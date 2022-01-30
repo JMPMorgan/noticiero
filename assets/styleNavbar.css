@@ -1,0 +1,11 @@
+/*Fuente para el contenido y titulos de las noticia*/
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500&family=Source+Serif+Pro:wght@200;300;400&display=swap');
+/*PARA EL CONTENIDO 
+font-family: 'Source Serif Pro', serif;
+*/
+/*PARA LOS TITULOS
+font-family: 'Arimo', sans-serif;
+*/
+.sections{
+    font-family: 'Arimo',sans-serif;
+}
