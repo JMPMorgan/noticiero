@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500&family=Source+Serif+Pro:wght@200;300;400&display=swap');
+
+*,body{
+    font-family:'Arimo',sans-serif;
+}
+
+.file {
+    visibility: hidden;
+    position: absolute;
+  }
+#preview{
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}

@@ -6,6 +6,26 @@ font-family: 'Source Serif Pro', serif;
 /*PARA LOS TITULOS
 font-family: 'Arimo', sans-serif;
 */
+
 #navbar{
     height: 50px;
+}
+
+.news-half{
+    height: 200px;
+}
+
+.news-complete{
+    height: 120px;
+}
+
+.news-photos{
+    width: 100%;
+}
+
+.news-title{
+    font-family:'Arimo',sans-serif;
+}
+.news-content{
+    font-family: 'Source Serif Pro', sans-serif;
 }
