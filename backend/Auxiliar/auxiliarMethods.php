@@ -41,4 +41,22 @@ function removeCharForSpaces($str){
 	return str_replace(array(";","`","'",'"',' '),'',$str);
 }
 
+function getImageType($str){
+	if($str=='image/jpeg'){
+		return '.jpeg';
+	}
+	else if($str=='image/jpg'){
+		return '.jpg';
+	}
+	else if($str=='image/png'){
+		return'.png';
+	}
+	else if($str=='image/gif'){
+		return'.gif';
+	}
+	else{
+		return 'error_type';
+	}
+}
+
 ?>
