@@ -33,4 +33,12 @@ function decode($str) {
     return openssl_decrypt(base64_decode($str), 'AES-256-CBC',$key, 0, $iv);
 }
 
+function removeEspecialChar($str){
+	return str_replace(array(";","`","'",'"'),'',$str);
+}
+
+function removeCharForSpaces($str){
+	return str_replace(array(";","`","'",'"',' '),'',$str);
+}
+
 ?>
