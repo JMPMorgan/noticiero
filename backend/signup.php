@@ -11,7 +11,8 @@ if(!empty($fields)){
         exit;
     }
     $fields['email'] = removeEspecialChar($fields['email']);
-    $sql = "SELECT `user_name`,`user_email` from `users_info` where `user_email` = '{$fields['email']}';";
+    $fields['user'] = removeCharForSpaces($fields['user']);
+    $sql = "SELECT `user_name`,`user_email` from `users_info` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
     $rows = selectQuery($sql);
     if (empty($rows)) {
         $uuid = generateRandomToken();
@@ -44,32 +45,48 @@ if(!empty($fields)){
                 $image_name=$uuid.'_pp'.$image_type;
                 $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}');";
                 execQuery($sql);
-                if($sql!=0){
-                    move_uploaded_file($fields[0]['image']['tmp_name'], $path.$image_name);
+                $save=move_uploaded_file($fields[0]['image']['tmp_name'], $path.$image_name);
+                if($sql!=0&&$save!=false){
+                    /*
+                        PROGRMAR EL OBTENER EL UUID DEL USUARIO Y GENERAR UN UUID PARA LA SECCION
+                        Y ESO PONERLO EN EL NOMBRE DE LA SESION INICIADA PARA LUEGO 
+                        EN SESSION_START Y EN LAS VARIABLES $_SESSION PARA SABER SI COINCIDE O NO 
+                        OBTENERLO EN OTRAS PARTES DEL BACKEND PARA SABER EL CUAL ES EL INICIO DE SESION 
+                        ver si se puede hacer un user_log
+                    */
                     echo json_encode($result);
                     exit;
                 }
                 else {
-                    echo 'Error al ingresar la informacion , por favor recargar la pagina';
+                    $result['success']=false;
+                    $result['error'][]='Error al ingresar la informacion , por favor recargar la pagina';
+                    echo json_encode($result);
                     exit;
                 }
 
             } else {
+
                 echo json_encode($result);
                 exit;
             }
         }
         else{
-            echo 'image_invalid';
+            $result['success']=false;
+            $result['error'][]='image_invalid';
+            echo json_encode($result);
             exit;
         }
     } else {
-        echo 'email';
+        $result['success']=false;
+        $result['error'][]='email';
+        echo json_encode($result);
         exit;
     }
 }
 else{
-    echo 'informacion';
+    $result['success']=false;
+    $result['error'][]='informacion';
+    echo json_encode($result);
     exit;
 }
 

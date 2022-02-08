@@ -9,15 +9,10 @@ $(()=>{
   }
   $('#browse').on("click", () => {
     //manda un trigger para presionar la seleccion de archivo ya que el cliente no podra por que esta oculto
-    console.log($(this));
-    console.log($(this).parents());
-    console.log($(this).parent().find("#file-image"));
-    console.log($('input[type="file"]'));
     var file = $(this).parents().find("#file-image");
     if (file.length === 0) {
       file = $('input[type="file"]');
     }
-    console.log(file[0]);
     file[0].click();
   });
   $('input[type="file"]').change(function (e) {
@@ -160,6 +155,8 @@ $(()=>{
       let response= await fetch('../backend/signup.php',{
         method:'POST',
         body:data
+      }).then((r)=>{
+        return r.text();
       });
       /*let response = await $.ajax({
         type: 'POST',
@@ -172,7 +169,6 @@ $(()=>{
       });*/
       response = JSON.parse(response);
       if (response.success === true) {
-
         Toast.fire({
           icon: 'success',
           title: 'Usuario Registrado con Exito'
