@@ -56,11 +56,15 @@ $(()=>{
                     user,
                     pass
                 },
-                datatype:'JSON',
-                success:(r)=>{
-
-                }
+                datatype:'JSON'
             });
+            response=JSON.parse(response);
+            if(response.success===true){
+              window.location='../index.html';
+            }
+            else{
+
+            }
         }
 
     });

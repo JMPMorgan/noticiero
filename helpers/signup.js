@@ -1,5 +1,4 @@
 $(()=>{
-
   let data= new FormData();
   let image_upload=false;
 
@@ -279,4 +278,5 @@ $(()=>{
     });
   }
 
-})
+});
+
