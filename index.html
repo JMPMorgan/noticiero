@@ -8,11 +8,38 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="assets/styleNavbar.css">
         <link rel="stylesheet" href="assets/styleIndex.css">
+        <script src="helpers/navbar.js"></script>
         <script src="helpers/index.js"></script>
     </head>
     <body>
-        <iframe src="pages/navbar.html" class="embed-responsive-item mx-auto w-100" id='navbar'frameborder="0"></iframe>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+            <div class="collapse navbar-collapse" id="info">
+                <ul class="navbar-nav mx-auto sections">
+                    <li class="nav-item active mx-2">
+                       <H6 class="mx-2">Seccion 1</H6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 2</h6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 3</h6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 3</h6>
+                    </li>
+                </ul>
+                <ul class="navbar-nav justify-content-end" id="profile">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary btn-sm" id="btn-login"><i class="fas fa-sign-in-alt"></i></button>
+                    </li>
+                    <li class="nav-item mx-2" >
+                       <button class="btn btn-outline-primary btn-sm" id="btn-signin"><i class='bx bxs-user-plus'></i></button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="container">
             <div class="row">
                 <div class="col-3">

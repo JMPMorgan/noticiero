@@ -17,10 +17,33 @@
                 $result=array('info'=>array());
                 if(!empty($rows)){
                     $result['info'][]=$rows[0]['user_name'];
-                    $result['info'][]=$rows[0]['user_profilepic'];
+                    $pp='assets/img/profile_pics/'.$rows[0]['user_profilepic'];
+                    $result['info'][]=$pp;
                     $result['info'][]=$rows[0]['user_lastname'];
                     $result['info'][]=$rows[0]['user_nick'];
                     $result['success']=true;
+                   /* if($rows[0]['user_type']==2){
+                        $result['info'][]=$rows[0]['user_name'];
+                        $pp='assets/img/profile_pics/'.$rows[0]['user_profilepic'];
+                        $result['info'][]=$pp;
+                        $result['info'][]=$rows[0]['user_lastname'];
+                        $result['info'][]=$rows[0]['user_nick'];
+                        $result['success']=true;
+                    }*/
+                    /*
+                    ESTE IF SE HACE PARA MANDAR CODIGO HTML PARA MOSTRAR INFORMACION ADICIONAL
+                    EN EL DROPDOWN MENU
+                    */
+                    if($rows[0]['user_type']==1){//Este tipo de usuario es para los editores
+                        $html="<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-yournews'>
+                                Your News</a>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification'>
+                                Notifications</a>";
+                        $result['info'][]=$html;
+                    }
+                    else if($rows[0]['user_type']==0){//Este tipo de usuario es para el administrador
+
+                    }
                 }
                 else{
                     $result['success']=false;

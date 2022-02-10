@@ -6,6 +6,8 @@ font-family: 'Source Serif Pro', serif;
 /*PARA LOS TITULOS
 font-family: 'Arimo', sans-serif;
 */
+
+
 .sections{
     font-family: 'Arimo',sans-serif;
 }
@@ -19,3 +21,45 @@ font-family: 'Arimo', sans-serif;
     height: 50px;
     border-radius: 50px !important;
 }
+
+#dropdownmenu{
+    font-weight: 900;
+}
+
+#dropdown-menu{
+    right: 20px;
+    left: auto;
+    position: absolute;
+    top: 100%;
+    z-index: 100;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 2px;
+    list-style: none;
+    background-color: white;
+    background-clip: padding-box;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: 5px;
+}
+
+
+.dropdown-list{
+    display: block;
+    padding: 4px 8px 4px 8px;
+    overflow: hidden;
+    color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.border{
+border: 1.5px solid #007fff9c!important;
+}
+
+details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }

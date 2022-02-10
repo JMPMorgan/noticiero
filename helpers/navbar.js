@@ -11,48 +11,81 @@
 })*/
 $(()=>{
     $('#btn-signin').on('click',()=>{
-        window.parent.document.location='signup.html';
+        document.location='pages/signup.html';
     });
     $('#btn-login').on('click',()=>{
-        window.parent.document.location='login.html';
+        document.location='pages/login.html';
     });
 })
+
+
     $.ajax({
         type:'POST',
         datatype:'JSON',
-        url:'../backend/data.php',
+        url:'backend/data.php',
         success:(r)=>{
             if(r!==undefined||r!==null){
+                /*
+                Esto carga la informacion de inicio de session si no hay información que mostrar
+                o sea un perfil muestra los botones de inicio de session 
+                si no carga la el nombre, usuario y foto de perfil  del usuario
+                con la variable html
+                */
                 let html;
                 let response;
-                //$('#profile').css('display','none');
                 response=JSON.parse(r);
-                let name =response.info[0];
-                let pp= response.info[1];
-                if(pp!==undefined||pp!==null){
-                    pp='../assets/img/brandon.png';
-                }
-                let last=response.info[2];
-                let user=response.info[3];
-                name +=' '+last;
-                html="<ul class='navbar-nav justify-content-end'>"+
-                        "<li class='nav-item justify-content-end'>"+
-                            "<div class='row'>"+
-                                "<div class='col-sm-12 m-0'>"+
-                                    "<p class='my-0 mr-3 ml-0 text-right'>"+name+"</p>"+
+                if(response.success===true){
+                    $('#profile').css('display','none');
+                    let name =response.info[0];
+                    let pp= response.info[1];
+                    if(pp===undefined||pp===null){
+                        pp='assets/img/brandon.png';
+                    }
+                    let last=response.info[2];
+                    let user=response.info[3];
+                    let code=response.info[4];
+                    if(code===undefined || code.length<=0){
+                        code='';
+                    }
+                    name +=' '+last;
+                    html="<ul class='navbar-nav justify-content-end'>"+
+                            "<li class='nav-item justify-content-end'>"+
+                                "<div class='row'>"+
+                                    "<div class='col-sm-12 m-0'>"+
+                                        "<p class='my-0 mr-3 ml-0 text-right'>"+name+"</p>"+
+                                    "</div>"+
+                                    "<div class='col-sm-12 m-0'>"+
+                                        "<p class='my-0 mr-3 ml-0 text-right' id='user'>"+user+"</p>"+
+                                     "</div>"+
                                 "</div>"+
-                                "<div class='col-sm-12 m-0'>"+
-                                    "<p class='my-0 mr-3 ml-0 text-right' id='user'>"+user+"</p>"+
-                                 "</div>"+
-                            "</div>"+
-                        "</li>"+
-                        "<li class='nav-item justify-content-end'>"+
-                            "<img src="+pp+" class='rounded img-thumbnail' id='profile-pic'>"+
-                        "</li>"+
-                    "</ul>";
-                html=$(html);
-                $(html[0].lastChild.firstChild).on('click',()=>{showProfileInfo()});
-                $("#info").append(html);
+                            "</li>"+
+                            "<li class='nav-item justify-content-end'>"+
+                                "<details id='profile-menu'>"+
+                                    "<summary>"+
+                                        "<img src="+pp+" class='rounded img-thumbnail' "+
+                                        "id='profile-pic'/>"+
+                                        "<i class='bx bx-caret-down' id='dropdownmenu'></i>"+
+                                    "</sumary>"+
+                                    "<details id='dropdown-menu'>"+
+                                        "<summary></summary>"+
+                                        code+
+                                        "<a class='dropdown-list rounded border btn btn-outline-primary'>Your profile</a>"+
+                                        "<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-signout'>Sign Out</a>"+
+                                    "</details>"+    
+                                "</details>"+    
+                            "</li>"+
+                        "</ul>";
+                    html=$(html);
+                    let profile_menu=$(html).find('#profile-menu');
+                    profile_menu[0].open=false;
+                    let dropdown_menu=$(html).find('#dropdown-menu');
+                    let btn_signout=$(html).find('#btn-signout');
+                    $(dropdown_menu[0]).css('border','none');
+                    $(btn_signout[0]).on('click',()=>{showProfileInfo()});
+                    $(profile_menu[0]).on('click',()=>{onClickProfileMenu(dropdown_menu)});
+                    $("#info").append(html);
+                }
+
             }
         }
     });
@@ -66,7 +99,7 @@ $(()=>{
         $.ajax({
             type:'POST',
             datatype:'JSON',
-            url:'../backend/navbar.php',
+            url:'backend/navbar.php',
             success:(r)=>{
                 console.log(r);
                 let response = JSON.parse(r);
@@ -81,19 +114,14 @@ $(()=>{
         });
     }
 
-
-
-/*const info= async ()=>{
-    let res;
-    let response= await $.ajax({
-        type:'POST',
-        datatype:'JSON',
-        url:'../backend/data.php',
-        success:(r)=>{
-            res=JSON.parse(r);
-            return new Promise(resolve => {
-                return res;
-              });
+    const onClickProfileMenu=(dropdown)=>{
+        let profile_menu=$(dropdown).parents('#profile-menu');
+        if(profile_menu[0].open===true){
+            dropdown[0].open=true;
+            $(dropdown[0]).css('padding','0');
         }
-    });
-}*/
+        else{
+            dropdown[0].open=false;
+            $(dropdown[0]).css('border','none');
+        }
+    }
