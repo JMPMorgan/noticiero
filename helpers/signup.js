@@ -1,3 +1,4 @@
+import {getParameterByName} from '../helpers/auxiliar/auxiliarMethods.js';
 $(()=>{
   let data= new FormData();
   let image_upload=false;
@@ -42,7 +43,7 @@ $(()=>{
 
   $('#btn-back').on('click', () => {
     //Regresa a el menu principal
-    $(location).attr('href', '../index.html');
+    $(location).attr('href', 'index.html');
   });
 
   $('#btn-register').on('click', async () => {
@@ -139,6 +140,7 @@ $(()=>{
     if (image_upload === false) {
       image_error = false;
     }
+    let type_signup=getParameterByName('id');
 
     //Se envia a esta funcion para saber cuales errores tiene la verificacion,
     //si no tiene ningun error se envia un success para ingresar el nuevo usuario a la BD.
@@ -151,7 +153,12 @@ $(()=>{
       data.append('password',password);
       data.append('gender',gender);
       data.append('image', $('input[type="file"]')[0].files[0]);
-      let response= await fetch('../backend/signup.php',{
+      let response='';
+      if(type_signup!==undefined||type_signup!==''){
+        data.append('type_signup',type_signup);
+
+      }
+      response= await fetch('../backend/signup.php',{
         method:'POST',
         body:data
       }).then((r)=>{
@@ -192,7 +199,7 @@ $(()=>{
   }
 
   const onlyMinus = (text) => {
-    let regex = /^[a-z\_\.]+$/;
+    let regex = /^[a-z0-9\_\.]+$/;
     return !regex.test(text);
   }
 

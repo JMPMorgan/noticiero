@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500&family=Source+Serif+Pro:wght@200;300;400&display=swap');
+
+html{
+    font-family: 'Arimo', sans-serif;
+}
+
+#info{
+    font-family: 'Arimo', sans-serif;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    background-color: #e3eaef !important;
+    border-color: #e3eaef !important;
+    color: #313a46 !important;
+}
+.btn-primary:hover:not(.disabled), btn-primary:focus, .btn-primary:active:not(.disabled)
+{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #fff !important;
+}
+.btn-primary:active:not(.disabled) {
+    filter: brightness(0.95);
+}
+.list-group-item-action{
+    width: auto !important;
+}

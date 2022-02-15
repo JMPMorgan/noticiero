@@ -1,4 +1,19 @@
 <?php
+function isSessionCorrect(){
+	$session_id=session_id();
+    if(isset($session_id)){
+        if(isset($_SESSION['uuid_session'])){
+        $uuid_session=$_SESSION['uuid_session'];
+            if(strcmp($session_id,$uuid_session)==0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+}
+
 function generateRandomToken($pre = '') {
 	if (function_exists('random_bytes')) {
 		return $pre.bin2hex(random_bytes(16));

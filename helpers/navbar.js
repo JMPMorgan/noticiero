@@ -11,10 +11,14 @@
 })*/
 $(()=>{
     $('#btn-signin').on('click',()=>{
-        document.location='pages/signup.html';
+        document.location='signup.html';
     });
     $('#btn-login').on('click',()=>{
-        document.location='pages/login.html';
+        document.location='login.html';
+    });
+
+    $('#logo').on('click',()=>{
+        document.location='index.html';
     });
 })
 
@@ -22,7 +26,7 @@ $(()=>{
     $.ajax({
         type:'POST',
         datatype:'JSON',
-        url:'backend/data.php',
+        url:'../backend/data.php',
         success:(r)=>{
             if(r!==undefined||r!==null){
                 /*
@@ -99,12 +103,12 @@ $(()=>{
         $.ajax({
             type:'POST',
             datatype:'JSON',
-            url:'backend/navbar.php',
+            url:'../backend/navbar.php',
             success:(r)=>{
                 console.log(r);
                 let response = JSON.parse(r);
                 if(response.success===true){
-                    window.parent.document.location.reload();
+                    window.location='index.html';
                 }
                 else{
                     alert('hola_como');

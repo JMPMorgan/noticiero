@@ -3,7 +3,6 @@ require_once('../backend/PDO/PDO.php');
 require_once('../backend/Auxiliar/auxiliarMethods.php');
 $fields=(empty($_GET)?$_POST:$_GET);
 if(!empty($fields)){
-
     if (!empty($_FILES['image'])) {
         array_push($fields, $_FILES);
     } else {
@@ -13,7 +12,7 @@ if(!empty($fields)){
     $fields['email'] = removeEspecialChar($fields['email']);
     $fields['user'] = removeCharForSpaces($fields['user']);
     $sql = "SELECT `user_name`,`user_email` from `users_info` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
-    $rows = selectQuery($sql);
+    $rows = selectQuery($sql);  
     if (empty($rows)) {
         $uuid = generateRandomToken();
         $path=$_SERVER['DOCUMENT_ROOT'].'/noticiero/assets/img/profile_pics/';
@@ -43,29 +42,8 @@ if(!empty($fields)){
             if ($result['success'] == true) {
                 $password = encode($fields['password']);
                 $image_name=$uuid.'_pp'.$image_type;
-                $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}');";
-                execQuery($sql);
-                $save=move_uploaded_file($fields[0]['image']['tmp_name'], $path.$image_name);
-                if($sql!=0&&$save!=false){
-                    /*
-                        PROGRMAR EL OBTENER EL UUID DEL USUARIO Y GENERAR UN UUID PARA LA SECCION
-                        Y ESO PONERLO EN EL NOMBRE DE LA SESION INICIADA PARA LUEGO 
-                        EN SESSION_START Y EN LAS VARIABLES $_SESSION PARA SABER SI COINCIDE O NO 
-                        OBTENERLO EN OTRAS PARTES DEL BACKEND PARA SABER EL CUAL ES EL INICIO DE SESION 
-                        ver si se puede hacer un user_log
-                    */
-                    echo json_encode($result);
-                    exit;
-                }
-                else {
-                    $result['success']=false;
-                    $result['error'][]='Error al ingresar la informacion , por favor recargar la pagina';
-                    echo json_encode($result);
-                    exit;
-                }
 
             } else {
-
                 echo json_encode($result);
                 exit;
             }
@@ -81,6 +59,37 @@ if(!empty($fields)){
         $result['error'][]='email';
         echo json_encode($result);
         exit;
+    }
+    if($fields['type_signup']!=''){
+        $fields['type_signup']=decode($fields['type_signup']);
+        if($fields['type_signup']==1){
+            $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','1');";
+        }
+    }
+    else{
+        $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','2');";
+
+    }
+    if(strlen($sql)>0){
+        execQuery($sql);
+        $save=move_uploaded_file($fields[0]['image']['tmp_name'], $path.$image_name);
+        if($sql!=0&&$save!=false){
+            /*
+                PROGRMAR EL OBTENER EL UUID DEL USUARIO Y GENERAR UN UUID PARA LA SECCION
+                Y ESO PONERLO EN EL NOMBRE DE LA SESION INICIADA PARA LUEGO 
+                EN SESSION_START Y EN LAS VARIABLES $_SESSION PARA SABER SI COINCIDE O NO 
+                OBTENERLO EN OTRAS PARTES DEL BACKEND PARA SABER EL CUAL ES EL INICIO DE SESION 
+                ver si se puede hacer un user_log
+            */
+            echo json_encode($result);
+            exit;
+        }
+        else {
+            $result['success']=false;
+            $result['error'][]='Error al ingresar la informacion , por favor recargar la pagina';
+            echo json_encode($result);
+            exit;
+        }
     }
 }
 else{

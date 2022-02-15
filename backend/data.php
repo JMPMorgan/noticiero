@@ -17,7 +17,7 @@
                 $result=array('info'=>array());
                 if(!empty($rows)){
                     $result['info'][]=$rows[0]['user_name'];
-                    $pp='assets/img/profile_pics/'.$rows[0]['user_profilepic'];
+                    $pp='../assets/img/profile_pics/'.$rows[0]['user_profilepic'];
                     $result['info'][]=$pp;
                     $result['info'][]=$rows[0]['user_lastname'];
                     $result['info'][]=$rows[0]['user_nick'];
@@ -42,6 +42,27 @@
                         $result['info'][]=$html;
                     }
                     else if($rows[0]['user_type']==0){//Este tipo de usuario es para el administrador
+                        $html="<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-reports' onclick='showReports()'>
+                                Reports</a>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification' onclick=''>
+                                Notifications</a>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-reporters' onclick='myReporters()'>
+                                Your Reporters</a>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-sections' onclick='showSections()'>
+                                Sectiones</a>";
+                        $js="<script>
+                                    const showReports=()=>{
+                                        window.location='reports.html';
+                                    }
+                                    const myReporters=()=>{
+                                        window.location='reporters.html';
+                                    }
+                                    const showSections=()=>{
+                                        window.location='sections.html';
+                                    }
+                             </script>";
+                             $html.=$js;
+                        $result['info'][]=$html;
 
                     }
                 }

@@ -7,7 +7,7 @@ function onlyLetters(text){
 }
 
 function onlyMinus(text){
-    let regex = /^[a-z\_\.]+$/;
+    let regex = /^[a-z0-9\_\.]+$/;
     return !regex.test(text);
 }
 
@@ -49,4 +49,11 @@ function validatePassword(password){
     }
 }
 
-export {onlyLetters,onlyMinus,validateEmail,validatePassword};
+function getParameterByName(str) {
+  str = str.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  let regex = new RegExp("[\\?&]" + str + "=([^&#]*)"),
+  results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+export {onlyLetters,onlyMinus,validateEmail,validatePassword,getParameterByName};
