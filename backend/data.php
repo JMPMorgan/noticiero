@@ -35,17 +35,26 @@
                     EN EL DROPDOWN MENU
                     */
                     if($rows[0]['user_type']==1){//Este tipo de usuario es para los editores
-                        $html="<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-yournews'>
+                        $html="<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-yournews' onclick='showMyNews()'>
                                 Your News</a>
-                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification'>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification' onclick='showNotificationsReporters()'>
                                 Notifications</a>";
+                        $js="<script>
+                                const showMyNews=()=>{
+                                    window.location='news-reporter.html';
+                                }
+                                const showNotificationsReporters=()=>{
+                                    window.location='notifications-reporters.html';
+                                }
+                            </script>";
+                            $html.=$js;
                         $result['info'][]=$html;
                     }
                     else if($rows[0]['user_type']==0){//Este tipo de usuario es para el administrador
                         $html="<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-reports' onclick='showReports()'>
                                 Reports</a>
-                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification' onclick=''>
-                                Notifications</a>
+                                <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-notification' onclick='showNotifications()'>
+                                Notifications <span class='badge badge-primary badge-pill' style='color: #007bff;'>.</span></a>
                                 <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-reporters' onclick='myReporters()'>
                                 Your Reporters</a>
                                 <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-sections' onclick='showSections()'>
@@ -59,6 +68,9 @@
                                     }
                                     const showSections=()=>{
                                         window.location='sections.html';
+                                    }
+                                    const showNotifications=()=>{
+                                        window.location='notifications.html';
                                     }
                              </script>";
                              $html.=$js;

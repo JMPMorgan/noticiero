@@ -69,3 +69,22 @@ details > summary {
   details > summary::-webkit-details-marker {
     display: none;
   }
+
+  /*.btn-primary {
+    background-color: #e3eaef !important;
+    border-color: #e3eaef !important;
+    color: #313a46 !important;
+}*/
+.btn-outline-primary:hover:not(.disabled), btn-primary:focus, .btn-primary:active:not(.disabled)
+{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #fff !important;
+}
+.btn-outline-primary:hover:not(.disabled)> .badge-primary {
+    color: #fff !important;
+    background-color: #fff !important;
+}
+.btn-primary:active:not(.disabled) {
+    filter: brightness(0.95);
+}
