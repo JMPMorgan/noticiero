@@ -32,6 +32,65 @@
             </ul>
         </div>
     </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <h2>Sections</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Status</th>
+                            <th scope="col">Section Name</th>
+                            <th scope="col">Change Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="bg-success text-success mx-auto th-row"><i class='bx bx-check text-white status-success'></i></th>
+                            <td>Hola</td>
+                            <td>
+                                <button class="btn btn-outline-success"><i class='bx bx-check'></i></button>
+                                <button class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-danger text-danger mx-auto th-row"><i class='bx bx-x-circle text-white status-success'></i></th>
+                            <td>Hola2</td>
+                            <td>
+                                <button class="btn btn-outline-success"><i class='bx bx-check'></i></button>
+                                <button class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <h2>All Sections</h2>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <button class="btn btn-sm btn-primary" id="btn-add">Add Section</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h1>Section</h1>
+                    </div>
+                    <div class="col-3">
+                        <h1>Actions</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

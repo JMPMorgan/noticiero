@@ -7,10 +7,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
+            <!--<script src="../helpers/plugins/datedropper-jquery.js"></script>-->
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="../assets/styleNavbar.css">
         <link rel="stylesheet" href="../assets/styleReports.css">  
         <script src="../helpers/navbar.js"></script>
+        <script src="../helpers/reports.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
@@ -56,9 +58,9 @@
                 <div class="col-4">
                     <div class="input-group">
                         <div class="input-group-pretend">  
-                            <label class="input-group-text" for="star-date">Ending date</label>
+                            <label class="input-group-text" for="end-date">Ending date</label>
                         </div>
-                        <input type="date" class="form-control"id="star-date">
+                        <input id="end-date" type="date" class="form-control">
                     </div>
                 </div>
             </div>

@@ -9,6 +9,9 @@
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="../assets/styleNavbar.css">
         <script src="../helpers/navbar.js"></script>
+        <script src="../helpers/plugins/node_modules/chart.js/dist/chart.js"></script>
+        <link rel="stylesheet" href="../assets/styleNewsReporter.css">
+        <script src="../helpers/newsreporter.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
@@ -28,5 +31,103 @@
                 </ul>
             </div>
         </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="" class="input-group-text">New Title</label>
+                        </div>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">Sections</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Choose...</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-pretend">  
+                            <label class="input-group-text" for="star-date">Start date</label>
+                        </div>
+                        <input type="date" class="form-control"id="star-date">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-pretend">  
+                            <label class="input-group-text" for="end-date">Ending date</label>
+                        </div>
+                        <input id="end-date" type="date" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-end">
+                <div class="col d-flex justify-content-end">
+                    <button class=" btn btn-primary">Search<i class='bx bx-search ml-2'></i></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-6">
+                            <span class="text-left h2 d-flex">Your News</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary d-flex">Add News</button>    
+                            </div>
+                            
+                        </div>
+                    </div>
+            </div>
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Status</th>
+                                <th scope="col">News Title</th>
+                                <th scope="col">News Date</th>
+                                <th scope="col">Change Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="bg-success text-success mx-auto th-row"><i class='bx bx-check text-white status-success'></i></th>
+                                <td>Hola</td>
+                                <td>12/10/1999</td>
+                                <td>
+                                    <button class="btn btn-outline-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="bg-danger text-danger mx-auto th-row"><i class='bx bx-x-circle text-white status-success'></i></th>
+                                <td>Hola2</td>
+                                <td>12/10/1999</td>
+                                <td>
+                                    <button class="btn btn-outline-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class='mx-auto' id='container-chart'>
+                        <h3 class="mx-auto text-center">Visits of your last news</h3>
+                        <canvas id="myChart" width="400" height="400"></canvas>    
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

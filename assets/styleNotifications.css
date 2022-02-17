@@ -24,4 +24,5 @@
 .btn-outline-primary:hover:not(.disabled)>.badge-list {
     color: #007bff !important;
     background-color: #fff !important;
+
 }
