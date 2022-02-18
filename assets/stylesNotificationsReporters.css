@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500&family=Source+Serif+Pro:wght@200;300;400&display=swap');
+*,html{
+    font-family: 'Arimo',sans-serif;
+}
+
+.btn-outline-primary:hover:not(.disabled), btn-primary:focus, .btn-primary:active:not(.disabled)
+{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #fff !important;
+}
+
+.btn-outline-danger:hover:not(.disabled)
+{
+    background-color: #dc3545!important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.btn-outline-success:hover:not(.disabled)
+{
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.btn-outline-danger:hover:not(.disabled)> .badge-danger {
+    color: #dc3545 !important;
+    background-color: #fff !important;
+}
+.btn-outline-primary:hover:not(.disabled)>.badge-list {
+    color: #007bff !important;
+    background-color: #fff !important;
+
+}
+
+.btn-outline-success:hover:not(.disabled)> .badge-list {
+    color: #28a745 !important;
+    background-color: #fff !important;
+}

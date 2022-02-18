@@ -73,7 +73,7 @@ $(()=>{
                                     "<details id='dropdown-menu'>"+
                                         "<summary></summary>"+
                                         code+
-                                        "<a class='dropdown-list rounded border btn btn-outline-primary'>Your profile</a>"+
+                                        "<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-profile'>Your profile</a>"+
                                         "<a class='dropdown-list rounded border btn btn-outline-primary' id='btn-signout'>Sign Out</a>"+
                                     "</details>"+    
                                 "</details>"+    
@@ -84,8 +84,10 @@ $(()=>{
                     profile_menu[0].open=false;
                     let dropdown_menu=$(html).find('#dropdown-menu');
                     let btn_signout=$(html).find('#btn-signout');
+                    let btn_profile = $(html).find('#btn-profile');
+                    $(btn_profile[0]).on('click',()=>{showInfoProfile()});
                     $(dropdown_menu[0]).css('border','none');
-                    $(btn_signout[0]).on('click',()=>{showProfileInfo()});
+                    $(btn_signout[0]).on('click',()=>{signOutSession()});
                     $(profile_menu[0]).on('click',()=>{onClickProfileMenu(dropdown_menu)});
                     $("#info").append(html);
                 }
@@ -99,7 +101,11 @@ $(()=>{
         alert('hola');
     })
 
-    const showProfileInfo=()=>{
+    const showInfoProfile=()=>{
+        window.location='editprofile.html';
+    }
+
+    const signOutSession=()=>{
         $.ajax({
             type:'POST',
             datatype:'JSON',

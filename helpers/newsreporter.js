@@ -1,8 +1,11 @@
+$(()=>{
+    $('#btn-add').on('click',()=>{
+        window.location='newsadd.html';
+    });
+})
+
 window.onload=()=>{
-    //var ctx = document.getElementById('myChart'); // node
-var ctx = document.getElementById('myChart').getContext('2d'); // 2d context
-/*var ctx = $('#myChart').getContext('2d'); // jQuery instance
-var ctx = 'myChart'; // element id*/
+let ctx = document.getElementById('myChart').getContext('2d'); // 2d context/
 
 const myChart = new Chart(ctx, {
     type: 'line',
