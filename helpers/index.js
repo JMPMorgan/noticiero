@@ -7,4 +7,8 @@ $(()=>{
         let new_Title= $(list[0]);
     });
 
+    $('.thumbnail').each((i,element)=>{
+        $(element).on('click',()=>{window.location='viewnews.html'});
+    });
+
 })

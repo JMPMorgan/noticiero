@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="../assets/styleNavbar.css">
+        <script src="../helpers/navbar.js"></script>
+        <script src="../helpers/viewnews.js"></script>
+        <link rel="stylesheet" href="../assets/styleViewNews.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+            <div class="collapse navbar-collapse" id="info">
+                <ul class="navbar-nav mr-auto justify-content-start" >
+                    <div>
+                        <img src="../assets/img/pn-logo.png" alt="" id="logo" srcset="">
+                    </div>
+                </ul>
+                <ul class="navbar-nav mx-auto sections">
+                    <li class="nav-item active mx-2">
+                       <H6 class="mx-2">Seccion 1</H6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 2</h6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 3</h6>
+                    </li>
+                    <li class="nav-item mx-auto mx-2">
+                        <h6 class="mx-2">Seccion 3</h6>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto justify-content-end" id="profile">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary btn-sm" id="btn-login"><i class="fas fa-sign-in-alt"></i></button>
+                    </li>
+                    <li class="nav-item mx-2" >
+                       <button class="btn btn-outline-primary btn-sm" id="btn-signin"><i class='bx bxs-user-plus'></i></button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-2">
+                <div class="container">
+                    <p class="text-muted mt-4">  
+                        Publication date:18/02/2022
+                    </p>
+                    <h2 class="text-justify">News Sections </h2>
+                    <div class="container-sections">
+                        <a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
+                        <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
+                        <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
+                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>
+
+                    </div>
+                    <h2 class="text-justify">Popular Sections </h2>
+                    <div class="container-sections">
+                        <a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
+                        <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
+                        <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
+                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>
+
+                    </div>
+ 
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="container" style="padding:0;">
+                    <div class=" ">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-primary"><i class='bx bxs-like'></i></button><span class="ml-2 h3">15</span>
+                        </div>
+                        <h1 class="text-center">Noticia Ficticia </h1>
+                        <div class="text-muted d-flex justify-content-between">
+                            <span>MEXICO <i class="fa-solid fa-location-crosshairs"></i> </span>
+                            <span>NOMBRE REPORTERO</span>
+                            <span><i class="fa-solid fa-calendar-days"></i>18/02/2022</span>
+                        </div>
+                        <p class="text-justify no-gutters news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget
+                            porttitor lectus pulvinar vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla, vitae elementum lectus
+                            dictum at. Morbi non dictum justo. </p>
+        
+                    </div>
+                    <div class="my-4">
+                        <div class="content-images mx-auto" style="max-width:1200px">
+                            <img class="mySlides mx-auto" src="../assets/img/pn-logo.png" style="width:25%;display:none">
+                            <img class="mySlides mx-auto" src="../assets/img/brandon.png" style="width:25%">
+                            <img class="mySlides mx-auto" src="../assets/img/brandon.png" style="width:25%;display:none">
+                          
+                            <div class="row-padding d-flex justify-content-between section-images">
+                              <div class="col-image  d-flex justify-content-center s4">
+                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(1)">
+                              </div>
+                              <div class="col-image  d-flex justify-content-center  s4">
+                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/brandon.png" style="width:25%;cursor:pointer" onclick="currentDiv(2)">
+                              </div>
+                              <div class="col-image  d-flex justify-content-center s4">
+                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/brandon.png" style="width:25%;cursor:pointer" onclick="currentDiv(3)">
+                              </div>
+                            </div>
+                          </div>
+                        <div>
+                            <p class="text-justify">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar vel.
+                                Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
+                                vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
+                                Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
+                                Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula nibh
+                                eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
+                            </p>
+                            <p class="text-justify">
+                                Pellentesque quis massa vel nunc porttitor fringilla. Integer fringilla nunc in ipsum pellentesque, eget luctus nisi
+                                aliquet. Donec vitae faucibus lacus, eget sagittis dolor. Vestibulum vestibulum, felis elementum rutrum consequat, massa
+                                augue venenatis augue, et lacinia risus est at ipsum.
+                                Fusce cursus et quam ut lacinia. Morbi commodo ligula a blandit varius. Quisque porta purus augue, eu hendrerit tortor
+                                porttitor vulputate. Sed rhoncus massa magna, ac ornare sem lacinia et. Aliquam tempor nulla id tellus lacinia, non
+                                euismod ipsum blandit.
+                                Maecenas ornare lorem mauris, eu finibus mauris dignissim ut. Proin cursus sapien sed ipsum lobortis euismod. Curabitur
+                                convallis magna vitae turpis rhoncus auctor. Suspendisse risus erat, auctor non enim ut, suscipit varius ipsum.
+                                
+                                Vivamus tincidunt libero et neque gravida, sed imperdiet erat iaculis. Nunc placerat lorem ligula, non dictum elit
+                                facilisis ut. Vivamus eleifend condimentum lorem, sit amet volutpat diam placerat et. Vestibulum varius erat nunc, sit
+                                amet tincidunt lacus accumsan non. Aenean tellus arcu, tempus efficitur feugiat id, tristique a dui. Quisque ullamcorper
+                                augue id diam feugiat vestibulum tristique id diam. Vivamus iaculis consectetur suscipit.
+                                
+                                Nunc eget justo id dui fermentum dictum. Curabitur condimentum ornare libero, ac vestibulum lacus varius id. Mauris quis
+                                dui sed mi elementum fermentum. Vestibulum felis purus, pellentesque eget sapien eu, consectetur venenatis massa. Aenean
+                                mattis, quam vitae aliquet feugiat, orci elit pellentesque purus, non finibus nisl massa eget mi. Aenean maximus erat eu
+                                odio volutpat, id lacinia odio volutpat. Fusce dignissim erat non sapien aliquam accumsan. Nulla facilisi. Aliquam eu
+                                nisi suscipit, ultricies est nec, viverra libero. Phasellus consectetur velit sit amet ex luctus congue. Praesent dui
+                                ex, laoreet sed blandit at, aliquam ac lectus. Nam et porta orci, at tempus nisl. Etiam finibus maximus fringilla.
+                                Suspendisse vel risus orci. Sed eu rhoncus massa. Suspendisse tempor sapien lectus, sed ornare dolor dictum vitae.
+                            </p>
+                        </div>
+                    </div>   
+                    <div>
+                        <div class="form-group border-top">
+                            <label class='h2 'for="exampleFormControlTextarea1">Comments</label>
+                            <textarea class="form-control my-2" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            <button class="btn btn-primary d-flex justify-content-end ml-auto">Comment</button>
+                        </div>
+                        <div >
+                            <div class="comment ">
+                                <div class="row border-top border-bottom">
+                                    <div class="col-2 container-pp-comments">
+                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
+                                    </div>
+                                    <div class="col-10">
+                                        <p class="h1">User</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
+                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
+                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
+                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
+                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
+                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment border-top">
+                                <div class="row border-top border-bottom">
+                                    <div class="col-2 container-pp-comments">
+                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
+                                    </div>
+                                    <div class="col-10">
+                                        <p class="h1">User</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
+                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
+                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
+                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
+                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
+                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <div class="row border-top border-bottom">
+                                    <div class="col-2 container-pp-comments">
+                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
+                                    </div>
+                                    <div class="col-10">
+                                        <p class="h1">User</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
+                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
+                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
+                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
+                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
+                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="container">
+                    <h2>News suggested</h2>
+                    <div class="news-suggested">
+                        <h6 class="news-title">FULL NOTICIA</h6>
+                        <a href="#">
+                            <img src="../assets/img/brandon.png" class="news-sections" alt="" srcset="">
+                            <div class="caption">
+                                <p class="news-content">Titulo noticia</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="news-suggested">
+                        <h6 class="news-title">FULL NOTICIA</h6>
+                        <a href="#">
+                            <img src="../assets/img/brandon.png" class="news-sections" alt="" srcset="">
+                            <div class="caption">
+                                <p class="news-content">Titulo noticia</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="news-suggested">
+                        <h6 class="news-title">FULL NOTICIA</h6>
+                        <a href="#">
+                            <img src="../assets/img/brandon.png" class="news-sections" alt="" srcset="">
+                            <div class="caption">
+                                <p class="news-content">Titulo noticia</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+      
+ 
+    </body>
+</html>
