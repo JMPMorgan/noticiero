@@ -54,6 +54,13 @@ $(()=>{
                     name +=' '+last;
                     html="<ul class='navbar-nav justify-content-end'>"+
                             "<li class='nav-item justify-content-end'>"+
+                                "<div class='input-group mt-2' style='width:120px;'>"+
+                                    "<input type='text' id='search-news' class='form-control' placeholder='Search...'>"+
+                                    "<label class='input-group-text'><i class='bx bx-search'></i>"+
+                                    "</label>"+
+                                "</div>"+
+                            "</li>"+
+                            "<li class='nav-item justify-content-end'>"+
                                 "<div class='row'>"+
                                     "<div class='col-sm-12 m-0'>"+
                                         "<p class='my-0 mr-3 ml-0 text-right'>"+name+"</p>"+
@@ -85,7 +92,9 @@ $(()=>{
                     let dropdown_menu=$(html).find('#dropdown-menu');
                     let btn_signout=$(html).find('#btn-signout');
                     let btn_profile = $(html).find('#btn-profile');
+                    let txt_buscador=$(html).find('#search-news');
                     $(btn_profile[0]).on('click',()=>{showInfoProfile()});
+                    $(txt_buscador[0]).keypress((e)=>{searchNews(e,txt_buscador)});
                     $(dropdown_menu[0]).css('border','none');
                     $(btn_signout[0]).on('click',()=>{signOutSession()});
                     $(profile_menu[0]).on('click',()=>{onClickProfileMenu(dropdown_menu)});
@@ -133,5 +142,14 @@ $(()=>{
         else{
             dropdown[0].open=false;
             $(dropdown[0]).css('border','none');
+        }
+    }
+
+    const searchNews=(e,txt_buscador)=>{
+        let buscador=txt_buscador[0];
+        let code = (e.keyCode ? e.keyCode : e.which);
+        let text=$(buscador).val();
+        if(code===13){
+            window.location='searchnews.html';
         }
     }
