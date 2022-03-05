@@ -14,7 +14,7 @@ $(()=>{
                                 '<input class="form-control" type="color"/>'+
                             '</div>'+
                          '</div>'+
-                '<div class="d-flex justify-content-end">'+
+                '<div class="d-flex mt-2 justify-content-end">'+
                     '<button class=" btn btn-primary mt-2">Save Section</button>' +
                  '</div>'+
                  '</div>'+
@@ -25,4 +25,21 @@ $(()=>{
     $('#container-add').append(html);
        // window.location='sectionsadd.html';
     })    
+    $('#btn-addkeywords').on('click',()=>{ 
+        let html = " <div class='col-12'>" +
+            "<div class='card mx-auto' style='width:450px'>" +
+            "<div class='container'>" +
+            "<div class='form-group'>" +
+            "<label>Keyword</label>" +
+            "<input class='form-control' type='text'/>" +
+            "</div>" +
+            "<div class='d-flex mt-2 justify-content-end'>" +
+            "<button class='btn btn-primary mt-2'>Save Keyword</button>" +
+            "</div>" +
+            "</div> " +
+            "</div>" +
+            "</div>";
+        $('#container-addkey').append(html);
+    })
+
 })

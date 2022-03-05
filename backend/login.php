@@ -14,10 +14,10 @@ if(!empty($fields)){
         si no existe no regresa nada de informacion
         */
         if($isEmail==1){
-            $sql="SELECT `user_uuid` FROM `users_info` WHERE `user_pass`='{$password}' AND `user_email`='{$fields['user']}';";
+            $sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_email`='{$fields['user']}';";
         }
         else{
-            $sql="SELECT `user_uuid` FROM `users_info` WHERE `user_pass`='{$password}' AND `user_nick`='{$fields['user']}';";
+            $sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_nick`='{$fields['user']}';";
         }
         $rows = selectQuery($sql);
         if(!empty($rows)){

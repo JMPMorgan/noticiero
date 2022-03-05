@@ -12,7 +12,7 @@
             if(strcmp($session_id,$uuid_session)==0){
                 $uuids=explode('-',$uuid_session);
                 $uuid_user=$uuids[1];
-                $sql="SELECT * FROM `users_info` WHERE `user_uuid`='{$uuid_user}';";
+                $sql="SELECT * FROM `users` WHERE `user_uuid`='{$uuid_user}';";
                 $rows=selectQuery($sql);
                 $result=array('info'=>array());
                 if(!empty($rows)){
@@ -58,7 +58,7 @@
                                 <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-reporters' onclick='myReporters()'>
                                 Your Reporters</a>
                                 <a class='dropdown-list rounded border btn btn-outline-primary' id='btn-sections' onclick='showSections()'>
-                                Sectiones</a>";
+                                Sections</a>";
                         $js="<script>
                                     const showReports=()=>{
                                         window.location='reports.html';

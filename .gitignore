@@ -4,4 +4,6 @@ profile_pics
 #ignora plugins
 plugins
 
-node_modules
+#ignora node_modules
+node_modules/
+

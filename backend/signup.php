@@ -11,7 +11,7 @@ if(!empty($fields)){
     }
     $fields['email'] = removeEspecialChar($fields['email']);
     $fields['user'] = removeCharForSpaces($fields['user']);
-    $sql = "SELECT `user_name`,`user_email` from `users_info` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
+    $sql = "SELECT `user_name`,`user_email` from `users` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
     $rows = selectQuery($sql);  
     if (empty($rows)) {
         $uuid = generateRandomToken();
@@ -63,11 +63,11 @@ if(!empty($fields)){
     if($fields['type_signup']!=''){
         $fields['type_signup']=decode($fields['type_signup']);
         if($fields['type_signup']==1){
-            $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','1');";
+            $sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','1');";
         }
     }
     else{
-        $sql = "INSERT into `users_info`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','2');";
+        $sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','2');";
 
     }
     if(strlen($sql)>0){

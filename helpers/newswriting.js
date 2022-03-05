@@ -79,3 +79,15 @@ const setEndOfContenteditable=(id) =>{
     }
 }*/
 
+window.onload=()=>{
+
+    ClassicEditor
+        .create(document.querySelector('#writer-news'),{
+            toolbar:['bold', 'italic', 'link','blockQuote','numberedList',  'bulletedList','|', 'undo', 'redo']
+        })
+
+        .catch(error => {
+            console.log(error);
+        });
+
+}
