@@ -5,5 +5,5 @@ profile_pics
 plugins
 
 #ignora node_modules
-node_modules/
+/node_modules
 

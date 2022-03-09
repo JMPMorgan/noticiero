@@ -11,6 +11,7 @@ function onlyMinus(text){
     return !regex.test(text);
 }
 
+
 function validateEmail(email){
         /*return String(email)
       .toLowerCase()
@@ -56,4 +57,41 @@ function getParameterByName(str) {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-export {onlyLetters,onlyMinus,validateEmail,validatePassword,getParameterByName};
+function validateEntirePassword(password){
+  let letters=0;
+  let char_especial=0;
+  let number=0;
+  for(let i =0;i<password.length;i++){
+    let last_char=password.charAt(i);
+    let value= validatePassword(last_char);
+    if (value===true){
+        errors.push('Contraseña Antigua');
+        break;
+    }
+    else if(value==='A'){
+        letters++;
+    }
+    else if(value==='@'){
+        char_especial++;
+    }
+    else if(value===1){
+        number++;
+    }
+  }
+  let length_char=letters+char_especial+number;
+  if(letters===0||char_especial===0||number===0){
+    return {
+      error:true,
+      text:'La contraseña no contiene letras,algun caracter especial o un numero'
+    }
+  }
+  else if(length_char<8){
+    return{
+      error:true,
+      text:'La contraseña debe ser mayor a 8 caracteres'
+    }
+  }
+  return false;
+}
+
+export {validateEntirePassword,onlyLetters,onlyMinus,validateEmail,validatePassword,getParameterByName};

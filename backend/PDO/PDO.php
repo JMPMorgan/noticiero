@@ -43,7 +43,7 @@ function selectQuery($sql){
 
 function execQuery($sql){
     global $this_DB;
-    return $this_DB->DB->exec($sql)>0;
+    return $this_DB->DB->exec($sql);
 }
 
 

@@ -49,11 +49,11 @@ function decode($str) {
 }
 
 function removeEspecialChar($str){
-	return str_replace(array(";","`","'",'"'),'',$str);
+	return str_replace(array(";","`","'",'"',')','('),'',$str);
 }
 
 function removeCharForSpaces($str){
-	return str_replace(array(";","`","'",'"',' '),'',$str);
+	return str_replace(array(";","`","'",'"',')','(',' '),'',$str);
 }
 
 function getImageType($str){
