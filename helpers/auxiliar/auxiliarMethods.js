@@ -91,7 +91,7 @@ function validateEntirePassword(password){
       text:'La contraseña debe ser mayor a 8 caracteres'
     }
   }
-  return false;
+  return {error:false}
 }
 
 export {validateEntirePassword,onlyLetters,onlyMinus,validateEmail,validatePassword,getParameterByName};

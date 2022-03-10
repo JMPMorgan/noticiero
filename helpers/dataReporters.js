@@ -33,12 +33,12 @@ $.ajax({
 });
 
 const editReporter=(n)=>{
-    alert(n);
+    window.location=`edprofileadmin.html?id=${n}&status=1`;
 }
 
 const deleteReporter=(n)=>{
     alert(n);
 }
 const detailReporter=(n)=>{
-    alert(n);
+    window.location=`edprofileadmin.html?id=${n}&status=2`;
 }

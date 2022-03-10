@@ -10,8 +10,92 @@
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="../helpers/auxiliar/auxiliarMethods.js"></script>
+        <script src="../helpers/navbar.js"></script>
+        <link rel="stylesheet" href="../assets/styleNavbar.css">
+        <link rel="stylesheet" href="../assets/styleEditProfiel.css">
+        <script type="module" src="../helpers/getinfoReporters.js"></script>
+        <script type="module" src="../helpers/editInfoReporteradmin.js"></script>
     </head>
     <body>
-        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+            <div class="collapse navbar-collapse" id="info">
+                <ul class="navbar-nav   mr-auto justify-content-start" >
+                    <div>
+                        <img  src="../assets/img/pn-logo.png" alt="" id="logo" srcset="">
+                    </div>
+                </ul>
+                <ul class="navbar-nav ml-auto justify-content-end" id="profile">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary btn-sm" id="btn-login"><i class="fas fa-sign-in-alt"></i></button>
+                    </li>
+                    <li class="nav-item mx-2" >
+                       <button class="btn btn-outline-primary btn-sm" id="btn-signin"><i class='bx bxs-user-plus'></i></button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <img class="img-thumbnail rounded" id="pm-img" src="" alt="" srcset="">
+                    <p class="font-weight-bold" id="pm-name" data="">Nombre Apellido</p>
+                    <p class="" id="pm-user">Usuario.Usuario</p>
+                    <p id="pm-email">email@email.com</p>      
+                </div>
+                <div class="col">
+                    <h1 id="title-status">Edit profile reporter</h1>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="" id="ed-name">    
+                                <label for="">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="" id="ed-lastname">    
+                                <label for="">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="" id="ed-password">    
+                                <label for="">Type Your New Password</label>
+                            </div>
+                        </div>                       
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="" id="ed-cpassword">    
+                                <label for="">Confirm your new password</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="ed-email">
+                                <label for="">E-mail</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label>Update your profile pic</label>
+                            <div id="msg"></div>
+                            <form method="post" id="image-form" enctype="multipart/form-data">
+                                <input type="file" name="img[]" class="file" id="file-image" accept="image/*">
+                                <div class="input-group my-3">
+                                    <input type="text" class="form-control" disabled placeholder="Upload File" id="file">
+                                    <div class="input-group-append">
+                                        <button type="button" id="browse" class="browse btn btn-primary">Browse...</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <img src="" id="preview" class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary">Back</button>
+                <button  id='btn-update'class="btn btn-primary ml-2">Update</button>
+            </div>
+        </div>
     </body>
 </html>

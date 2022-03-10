@@ -1,5 +1,6 @@
 <?php
 function isSessionCorrect(){
+	session_start();
 	$session_id=session_id();
     if(isset($session_id)){
         if(isset($_SESSION['uuid_session'])){

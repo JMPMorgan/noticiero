@@ -1,7 +1,6 @@
 <?php
     require_once('../backend/PDO/PDO.php');
     require_once('../backend/Auxiliar/auxiliarMethods.php');
-    session_start();
     $isCorrect=isSessionCorrect();
     if($isCorrect==1){
         $result = array('error'=>array());
