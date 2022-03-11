@@ -37,7 +37,34 @@ const editReporter=(n)=>{
 }
 
 const deleteReporter=(n)=>{
-    alert(n);
+    Swal.fire({
+        title: 'Desea Eliminar a este reportero?',
+        text: "Se enviara un mensaje de confirmacion hacia el reportero",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<i class="fa-solid fa-check"></i> Ok!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+            let response= await $.ajax({
+                method:'GET',
+                url:'../backend/messages.php',
+                data:{
+                    n,
+                    id:'Y2pUeFBBLzgxWFloRm5Mam9FVVd2QT09'
+                },
+                datatype:'JSON'
+            });
+            console.log(response);
+            Swal.fire({
+            title:'Deleted!',
+            text:'Your file has been deleted.',
+            icon:'success',
+            confirmButtonColor:'#28a745'
+          })
+        }
+      })
 }
 const detailReporter=(n)=>{
     window.location=`edprofileadmin.html?id=${n}&status=2`;

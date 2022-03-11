@@ -22,6 +22,7 @@ if(isset($session_id)){
                 $result['info'][]=$rows[0]['user_nick'];
                 $i=encode($rows[0]['user_uuid']);
                 $result['info'][]=$i;
+                $result['info'][]=$rows[0]['user_type'];
                 $result['success']=true;
             }
             else{

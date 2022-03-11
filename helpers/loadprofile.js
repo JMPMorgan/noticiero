@@ -24,6 +24,15 @@ $(()=>{
                 $('#ed-name').val(r.info[0]);
                 $('#ed-lastname').val(r.info[1]);
                 $('#ed-email').val(r.info[2]);
+                if(r.info[6]!==0){
+                    const html =$(`<button class='btn btn-danger'>
+                    Delete User
+                    </button>`);
+                    $('#container-buttons').append(html);
+                    $(html).on('click',()=>{
+                        deleteUser();
+                    })
+                }
             }
         }
     });
@@ -156,4 +165,17 @@ const printErrors=(errors)=>{
         icon: 'warning',
         html: html
       });
+}
+
+const deleteUser=async ()=>{
+     let response= await $.ajax({
+         method:'POST',
+         datatype:'JSON',
+         url:'../backend/deleteUser.php'
+     });
+     response=JSON.parse(response);
+     console.log(response);
+     if(response.success===true){
+         window.location='index.html';
+     }
 }

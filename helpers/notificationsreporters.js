@@ -1,4 +1,30 @@
-$(()=>{
+$(async()=>{
+     let initial_response=await $.ajax({
+         method:'GET',
+         url:'../backend/getNotificationsReporters.php',
+         datatype:'JSON'
+     })
+     initial_response=JSON.parse(initial_response);
+     initial_response.info .forEach(element => {
+        if(element==='ELIMINACION'){
+            const html=$(`<div class='rounded border border-secondary container pb-2 my-4'>
+            <h2 class='text-center'>El administrador desea eliminar tu usuario</h2>
+            <div class='d-flex justify-content-center'>
+            <button id='btn-aceptar' class='btn btn-success mr-2'>Aceptar</button>
+            <button id='btn-cancelar' class='btn btn-danger'>Cancelar</button>
+            </div>
+            </div>`);
+            $(html).find('#btn-aceptar').on('click',()=>{
+                deleteUser();
+            });
+            $(html).find('#btn-cancelar').on('click',()=>{
+                console.log('Entre a btn cancelar');
+            });
+
+            $('#group-notifications-news').append(html);
+        }
+     });
+
     $('#news-modification').on('click',()=>{
         let html='<div class="row" id="noticia">'+
         '<div class="col-4">'+
@@ -24,3 +50,20 @@ $(()=>{
         $('#news-modification').after(html);
     })
 })
+
+const deleteUser=async ()=>{
+    let response = await $.ajax({
+        method:'POST',
+        url:'../backend/deleteReporter.php',
+        datatype:'JSON'
+    })
+    response=JSON.parse(response);
+    console.log(response);
+    if(response.success===true){
+        window.location='index.html';
+    }
+}
+
+const noDeleteUser= async()=>{
+
+}
