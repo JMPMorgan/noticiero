@@ -9,8 +9,8 @@ if($isSessionCorrect==true){
         $fields['keyword_valor']=removeEspecialChar($fields['keyword_valor']);
         $uuid=generateRandomToken();
         if(strlen($fields['keyword_valor'])>0){
-            $sql="INSERT INTO `keywords` (`word_keywords`,`creation_keywords`,`uuid_keywords`) 
-            VALUES('{$fields['keyword_valor']}',NOW(),'{$uuid}')";
+            $sql="INSERT INTO `keywords` (`word_keywords`,`creation_keywords`,`uuid_keywords`,`status_keywords`) 
+            VALUES('{$fields['keyword_valor']}',NOW(),'{$uuid}',1)";
             $isInsert=execQuery($sql);
             if($isInsert>=0){
                 $result['success']=true;
