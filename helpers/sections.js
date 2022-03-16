@@ -1,4 +1,5 @@
 $(()=>{
+
     $('#btn-addsections').on('click',()=>{
         let html='<div class="col-12">'+
                 '<div class="card mx-auto" style="width:450px;">'+
@@ -78,7 +79,6 @@ const saveSection=async(html)=>{
             url:'../backend/insertsections.php' 
         });
         response=JSON.parse(response);
-        console.log(response);
     }
 }
 

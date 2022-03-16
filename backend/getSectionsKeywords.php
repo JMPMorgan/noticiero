@@ -6,11 +6,11 @@ $isSessionCorrect=isSessionCorrect();
 $result=array('sections'=>array(),'keywords'=>array());
 
 if($isSessionCorrect==true){
-    $sql="SELECT `uuid_sections`,`section_name`,`sections_color`,`sections_active` FROM `sections`;";
+    $sql="SELECT `uuid_sections`,`section_name`,`sections_color`,`sections_status` FROM `sections` WHERE `sections_active`=1;";
     $rows=selectQuery($sql);
     $sections=array();
     array_push($result['sections'],$rows);
-    $sql="SELECT `uuid_keywords`,`status_keywords`,`word_keywords` FROM `keywords`;";
+    $sql="SELECT `uuid_keywords`,`word_keywords` FROM `keywords` WHERE `status_keywords`=1;";
     $rows=selectQuery($sql);
     $keywords=array();
     array_push($result['keywords'],$rows);
