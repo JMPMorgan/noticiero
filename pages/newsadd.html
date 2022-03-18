@@ -9,9 +9,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+        <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../assets/styleNavbar.css">
         <script src="../helpers/navbar.js"></script>
         <link rel="stylesheet" href="../assets/styleNewsAdd.css">
+        <script src="../helpers/loadSandKNews.js"></script>
         <script src="../helpers/newswriting.js"></script>
     </head>
     <body>
@@ -36,22 +38,22 @@
             <div class="d-flex justify-content-between">
                 <button class="btn btn-secondary justify-content-start">Back</button>
                 <div>
-                    <button class="btn btn-primary justify-content-end">Save News</button>
-                <button class="btn btn-success justify-content-end ">Send News</button>    
+                    <button id="btn-save" class="btn btn-primary justify-content-end">Save News</button>
+                <button id="btn-send" class="btn btn-success justify-content-end ">Send News</button>    
                 </div>
             </div>
             <div class="form-group">
                 <label class="h3" for="">News Title</label>
-                <input type="text" class="form-control form-control-lg" name="" id=""/>
+                <input id="title" type="text" class="form-control form-control-lg" name="" id=""/>
             </div>
             <div class="form-group">
                 <label class="h3" for="">News Sections</label>
                 <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="0">Choose...</option>
                   </select>
+                <div id="container-sections" class="my-3">
+
+                </div>
             </div>
             <div class="form-group row">
                 <div class="col-3">
@@ -85,7 +87,7 @@
                     <button class="btn-sm btn-secondary mx-2" id="btn-italic" active=false  ><i class='bx bx-italic' ></i></button>
                     <button class="btn-sm btn-secondary"><i class='bx bx-link-alt' active=false ></i></button>
                 </label>-->
-                <div class="form-control" id="writer-news"></div>
+                <textarea class="form-control" id="writer-news"></textarea>
             </div>
         </div>
     </body>

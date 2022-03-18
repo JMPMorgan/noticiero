@@ -79,15 +79,27 @@ const setEndOfContenteditable=(id) =>{
     }
 }*/
 
-window.onload=()=>{
 
-    ClassicEditor
-        .create(document.querySelector('#writer-news'),{
+
+window.onload=()=>{
+    let editor;
+    ClassicEditor.create(document.querySelector('#writer-news'),{
             toolbar:['bold', 'italic', 'link','blockQuote','numberedList',  'bulletedList','|', 'undo', 'redo']
         })
-
+        .then(newEditor=>{editor=newEditor;})
         .catch(error => {
             console.log(error);
         });
 
+    
+    $('#btn-save').on('click',()=>{
+        const valor = editor.getData();
+        const title=$('#title').val().length>0?$('#title').val():'';
+        const sectiones=$('#container-sections').children();
+        const sectiones_selected=[];
+        $(sectiones).each((index,element)=>{
+            sectiones_selected.push($(element).attr('data'));
+        })
+    })
+    
 }

@@ -50,3 +50,9 @@
 #writer-news{
     width: 500px;
 }
+
+.sections-selected:hover{
+    cursor: pointer;
+    background-color: #0051ff !important;
+    border-color: #0051ff !important;
+}
