@@ -1,85 +1,10 @@
-/*window.onload = () => {
-    let news = $('#news-writing').val();
-    let bold;
-    let isActiveBold = false,isActiveItalic=false,isActiveLink=false;
-    let text_length = 0;
-    let text_lengthF=0;
-    $('#btn-bold').on('click', () => {
-        let bold = $('#btn-bold').attr('active');
-        isActiveBold = bold === 'false' ? true : false;
-        if(isActiveBold===true){
-            $('#btn-bold').attr('active','true');
-            text_length = $('#news-writing').text().length;
-            $('#btn-bold').removeClass('btn-secondary');
-            $('#btn-bold').addClass('btn-pressed');
-        }   
-        else{
-            transformBold(text_length,'#news-writing');
-            $('#btn-bold').attr('active','false');
-            $('#btn-bold').removeClass('btn-pressed');
-            $('#btn-bold').addClass('btn-secondary');
-        }
-
-
-    })
-    $('#news-writing').on('keyup', () => {
-        let lengthFinal=$('#news-writing').text().length;
-        if (isActiveBold === true) {
-            transformBold(text_length,'#news-writing');
-        }
-        else if(isActiveItalic===true){
-
-        }
-        else if(isActiveLink===true){
-
-        }
-        else{
-            transformNormal('#news-writing',lengthFinal);
-        }
-    })
-}
-
-const transformBold=(length,id)=>{
-    let text = $(id).text();
-    let lengthFinal= $(id).text().length;
-    text_slice = text.slice(length, lengthFinal);
-    let bold_text = '<b>' + text_slice + '</b>';
-    let text_prev = text.substr(0, length);
-    text_prev += bold_text;
-    //text_prev = text_prev ;
-   // text_prev = $(text_prev);
-    $(id).text('');
-    $(id).append(text_prev);
-    let newsid = document.querySelector(id);
-    newsid.focus();
-    setEndOfContenteditable(newsid);
-}
-
-const transformNormal=(id,length)=>{
-    let text = $(id).text();
-    text_slice= text.slice(length)
-    console.log(id);
-    let lastChild = $(id);
-   // lastChild.lastChild.after(()=>{return '<p>'++'</p>'})
-    console.log(lastChild);
-    lastChild=lastChild.children().length-1;
-    console.log(lastChild);
-}
-
-const setEndOfContenteditable=(id) =>{
-    let range, selection;
-    if (document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+ 
-    {
-        range = document.createRange();//Create a range (a range is a like the selection but invisible) 
-        range.selectNodeContents(id);//Select the entire contents of the element with the range 
-        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start 
-        selection = window.getSelection();//get the selection object (allows you to change selection) 
-        selection.removeAllRanges();//remove any selections already made 
-        selection.addRange(range);//make the range you have just created the visible selection }    
-    }
-}*/
-
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 4500,
+    timerProgressBar: false
+  });
 
 window.onload=()=>{
     let editor;
@@ -92,14 +17,64 @@ window.onload=()=>{
         });
 
     
-    $('#btn-save').on('click',()=>{
+    $('#btn-save').on('click',async ()=>{
+
         const valor = editor.getData();
         const title=$('#title').val().length>0?$('#title').val():'';
         const sectiones=$('#container-sections').children();
         const sectiones_selected=[];
         $(sectiones).each((index,element)=>{
             sectiones_selected.push($(element).attr('data'));
-        })
+        });
+        if(valor.length>0&&sectiones.length>0 && title.length>0){
+            const data=new FormData();
+            data.append('archive',[]);
+            if($('#file1')[0].files.length>0){
+                data.append('archive1',$('#file1')[0].files[0]);
+            }
+            if($('#file2')[0].files.length>0){
+                data.append('archive2',$('#file2')[0].files[0]);
+            }
+            if($('#file3')[0].files.length>0){
+                data.append('archive3',$('#file3')[0].files[0]);
+            }
+            if($('#file4')[0].files.length>0){
+                data.append('archive4',$('#file4')[0].files[0]);
+            }
+            if($('#file5')[0].files.length>0){
+                data.append('archive5',$('#file5')[0].files[0]);
+            }
+            data.append('title',title);
+            data.append('sectiones',sectiones_selected);
+            data.append('editor',valor);
+            let response= await fetch('../backend/saveNews.php',{
+                method:'POST',
+                body:data
+            }).then(r=>r.text());
+            response=JSON.parse(response);
+            if(response.success==true){
+                window.location='news-reporter.html';
+            }
+            else{
+                printErrors(response.error);
+            }
+        } 
+        else{
+
+        }
     })
     
 }
+const printErrors = (error) => {
+    let html = 'Verificar información:';
+    let li = '<li>';
+    let li_last = '</li>';
+    for (let i = 0; error.length > i; i++) {
+      let text = li + error[i] + li_last;
+      html = html + text;
+    }
+    Toast.fire({
+      icon: 'warning',
+      html: html
+    });
+  }

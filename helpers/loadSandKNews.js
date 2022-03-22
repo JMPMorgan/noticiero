@@ -6,7 +6,6 @@ $(async()=>{
     });
     response=JSON.parse(response);
     const sections=response.sections[0];
-    console.table(sections);
     
     sections.forEach(element => {
         const html=$(`<option value=${element.uuid_sections}>${element.section_name}</option>`);

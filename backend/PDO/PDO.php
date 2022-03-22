@@ -46,5 +46,20 @@ function execQuery($sql){
     return $this_DB->DB->exec($sql);
 }
 
+function beginTransction(){
+    global $this_DB;
+    return $this_DB->DB->beginTransaction();
+}
+
+function commit(){
+    global $this_DB;
+    return $this_DB->DB->commit();
+}
+
+function rollback(){
+    global $this_DB;
+    return $this_DB->DB->rollBack();
+}
+
 
 ?>
