@@ -1,4 +1,9 @@
 <?php
+/*
+en el switch es 
+1 para eliminacion de usuario
+2 para enviar noticia al admin para 
+*/
 require_once('../backend/PDO/PDO.php');
 require_once('../backend/Auxiliar/auxiliarMethods.php');
 $fields=(empty($_GET)?$_POST:$_GET);
@@ -11,6 +16,7 @@ if($isSessionCorrect==true){
             $fields['id']=intval(decode($fields['id']));
             $session_id=session_id();
             $uuids=explode("-",$session_id);
+            var_dump($fields);
             switch($fields['id']){
                 case 1:{
                     $sql="INSERT INTO `communication` (`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
@@ -25,8 +31,26 @@ if($isSessionCorrect==true){
                         $result['error'][]='No se pudo eliminar el usuario por favor recargue la pagina e intente de nuevo';
                         echo json_encode($result);
                     }
-                    break;
+                    
                 }
+                break;
+                case 2:{
+                    $sql="INSERT INTO `communication`(`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
+                    `communication_status`,`communication_lastM`,`uuid_referencenews`) VALUES('{$uuids[1]}','7df77187de42f964ea60872a478f6819','Noticia Enviada Para revision',
+                    NOW(),0,now(),'{$fields['n']}');";
+                    $isCreate=execQuery($sql);
+                    if(is_numeric($isCreate)){
+                        $result['success']=true;
+                        echo json_encode($result);
+                    }
+                    else{
+                        $result['success']=false;
+                        $result['error'][]='No se pudo enviar la noticia para revision guarde la noticia e intente de nuevo';
+                        echo json_encode($result);
+                    }
+                   
+                }
+                break;
                 default:{
                     $result['success']=false;
                     $result['error'][]='No existe ningun caso para esta peticion';

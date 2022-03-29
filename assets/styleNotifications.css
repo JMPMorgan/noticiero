@@ -29,3 +29,7 @@
 .news_image{
     width: 300px;
 }
+
+.noticia{
+    cursor: pointer;
+}

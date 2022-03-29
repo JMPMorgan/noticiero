@@ -33,7 +33,7 @@ try {
                 3->Publicada
                 */
                 $sql = "INSERT INTO `news`(`news_text`,`news_title`,`uuid_news`,`uuid_userC`,`news_creation`,`news_active`) 
-                VALUES('{$fields['editor']}','{$fields['title']}','{$uuid}','{$uuids[1]}',NOW()),1;";
+                VALUES('{$fields['editor']}','{$fields['title']}','{$uuid}','{$uuids[1]}',NOW(),1);";
                 $isInsert = execQuery($sql);
                 if ($isInsert > 0) {
                    $archivos=$fields[0];
@@ -66,6 +66,11 @@ try {
                     }
                     if ($result['success'] == true) {
                         commit();
+                        
+                        //ESTO SE VA QUITAR PARA DESPUES DEL SEGUNDO AVANCE
+                        $uuid=encode($uuid);
+                        $result['info'][]=$uuid;
+                        //ESTO SE VA QUITAR PARA DESPUES DEL SEGUNDO AVANCE
                         echo json_encode($result);
                         exit;
                     } else {

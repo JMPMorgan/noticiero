@@ -8,6 +8,9 @@ const Toast = Swal.mixin({
 
 window.onload=()=>{
     let editor;
+    //ESTO SE QUITA PARA DESPUES DEL SEGUNDO AVANCE
+    let uuid='';
+    //ESTO SE QUITA PARA DESPUES DEL SEGUNDO AVANCE
     ClassicEditor.create(document.querySelector('#writer-news'),{
             toolbar:['bold', 'italic', 'link','blockQuote','numberedList',  'bulletedList','|', 'undo', 'redo']
         })
@@ -53,7 +56,11 @@ window.onload=()=>{
             }).then(r=>r.text());
             response=JSON.parse(response);
             if(response.success==true){
-                window.location='news-reporter.html';
+                //window.location='news-reporter.html';
+                console.log(response.info);
+                //ESTO SE VA A QUITAR PARA DESPUES DEL SEGUNDO AVANCE
+                uuid=response.info[0];
+                //ESTO SE VA A QUITAR PARA DESPUES DEL SEGUNDO AVANCE
             }
             else{
                 printErrors(response.error);
@@ -62,7 +69,20 @@ window.onload=()=>{
         else{
 
         }
-    })
+    });
+    $('#btn-send').on('click',async ()=>{
+        const id='QS9OUG9GRXNGNHhyMWhScnFIbHNKdz09';
+        let response=await $.ajax({
+            method:'POST',
+            datatype:'JSON',
+            data:{
+                n:uuid,
+                id
+            },
+            url:'../backend/messages.php'
+        });
+        console.log(response);
+    });
     
 }
 const printErrors = (error) => {
