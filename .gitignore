@@ -7,3 +7,5 @@ plugins
 #ignora node_modules
 /node_modules
 
+sqlscripts
+

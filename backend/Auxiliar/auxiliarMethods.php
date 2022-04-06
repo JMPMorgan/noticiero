@@ -4,6 +4,7 @@ function isSessionCorrect(){
 	$session_id=session_id();
     if(isset($session_id)){
         if(isset($_SESSION['uuid_session'])){
+			//COMBINACION ENTRE UN (ID DE LA SECCION)RANDOM TOKEN '-' Y EL ID DEL USUARIO
         $uuid_session=$_SESSION['uuid_session'];
             if(strcmp($session_id,$uuid_session)==0){
 				return true;
@@ -70,13 +71,16 @@ function getImageType($str){
 	else if($str=='image/gif'){
 		return'.gif';
 	}
+	else if($str=='video/mp4'){
+		return'.mp4';
+	}
 	else{
 		return 'error_type';
 	}
 }
 
 function isEmail($str){
-    $regex = "/^([a-zA-Z0-9\.]+@+[a-zA-Z]+(\.)+[a-zA-Z]{2,3})$/";
+    $regex = "/^([a-zA-Z0-9\.\_\-]+@+[a-zA-Z]+(\.)+[a-zA-Z]{2,3})$/";
     return preg_match($regex, $str) ? true :false;
 }
 

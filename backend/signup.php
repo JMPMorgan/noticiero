@@ -50,13 +50,13 @@ if(!empty($fields)){
         }
         else{
             $result['success']=false;
-            $result['error'][]='image_invalid';
+            $result['error'][]='Formato de imagen invalido';
             echo json_encode($result);
             exit;
         }
     } else {
         $result['success']=false;
-        $result['error'][]='email';
+        $result['error'][]='Usuario ya creado';
         echo json_encode($result);
         exit;
     }

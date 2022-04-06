@@ -78,6 +78,7 @@ try{
                     $informacion['news_date']=$archivos['news_date'];
                     $informacion['news_publication']=$archivos['news_publication'];
                     $informacion['news_creation']=$archivos['news_creation'];
+                    $informacion['news_text']=$archivos['news_text'];
                     $informacion['uuid_user']=$archivos['uuid_userC'];
                     $informacion['news_title']=$archivos['news_title'];
                     $informacion['user_name']=$archivos['user_name'].' '.$archivos['user_lastname'];

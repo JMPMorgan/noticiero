@@ -54,8 +54,8 @@
                     <p class="text-muted mt-4">  
                         Publication date:18/02/2022
                     </p>
-                    <h2 class="text-justify">News Sections </h2>
-                    <div class="container-sections">
+                    <h2 class="text-justify" >News Sections </h2>
+                    <div class="container-sections" id="sections-news">
                         <a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
                         <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
                         <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
@@ -79,10 +79,10 @@
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-outline-primary"><i class='bx bxs-like'></i></button><span class="ml-2 h3">15</span>
                         </div>
-                        <h1 class="text-center">Falta de Agua en la Presa de la Boca </h1>
+                        <h1 class="text-center" id="titulo-noticia">Falta de Agua en la Presa de la Boca </h1>
                         <div class="text-muted d-flex justify-content-between">
                             <span>MEXICO <i class="fa-solid fa-location-crosshairs"></i> </span>
-                            <span>NOMBRE REPORTERO</span>
+                            <span id="nombre-reportero">NOMBRE REPORTERO</span>
                             <span><i class="fa-solid fa-calendar-days"></i>18/02/2022</span>
                         </div>
                         <p class="text-justify no-gutters news-description">En caso de que haya ausencia de lluvia la presa podría secarse en su
@@ -95,7 +95,7 @@
                             <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%">
                             <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">
                           
-                            <div class="row-padding d-flex justify-content-between section-images">
+                            <div id="container-imgs" class="row-padding d-flex justify-content-between section-images">
                               <div class="col-image  d-flex justify-content-center s4">
                                 <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(1)">
                               </div>
@@ -107,7 +107,7 @@
                               </div>
                             </div>
                           </div>
-                        <div>
+                        <div id="text-noticia">
                             <p class="text-justify">
                                 El Alcalde de Santiago, David de la Peña lanza la alerta y advierte de la baja captación que está a menos del 22 por
                                 ciento de su capacidad, el nivel más bajo en la historia de esta presa inaugurada en septiembre de 1963.

@@ -17,7 +17,7 @@
         <script type="module" src="../helpers/auxiliar/auxiliarMethods.js"></script>
         <script type="module" src="../helpers/loadEditNews.js"></script>
         <script src="../helpers/loadSandKNews.js"></script>
-        <script src="../helpers/newswriting.js"></script>
+        <script type="module" src="../helpers/newswriting.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
@@ -58,32 +58,32 @@
 
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-3">
+            <div class="form-group row" id="container-archive">
+                <div class="col-3" id="archive-1">
                     <div class="custom-file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <input id="file1" type="file" class="custom-file-input" id="customFile">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3" id="archive-2">
                     <div class="custom-file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <input id="file2" type="file" class="custom-file-input" id="customFile">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3" id="archive-3">
                     <div class="custom-file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <input id="file3" type="file" class="custom-file-input" id="customFile">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3" id="archive-4">
                     <div class="custom-file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <input id="file4" type="file" class="custom-file-input" id="customFile">
                     </div>
                 </div>
-                <div class="col-3 mt-2">
+                <div class="col-3 mt-2" id="archive-5">
                     <div class="custom-file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <input id="file5" type="file" class="custom-file-input" id="customFile">
@@ -91,6 +91,7 @@
                 </div>
             </div>
             <div class="form-group">
+                <input type="text" data=false id="news-hidden" style="display: none;">
                 <!--<label for="" class="input-group-text" form="news-writing">
                     <button class="btn-sm btn-secondary" id="btn-bold" active=false ><i class='bx bx-bold'></i></button>
                     <button class="btn-sm btn-secondary mx-2" id="btn-italic" active=false  ><i class='bx bx-italic' ></i></button>

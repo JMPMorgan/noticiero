@@ -6,8 +6,60 @@ const Toast = Swal.mixin({
     timerProgressBar: false
   });
 
+
+
+  import {getParameterByName} from '../helpers/auxiliar/auxiliarMethods.js';
+
+  let editor;
+  let data_d=[];
+    
+$(async ()=>{
+ const data=getParameterByName('id');
+ if(data.length>0){
+    let response=await $.ajax({
+        method:'GET',
+        url:'../backend/getNews.php',
+        datatype:'JSON',
+        data:{
+            id:data
+        }
+    });
+    response=JSON.parse(response);
+    console.log(response);
+    $('#title').val(response.info.news_title);
+    const data_archivos=response.info.archive_info;
+    const sections=response.info.sections_info;
+    sections.forEach(element=>{
+        const html=$(`<span data='${element.uuid_sections}'
+        class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>
+        ${element.section_name} <i class="fa-solid fa-circle-xmark"></span>`);
+        $(html).on('click',()=>$(html).remove());
+        $('#container-sections').append(html);
+        
+    });
+    let id_archive=1;
+    data_archivos.forEach(element=>{
+        if(element.type_archive==='.mp4'){//Es un video
+            $(`#archive-${id_archive}`).children().css('display','none');
+            const html=$(`<video class='archives-edit' src='data:video/mp4;base64,${element.archive}' type='video/mp4' data=${element.uuid} controls>${element.name}</video>`);
+            const button_cancel=$(`<span class='d-flex justify-content-center btn btn-outline-danger'>Eliminar Archivo <i class='bx bx-x '></i></span>`);
+            $(`#archive-${id_archive}`).append(html);
+            $(`#archive-${id_archive}`).append(button_cancel);
+            $(button_cancel).on('click',()=>{eliminarArchivo(html,button_cancel,id_archive)});
+        }
+        else{
+            const html=``;
+        }
+    });
+    $('#news-hidden').text(response.info.news_text);
+    $('#news-hidden').attr('data',true);
+    editor.setData(response.info.news_text);
+ }
+});
+
+
 window.onload=()=>{
-    let editor;
+
     //ESTO SE QUITA PARA DESPUES DEL SEGUNDO AVANCE
     let uuid='';
     //ESTO SE QUITA PARA DESPUES DEL SEGUNDO AVANCE
@@ -19,9 +71,14 @@ window.onload=()=>{
             console.log(error);
         });
 
-    
+    $('#news-hidden').change(()=>{
+        console.log('GOla');
+    });
     $('#btn-save').on('click',async ()=>{
-
+        /*
+        Aqui se dirije si es insert o update
+        */
+        
         const valor = editor.getData();
         const title=$('#title').val().length>0?$('#title').val():'';
         const sectiones=$('#container-sections').children();
@@ -50,6 +107,11 @@ window.onload=()=>{
             data.append('title',title);
             data.append('sectiones',sectiones_selected);
             data.append('editor',valor);
+            const id=getParameterByName('id');
+            if(id.length>0){
+                data.append('id',id);
+                data.append('archivos_delete',data_d);
+            }
             let response= await fetch('../backend/saveNews.php',{
                 method:'POST',
                 body:data
@@ -98,3 +160,13 @@ const printErrors = (error) => {
       html: html
     });
   }
+
+const eliminarArchivo=(archive,button_cancel,id)=>{
+    /*
+    eliminar los archivos guardados al momento de editar una noticia ya creada
+    */
+    data_d.push(Number($(archive).attr('data')));
+    $(button_cancel).remove();
+    $(archive).remove();
+    $(`#archive-${id}`).children().css('display','flex');
+}

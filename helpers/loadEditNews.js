@@ -1,7 +1,10 @@
 /*
 Esto sirve para saber si en newsadd se manda llamar a una noticia editada
 */
+
+/*
 import {getParameterByName} from '../helpers/auxiliar/auxiliarMethods.js';
+
 $(async ()=>{
  const data=getParameterByName('id');
  if(data.length>0){
@@ -15,11 +18,17 @@ $(async ()=>{
     });
     response=JSON.parse(response);
     console.log(response);
-    let html=response.info[1];
-    $('#writer-news').after(html);
-    html=response.info[6];
-    $('#writer-news').after(html);
-    html=response.info[11];
-    $('#writer-news').after(html);
+    $('#title').val(response.info.news_title);
+    const sections=response.info.sections_info;
+    sections.forEach(element=>{
+        const html=$(`<span data='${element.uuid_sections}'
+        class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>
+        ${element.section_name} <i class="fa-solid fa-circle-xmark"></span>`);
+        $(html).on('click',()=>$(html).remove());
+        $('#container-sections').append(html);
+        
+    });
+    $('#news-hidden').text(response.info.news_text)
+    
  }
-})
+});*/

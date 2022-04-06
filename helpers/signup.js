@@ -138,7 +138,7 @@ $(()=>{
       gender_error = true;
     }
     if (image_upload === false) {
-      image_error = false;
+      image_error = true;
     }
     let type_signup=getParameterByName('id');
 
