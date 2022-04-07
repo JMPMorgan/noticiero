@@ -61,3 +61,12 @@
     width: 220px;
     height: 150px;
 }
+
+
+#container-searchkeyword{
+    padding: 0;
+z-index: 100;
+display: grid;
+position: fixed;
+background-color: #dddddd;
+}
