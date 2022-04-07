@@ -76,7 +76,7 @@ const selectedSections=(section_name,section_value )=>{
 const putOnContainerKeywords=(html)=>{
     const uuid=$(html).attr('data');
     const text= $(html).text();
-    const html_new=$(`<span data='${uuid}'class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>${text} <i class="fa-solid fa-circle-xmark"></i><span>`);
+    const html_new=$(`<span id='keywords-unload' data='${uuid}'class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>${text} <i class="fa-solid fa-circle-xmark"></i><span>`);
     const array_keywords=$('#container-keywords-selected').children();
     console.log(array_keywords);
     let  isSelected=false;

@@ -10,6 +10,7 @@ try {
             $fields['title'] = removeEspecialChar($fields['title']);
             $fields['editor'] = removeEspecialChar($fields['editor']);
             $fields['sectiones'] = removeEspecialChar($fields['sectiones']);
+            $fields['date']=removeEspecialChar($fields['date']);
             if (isset($fields['id'])) { //Pregunta si contiene el id que estoy significa que es un upfate
                 //Pregunta si esta declarada la variable para poder agarrar el numero de archivos que quiero eliminar
                 $num_archivos_delete = $fields['archivos_delete'] == '' ? 0 : count(explode(",",$fields['archivos_delete']));
@@ -44,7 +45,7 @@ try {
                 $result=validationsWithOutArchivos($fields['title'],$fields['editor']);
             }   
             else{
-                $result = validations($fields['title'], $fields['editor'], $fields['sectiones'], $fields[0]);    
+                $result = validations($fields['title'], $fields['editor'], $fields['sectiones'], $fields['keywords'],$fields[0]);    
             }
             if ($result['success'] == true) {
                 $uuids = session_id();
@@ -87,7 +88,7 @@ try {
 
                 */
                 if (isset($fields['id'])) { //Que si es true significa update de lo contrario se inserta 
-                    $sql = "CALL updateNotiInfo_sp(0,'{$fields['id']}',NULL,NULL,'{$fields['editor']}',NULL,NULL,NULL,'{$fields['title']}',NULL);";
+                    $sql = "CALL updateNotiInfo_sp(0,'{$fields['id']}',NULL,NULL,'{$fields['editor']}',NULL,'{$fields['date']}',NULL,'{$fields['title']}',NULL);";
                     
                     $isUpdated = execQuery($sql);
                     
@@ -126,11 +127,28 @@ try {
                                 }
                             }
                         }
+
+                        if(strlen($fields['keywords_delete'])>0){
+                            $keywords_delete=explode(",",$fields['keywords_delete']);
+                            foreach($keywords_delete as $uuid_keywords){
+                                $sql="CALL updateNotiInfo_sp(2,'{$fields['id']}','{$uuid_keywords}',NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+                                $isDelete=execQuery($sql);
+                                if(!is_numeric($isDelete)){
+                                    $result['error'][]='Error al eliminar una palabra clave de la noticia';
+                                    $result['success']=false;
+                                    rollback();
+                                    echo json_encode($result);
+                                    exit;
+                                }
+                            }
+                        }
                         /*
+
                         AL MOMENTO DE ESCOGER CUAL SE ELIMINAN Y CUAL NO SE APOYA DEL BACKEND
                         AL MOMENTO DE MOSTRAR LAS SECCIONES SE CARGAN EN DOS LAS QUE SE CARGAN
                         DE LA BD Y LAS QUE ESCOGEN EL USUARIO Y ASI SE PUEDE DIFERENCIAR CUALES
                         SON NUEVAS Y CUALES NO. 
+
                         */ 
                         $sectiones = explode(",", $fields['sectiones']);
                         if(strlen($sectiones[0])>0){
@@ -141,7 +159,24 @@ try {
                                 if ($isInsert == 0) {
                                     $result['error'][] = 'No se puede ingresar la seccion ' . $seccion . ' en la noticia';
                                     $result['success'] = false;
+                                    echo json_encode($result);
                                     rollback();
+                                    exit;
+                                }
+                            }
+                        }
+                        $keywords=explode(",",$fields['keywords']);
+                        if(strlen($keywords[0]>0)){
+                            foreach($keywords as $keyword){
+                                $sql="CALL setNotiInfo_sp(1,'{$fields['id']}','{$keyword}',NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+                                $isInsert=execQuery($sql);
+                                //echo $isInsert;
+                                if($isInsert==0){
+                                    $result['error'][]='No se puede ingresar la palabra clave :'.$keyword.'en la noticia';
+                                    $result['success']=false;
+                                    echo json_encode($result);
+                                    rollback();
+                                    exit;
                                 }
                             }
                         }
@@ -160,6 +195,7 @@ try {
                                     if ($isInsertArchive == 0) {
                                         $result['error'][] = 'No se pudo ingresar el archivo: ' . $archivo['name'];
                                         $result['success'] = false;
+                                        echo json_encode($result);
                                         rollback();
                                         exit;
                                     }
@@ -182,9 +218,11 @@ try {
                         rollback();
                         $result['success']=false;
                         $result['error'][]='';
+                        echo json_encode($result);
+                        exit;
                     }
                 } else {
-                    $sql = "CALL setNotiInfo_sp (0,'{$uuid}','{$uuids[1]}',NULL,'{$fields['editor']}',0,NULL,NULL,'{$fields['title']}',NULL);";
+                    $sql = "CALL setNotiInfo_sp (0,'{$uuid}','{$uuids[1]}',NULL,'{$fields['editor']}',0,'{$fields['date']}',NULL,'{$fields['title']}',NULL);";
                     $isInsert = execQuery($sql);
                     if ($isInsert > 0) {
                         $archivos = $fields[0];
@@ -214,7 +252,23 @@ try {
                             if ($isInsert == 0) {
                                 $result['error'][] = 'No se puede ingresar la seccion ' . $seccion . ' en la noticia';
                                 $result['success'] = false;
+                                echo json_encode($result);
                                 rollback();
+                                exit;
+                            }
+                        
+                        }
+                        $keywords=explode(",",$fields['keywords']);
+                        foreach($keywords as $keyword){
+                            $sql="CALL setNotiInfo_sp(1,'{$uuid}','{$keyword}',NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+                            $isInsert=execQuery($sql);
+                            
+                            if($isInsert==0){
+                                $result['error'][]='No se puede ingresar la palabra clave: '.$keyword.' en la noticia';
+                                $result['success']=false;
+                                echo json_encode($result);
+                                rollback();
+                                exit;
                             }
                         }
                         if ($result['success'] == true) {
@@ -236,6 +290,7 @@ try {
                     } else {
                         $result['error'][] = 'No se pudo ingresar la noticia';
                         $result['success'] = false;
+                        echo json_encode($result);
                         rollback();
                         exit;
                     }
@@ -247,10 +302,12 @@ try {
         } else {
             $result['error'][] = 'No se obtuvo ningun archivo,recargue la pagina e intente de nuevo';
             $result['success'] = false;
+            echo json_encode($result);
             exit;
         }
     } else {
         $result['logged'] = false;
+        echo json_encode($result);
         exit;
     }
 } catch (Exception $e) {
@@ -261,7 +318,7 @@ try {
     exit;
 }
 
-function validations($title, $editor, $sectiones, $archivos)
+function validations($title, $editor, $sectiones,$keywords, $archivos)
 {
     $result = array('error' => array());
     if (strlen($title) <= 0) {
@@ -272,6 +329,9 @@ function validations($title, $editor, $sectiones, $archivos)
     }
     if (strlen($sectiones) <= 0) {
         $result['error'][] = 'Debe tener seleccionada minimo una seccion';
+    }
+    if(strlen($keywords)<=0){
+        $result['error'][]='Debe tener seleccionado minimo una palabra clave';
     }
     foreach ($archivos as $archivo) {
         $image_type = getImageType($archivo['type']);

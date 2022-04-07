@@ -28,6 +28,8 @@ try{
             $rows2=selectQuery($sql);
             $sql="call getNSK_sp(3,'{$fields['id']}');";
             $rows3=selectQuery($sql);
+            $sql="Call getNSK_sp(2,'{$fields['id']}');";
+            $rows4=selectQuery($sql);
             foreach($rows as $data){
                 $result['info']['news_active']=$data['news_active'];
                 $result['info']['news_description']=$data['news_description'];
@@ -50,6 +52,15 @@ try{
                 $contador++;
             }
             $result['info']['sections_info']=$sections;
+            $keywords=array();
+            $contador=0;
+            foreach($rows4 as $data_keywords){
+                $keywords[$contador]=array();
+                $keywords[$contador]['uuid_keywords']=$data_keywords['uuid_keywords'];
+                $keywords[$contador]['word_keywords']=$data_keywords['word_keywords'];
+                $contador++;
+            }
+            $result['info']['keywords_info']=$keywords;
             $dataimages=array();
             $contador=0;
             foreach($rows3 as $data_archive){

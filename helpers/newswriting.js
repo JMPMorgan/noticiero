@@ -11,7 +11,7 @@ const Toast = Swal.mixin({
   import {getParameterByName} from '../helpers/auxiliar/auxiliarMethods.js';
 
   let editor;
-  let data_d=[],data_s=[];
+  let data_d=[],data_s=[],data_k=[];
     
 $(async ()=>{
  const data=getParameterByName('id');
@@ -27,8 +27,10 @@ $(async ()=>{
     response=JSON.parse(response);
     console.log(response);
     $('#title').val(response.info.news_title);
+    $('#news_date').val(response.info.news_date);
     const data_archivos=response.info.archive_info;
     const sections=response.info.sections_info;
+    const keywords= response.info.keywords_info;
     sections.forEach(element=>{ 
         const html=$(`<span id='sections-load' data='${element.uuid_sections}'
         class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>
@@ -36,6 +38,13 @@ $(async ()=>{
         $('#container-sections').append(html);
         $(html).on('click',()=>{eliminarSecciones(html)});
         
+    });
+    keywords.forEach(element=>{
+        const html=$(`<span id='keywords-load' data='${element.uuid_keywords}'
+        class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>
+        ${element.word_keywords} <i class="fa-solid fa-circle-xmark"></i><span>`);
+        $('#container-keywords-selected').append(html);
+        $(html).on('click',()=>{eliminarKeywords(html)});
     });
     let id_archive=1;
     data_archivos.forEach(element=>{
@@ -92,9 +101,13 @@ window.onload=()=>{
         
         const valor = editor.getData();
         const title=$('#title').val().length>0?$('#title').val():'';
+        const news_date=$('#news_date').val();
         const sectiones=$('#container-sections').children('#sections-unload');
         const sectiones_selected=[];
+        const keywords=$('#container-keywords-selected').children('#keywords-unload');
+        const keywords_selected=[];
         let existSections=false;
+        let existKeywords=false;
         $(sectiones).each((index,element)=>{
             sectiones_selected.push($(element).attr('data'));
             existSections=true;
@@ -103,7 +116,16 @@ window.onload=()=>{
         if(sectiones_novalue.length>0){
             existSections=true;
         }
-        if(valor.length>0&&existSections===true && title.length>0){
+
+        $(keywords).each((index,element)=>{
+            keywords_selected.push($(element).attr('data'));
+            existKeywords=true;
+        });
+        const keywords_novalue=$('#container-keywords-selected').children('#keywords-load');
+        if(keywords_novalue.length>0){
+            existKeywords=true;
+        }
+        if(valor.length>0&&existKeywords===true&&existSections===true && title.length>0 && news_date.length>0){
             const data=new FormData();
             data.append('archive',[]);
             if($('#file1')[0].files.length>0){
@@ -123,12 +145,15 @@ window.onload=()=>{
             }
             data.append('title',title);
             data.append('sectiones',sectiones_selected);
+            data.append('keywords',keywords_selected);
             data.append('editor',valor);
+            data.append('date',news_date);
             const id=getParameterByName('id');
             if(id.length>0){
                 data.append('id',id);
                 data.append('archivos_delete',data_d);
                 data.append('sections_delete',data_s);
+                data.append('keywords_delete',data_k);
             }
             let response= await fetch('../backend/saveNews.php',{
                 method:'POST',
@@ -183,7 +208,6 @@ const eliminarArchivo=(archive,button_cancel,id)=>{
     eliminar los archivos guardados al momento de editar una noticia ya creada
     */
     data_d.push(Number($(archive).attr('data')));
-    console.log(id);
     $(button_cancel).remove();
     $(archive).remove();
     $(`#archive-${id}`).children().css('display','flex');
@@ -193,8 +217,11 @@ const eliminarSecciones=(html)=>{
     /*
     elimina las secciones guardadas al momento de editar la noticia ya creada
     */
-   console.log(html);
    data_s.push($(html).attr('data'));
    $(html).remove();
-   console.log(data_s);
+}
+
+const eliminarKeywords=(html)=>{
+    data_k.push($(html).attr('data'));
+    $(html).remove();
 }

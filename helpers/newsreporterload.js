@@ -13,14 +13,15 @@ $(async()=>{
         url:'../backend/loadNews.php'
     });
     response=JSON.parse(response);
+    console.log(response);
     if(response.success===true){
         response.info.forEach(element=>{
             let html;
-            if(element.news_date=='0000-00-00'){
+            if(element.news_status===0){
                 html=$(`<tr><th scope="row" class="bg-primary text-primary mx-auto th-row">
                 <i class='bx bx-edit-alt text-white status-success'></i></th>
                 <td id='title' data=${element.uuid_news}>${element.news_title}</td>
-                <td>${element.news_creation}</td>
+                <td>${element.news_date}</td>
                 <td>
                     <button id='edit' class='btn btn-outline-primary'>
                     <i class='bx bx-edit-alt '></i>
