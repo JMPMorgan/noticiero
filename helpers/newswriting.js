@@ -162,8 +162,7 @@ window.onload=()=>{
             response=JSON.parse(response);
             if(response.success==true){
                 //window.location='news-reporter.html';
-                
-               
+
             }
             else{
                 printErrors(response.error);
@@ -175,17 +174,46 @@ window.onload=()=>{
         }
     });
     $('#btn-send').on('click',async ()=>{
-        const id='QS9OUG9GRXNGNHhyMWhScnFIbHNKdz09';
-        let response=await $.ajax({
-            method:'POST',
-            datatype:'JSON',
-            data:{
-                n:uuid,
-                id
-            },
-            url:'../backend/messages.php'
-        });
-        console.log(response);
+        const id=getParameterByName('id');
+        let messages;
+        if(id.length>0){
+             messages= await $.ajax({
+                method:'POST',
+                datatype:'JSON',
+                data:{
+                    n:id,
+                    id:'QS9OUG9GRXNGNHhyMWhScnFIbHNKdz09'
+                },
+                url:'../backend/messages.php'
+            });
+        }else{
+            messages=await $.ajax({
+                method:'POST',
+                datatype:'JSON',
+                data:{
+                    n:id,
+                    id:'QS9OUG9GRXNGNHhyMWhScnFIbHNKdz09'
+                },
+                url:'../backend/messages.php'
+            });
+        }
+        messages=JSON.parse(messages);
+        if(messages.success===true){
+            Swal.fire({
+                title:'Mensaje Enviado Con Exito',
+                text:'Su noticia fue enviada para revision',
+                icon:'success',
+                confirmButtonColor:'#28a745'
+            });
+        }else{
+            Swal.fire({
+                title:'Mensaje No Enviado ',
+                text:'Su noticia no pudo ser enviada para revision',
+                icon:'error',
+                confirmButtonColor:'#28a745'
+            });
+            printErrors(response.error);
+        }
     });
     
 }

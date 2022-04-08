@@ -62,7 +62,7 @@ const deleteReporter=(n)=>{
             text:'Your file has been deleted.',
             icon:'success',
             confirmButtonColor:'#28a745'
-          })
+          });
         }
       })
 }

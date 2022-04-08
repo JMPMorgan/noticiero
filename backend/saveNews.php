@@ -275,8 +275,8 @@ try {
                             commit();
 
                             //ESTO SE VA QUITAR PARA DESPUES DEL SEGUNDO AVANCE
-                            $uuid = encode($uuid);
-                            $result['info'][] = $uuid;
+                            //$uuid = encode($uuid);
+                            $result['info']['id'] = $uuid;
                             //ESTO SE VA QUITAR PARA DESPUES DEL SEGUNDO AVANCE
                             echo json_encode($result);
                             exit;

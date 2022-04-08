@@ -29,13 +29,12 @@ $(async()=>{
                 </td><tr>`);
             }else{
                 if(element.news_active===1){
-                    html=$(`<tr><th scope="row" class="bg-success text-success mx-auto th-row">
-                    <i class='bx bx-check text-white status-success'></i></th>
+                    html=$(`<tr><th scope="row" class=" bg-secondary text-success mx-auto th-row">
+                    <i class='bx bx-paper-plane text-white status-success' ></i></th>
                     <td id='title' data=${element.uuid_news}>${element.news_title}</td>
                     <td>${element.news_date}</td>
                     <td>
-                    <button id='active' class="btn btn-outline-success"><i class='bx bx-check'></i></button>
-                    <button id='disable' class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                    <span>No se puede cambiar,esperando la revision</span>
                     </td></tr>`);
                 }
                 else{
@@ -46,6 +45,9 @@ $(async()=>{
                     <td>
                     <button id='active' class="btn btn-outline-success"><i class='bx bx-check'></i></button>
                     <button id='disable' class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
+                    <button id='edit' class='btn btn-outline-primary'>
+                    <i class='bx bx-edit-alt '></i>
+                    </button>
                     </td></tr>`);
                 }
             }
@@ -63,13 +65,13 @@ $(async()=>{
             if($(html).find('#active').length>0){
                 console.log('active');
                 const active = $(html).find('#active')[0];
-                const data=$(section).attr('data');
+                const data=$(active).attr('data');
                 console.log(active,data);
             }
             if($(html).find('#disable').length>0){
                 console.log('disble');
                 const disable = $(html).find('#disable')[0];
-                const data=$(section).attr('data');
+                const data=$(disable).attr('data');
                 console.log(disable,data );
             }
             $('tbody').append(html)

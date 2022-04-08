@@ -4,7 +4,8 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -56,14 +57,14 @@
                     </p>
                     <h2 class="text-justify" >News Sections </h2>
                     <div class="container-sections" id="sections-news">
-                        <a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
+                        <!--<a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
                         <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
                         <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
-                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>
+                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>-->
 
                     </div>
                     <h2 class="text-justify">Popular Sections </h2>
-                    <div class="container-sections">
+                    <div class="container-sections" id="sections-popular">
                         <a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
                         <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
                         <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
@@ -91,12 +92,12 @@
                     </div>
                     <div class="my-4">
                         <div class="content-images mx-auto" style="max-width:1200px">
-                            <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">
+                            <!--<img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">
                             <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%">
-                            <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">
+                            <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">-->
                           
                             <div id="container-imgs" class="row-padding d-flex justify-content-between section-images">
-                              <div class="col-image  d-flex justify-content-center s4">
+                              <!--<div class="col-image  d-flex justify-content-center s4">
                                 <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(1)">
                               </div>
                               <div class="col-image  d-flex justify-content-center  s4">
@@ -104,7 +105,7 @@
                               </div>
                               <div class="col-image  d-flex justify-content-center s4">
                                 <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(3)">
-                              </div>
+                              </div>-->
                             </div>
                           </div>
                         <div id="text-noticia">
@@ -132,7 +133,7 @@
                             </p>
                         </div>
                     </div>   
-                    <div>
+                    <div id="container-all-comments">
                         <div class="form-group border-top">
                             <label class='h2 'for="exampleFormControlTextarea1">Comments</label>
                             <textarea class="form-control my-2" id="exampleFormControlTextarea1" rows="5"></textarea>
@@ -201,7 +202,7 @@
                 </div>
             </div>
             <div class="col-2">
-                <div class="container">
+                <div class="container" id="container-all-news-suggested">
                     <h2>News suggested</h2>
                     <div class="news-suggested">
                         <h6 class="news-title">FULL NOTICIA</h6>

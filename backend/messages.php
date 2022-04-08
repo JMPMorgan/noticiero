@@ -12,15 +12,14 @@ if($isSessionCorrect==true){
     if(!empty($fields)){
         if(isset($fields['n']) && isset($fields['id'])){
             $result=array('info'=>array());
-            $fields['n']=decode($fields['n']);
             $fields['id']=intval(decode($fields['id']));
             $session_id=session_id();
             $uuids=explode("-",$session_id);
-            var_dump($fields);
             switch($fields['id']){
                 case 1:{
-                    $sql="INSERT INTO `communication` (`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
-                    `communication_status`,communication_lastM) VALUES ('{$uuids[1]}','{$fields['n']}','ELIMINACION',now(),0,now());";
+                    $sql="CALL `insertMessageCommunication`(0,'{$uuids[1]}','{$fields['n']}',NULL);";
+                    /*$sql="INSERT INTO `communication` (`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
+                    `communication_status`,communication_lastM) VALUES ('{$uuids[1]}','{$fields['n']}','ELIMINACION',now(),0,now());";*/
                     $isCreate=execQuery($sql);
                     if(is_numeric($isCreate)){
                         $result['success']=true;
@@ -35,9 +34,11 @@ if($isSessionCorrect==true){
                 }
                 break;
                 case 2:{
-                    $sql="INSERT INTO `communication`(`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
+                    
+                    $sql="CALL `insertMessageCommunication`(1,'{$uuids[1]}','7df77187de42f964ea60872a478f6819','{$fields['n']}');";
+                    /*$sql="INSERT INTO `communication`(`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
                     `communication_status`,`communication_lastM`,`uuid_referencenews`) VALUES('{$uuids[1]}','7df77187de42f964ea60872a478f6819','Noticia Enviada Para revision',
-                    NOW(),0,now(),'{$fields['n']}');";
+                    NOW(),0,now(),'{$fields['n']}');";*/
                     $isCreate=execQuery($sql);
                     if(is_numeric($isCreate)){
                         $result['success']=true;

@@ -10,6 +10,10 @@ if($isSessionCorrect==true){
     $rows=selectQuery($sql);
     $sections=array();
     array_push($result['sections'],$rows);
+    $sql="SELECT `uuid_keywords`,`word_keywords` FROM `keywords` WHERE `status_keywords`=1;";
+    $rows=selectQuery($sql);
+    $keywords=array();
+    array_push($result['keywords'],$rows);
     echo json_encode($result);
     exit;   
 }

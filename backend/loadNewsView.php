@@ -27,24 +27,55 @@ try{
         $rows=selectQuery($sql);
         if(!empty($rows)){
             $status=intval($rows[0]['status']);
+            $informacion=array();
             //Obtenemos el status de la noticia dependiendo de eso varia el query que se 
             //solicita en la base de datos
             switch($status){
                 case 0:{
                     break;
                 }
-                case 1:{
-                    $sql="  SELECT `news`.*,
-                    `users`.`user_name`,
-                    `users`.`user_lastname`
-                    FROM `news`
-                    INNER JOIN `users` ON `users`.`user_uuid`=`news`.`uuid_userC` 
-                    WHERE `news`.`news_status`=1 
-                    AND `news`.`uuid_news`='{$fields['id']}';";
+                case 1:{//CASO ENVIADO PARA REVISION POR ADMIN
+                    $sql="CALL getNSK_sp(0,'{$fields['id']}'); ";
                     $rows=selectQuery($sql);
+                    $sql="CALL getNSK_sp(3,'{$fields['id']}');";
+                    $data_multimedia=selectQuery($sql);
+                    $sql="CALL getNSK_sp(1,'{$fields['id']}');";
+                    $data_sections=selectQuery($sql);
+                    $sql="CALL getNSK_sp(2,'{$fields['id']}')";
+                    $data_keywords=selectQuery($sql);
+                    if(!empty($rows)){
+                        $informacion['news_info']=getInformationNews($rows[0]);
+                        $informacion['news_info']['news_date']=date("d/m/Y",strtotime($informacion['news_info']['news_date']));
+                        $informacion['news_info']['news_publication']=date("d/m/Y",strtotime($informacion['news_info']['news_publication']));
+                        
+                    }
+                    else{
+                        $informacion['news_info']='';
+                    }
+                    if(!empty($data_multimedia)){
+                        $informacion['multimedia_info']=getMultimediaNews($data_multimedia);
+                        
+                    }
+                    else{
+                        $informacion['multimedia_info']='';
+                    }
+                    if(!empty($data_sections)){
+                        $informacion['sections_info']=getSectionsNews($data_sections);
+                        
+                    }else{
+                        $informacion['sections_info']='';
+                    }
+                    if(!empty($data_keywords)){
+                        $informacion['keywords_info']=getKeywordsNews($data_keywords);
+                    }else{
+                        $informacion['keywords_info']='';
+                    }
+
+                    if(count($informacion)>0){
+                        $result['info']=$informacion;
+                    }
                     break;
                 }
-                
                 default:{
                     $result['success']=false;
                     $result['error'][]='No existe ningun caso para esta peticion';
@@ -52,82 +83,16 @@ try{
                     break;
                 }
             }
-            $data=array();
-            $informacion=array();
-            if(!empty($rows)){
-                foreach($rows as $archivos){    
-                    /*
-                    Se obtiene las imagenes de cualquiera de los querys solicitidos
-                    para despues encriptarlos en base 64 para enviarlos en formato JSON 
-                    a donde se solicite
-    
-                    La logica del for es que se recorra a 5 
-                    ese numero depende que cuantos archivos quieras tener en tu tabla si quieres 
-                    recorrer mas solo aumenta ese numero
-                    */
-                    for ($i=1 ; $i <= 5 ; $i++ ) { 
-                        if(strlen($archivos['news_archive'.$i]>0)){
-                            $archivo=base64_encode($archivos['news_archive'.$i]);
-                            array_push($data,$archivo);
-                        }
-                    }
-                    $informacion['news_active']=$archivos['news_active'];
-                    $informacion['news_description']=$archivos['news_description'];
-                    $informacion['news_status']=$archivos['news_status'];
-                    $informacion['uuid_news']=$archivos['uuid_news'];
-                    $informacion['news_date']=$archivos['news_date'];
-                    $informacion['news_publication']=$archivos['news_publication'];
-                    $informacion['news_creation']=$archivos['news_creation'];
-                    $informacion['news_text']=$archivos['news_text'];
-                    $informacion['uuid_user']=$archivos['uuid_userC'];
-                    $informacion['news_title']=$archivos['news_title'];
-                    $informacion['user_name']=$archivos['user_name'].' '.$archivos['user_lastname'];
-                }
-
-                /*
-                de la informacion que obtuve a la tabla de noticias
-                obtengo sus secciones y su keywords para enviarlas todas directamente en el JSON 
-                para que el programador desee hacer lo que quiera con la info 
-                */
-                $sql="SELECT `uuid_section`
-                FROM `news_sections` 
-                WHERE `uuid_news`='{$informacion['uuid_news']}';";
-                $rows=selectQuery($sql);
-                $informacion['sections']=array();
-                foreach($rows as $sections_info){
-                    $sql="SELECT `section_name` FROM `sections` WHERE `uuid_sections`='{$sections_info['uuid_section']}';";
-                    $name_sections=selectQuery($sql);
-                    $array_sections=array();
-                    $array_sections['uuid']=$sections_info['uuid_section'];
-                    $array_sections['name']=$name_sections[0]['section_name'];
-                    array_push($informacion['sections'],$array_sections);   
-                }
-    
-                $sql="SELECT `uuid_keywords`
-                FROM `news_keywords`
-                WHERE `uuid_news`='{$informacion['uuid_news']}';";
-                $rows=selectQuery($sql);
-                $informacion['keywords']=array();
-                foreach($rows as $keywords_info){
-                    $sql="SELECT `word_keywords` FROM `keywords` WHERE `uuid_keywords`='{$keywords_info['uuid_keywords']}';";
-                    $name_keywords=selectQuery($sql);
-                    $array_keywords=array();
-                    $array_keywords['uuid']=$keywords_info['uuid_keywords'];
-                    $array_keywords['name']=$keywords_info[0]['section_name'];
-                }
-                if(count($data)>0 && count($informacion)>0){//Se pregunta para ver si se obtuvo algun archivo
-                    $result['success']=true;
-                    $result['info']['archivos']=$data;
-                    $result['info']['data']=$informacion;
-                }
-                else{
-                    $result['success']=false;
-                    $result['error'][]='No se pudo obtener la informacion adicional a la noticia';
-                }
+            if(count($result['info'])>0){
+                $result['success']=true;
+                echo json_encode($result);
+                exit;
             }else{
                 $result['success']=false;
-                $result['error'][]='No se pudo obtener la noticia';
-            }  
+                $result['error'][]='No se obtuvo ninguna informacion de la api';
+                echo json_encode($result);
+                exit;
+            }
         }else{
             $result['success']=false;
             $result['error'][]='No se pudo obtener el status de la noticia';
@@ -144,5 +109,69 @@ catch(Exception $e){
     $result['success']=false;
     echo json_encode($result);
     exit;
+}
+
+
+
+function getInformationNews($info_news){
+    $return=array();
+    $return['news_active']=$info_news['news_active'];
+    $return['news_description']=$info_news['news_description'];
+    $return['news_status']=$info_news['news_status'];
+    $return['uuid_news']=$info_news['uuid_news'];
+    $return['news_date']=$info_news['news_date'];
+    $return['news_publication']=$info_news['news_publication'];
+    $return['news_creation']=$info_news['news_creation'];
+    $return['news_text']=$info_news['news_text'];
+    $return['uuid_user']=$info_news['uuid_userC'];
+    $return['news_title']=$info_news['news_title'];
+    return $return;
+}
+
+function getMultimediaNews($multimedia){
+    $return=array();
+    $contador=0;
+    foreach($multimedia  as $data){
+        $return[$contador]['idmulti_news']=$data['idmulti_news'];
+        $return[$contador]['type_archive']=$data['type_archive'];
+        $return[$contador]['name_archive']=$data['name_archive'];
+        $return[$contador]['archive']=base64_encode($data['archive']);
+        $return[$contador]['cretion_time']=$data['creation_time'];
+        $return[$contador]['lastM_multinews']=$data['lastM_multinews'];
+        $contador++;
+    }
+    return $return;
+
+}
+
+
+function getSectionsNews($sections){
+    $return=array();
+    $contador=0;
+    foreach($sections as $data){
+        $return[$contador]['section_name']=$data['section_name'];
+        $return[$contador]['uuid_sections']=$data['uuid_sections'];
+        $return[$contador]['sections_active']=$data['sections_active'];
+        $return[$contador]['sections_color']=$data['sections_color'];
+        $return[$contador]['sections_lastM']=$data['sections_lastM'];
+        $return[$contador]['sections_creation']=$data['sections_creation'];
+        $return[$contador]['sections_status']=$data['sections_status'];
+        $contador++;
+    }
+    return $return;
+}
+
+function getKeywordsNews($keywords){
+    $return=array();
+    $contador=0;
+    foreach($keywords as $data){
+        $return[$contador]['uuid_keywords']=$data['uuid_keywords'];
+        $return[$contador]['word_keywords']=$data['word_keywords'];
+        $return[$contador]['status_keywords']=$data['status_keywords'];
+        $return[$contador]['lastM_keywords']=$data['lastM_keywords'];
+        $return[$contador]['creation_keywords']=$data['creation_keywords'];
+        $contador++;
+    }
+    return $return;
 }
 ?>
