@@ -16,14 +16,17 @@ $(async () => {
             if (status === 0) {
 
             } else if (status === 1) {
-                $('#container-all-comments').css('display', 'none');
+                $('#container-all-comments').children().css('display', 'none');
                 $('#container-all-news-suggested').css('display', 'none');
-                $('#sections-popular').css('display', 'none');
-                $('#sections-popular').prev().css('display', 'none');
+                $('#sections-popular').children().css('display', 'none');
+                //$('#sections-popular').prev().css('display', 'none');
+                $('#description').css('display','none');
+                $('#likes-container').children().css('display','none');
                 const news = response.info.news_info;
                 const keywords = response.info.keywords_info;
                 const sections = response.info.sections_info;
                 const multimedia = response.info.multimedia_info;
+                const user=response.info.user_info;
                 let i = 1;
                 if(multimedia.length>0){
                     multimedia.forEach(element => {
@@ -66,8 +69,11 @@ $(async () => {
                     });
                 }
                 $('#titulo-noticia').text(news.news_title);
-                $('#nombre-reportero').text(news.uuid_user);
+                $('#nombre-reportero').text(`${user.user_name} ${user.user_lastname}`);
+                $('#nombre-reportero').attr('data',news.uuid_user);
                 $('#text-noticia').html(news.news_text);
+                $('#news-date').text(news.news_date);
+                editSection();
 
             } else if (status === 2) {
 
@@ -76,4 +82,68 @@ $(async () => {
             }
         }
     }
-})
+});
+
+const editSection=()=>{
+    const comments=$(`<textarea id='comments-editor' placeholder='Cambios a realizar en la noticia...' class='form-control my-2' rows=5></textarea>`);
+    
+    const approve =$(`<button class='btn btn-outline-success'>Aprobar</button>`);
+    $(approve).on('click',async()=>{
+        const { value: text } = await Swal.fire({
+            input: 'textarea',
+            inputLabel: '',
+            inputPlaceholder: 'Ingrese la descripcion de la noticia...',
+            inputAttributes: {
+              'aria-label': 'Ingrese la descripcion de la noticia'
+            },
+            showCancelButton: true
+          });
+          
+          if (text) {
+            const n = getParameterByName('id');
+            const uuid=$('#nombre-reportero').attr('data');
+            let response= await $.ajax({
+                method:'POST',
+                datatype:'JSON',
+                data:{
+                    messages:text,
+                    uuid:uuid,
+                    n:n,
+                    id:'cnNmUmFVaVhlMDZiVnUrbzRVMXRlQT09'
+                },
+                url:'../backend/messages.php'
+            });
+            console.log(response);
+          }
+    });
+    const reject=$(`<button class='btn btn-outline-danger mr-2'>Rechazar</button>`);
+
+    $(reject).on('click',async ()=>{
+        const comment=$('#comments-editor').val();
+        if(comment.length>0){
+            const n = getParameterByName('id');
+            const uuid=$('#nombre-reportero').attr('data');
+            let response=await $.ajax({
+                method:'POST',
+                datatype:'JSON',
+                data:{
+                    messages:comment,
+                    uuid:uuid,
+                    n:n,
+                    id:'Y2xPQ256QzQ4K3crcENmUXFGR3Jxdz09'
+                },
+                url:'../backend/messages.php'
+            });
+            console.log(response);
+        }else{
+            Swal.fire({
+                icon: 'warning',
+                text: 'Debe escribir un comentario en el area de comentarios',
+            });
+        }
+    });
+    $('#container-all-comments').append('<h4>Cambios a realizar de la noticia</h4>');
+    $('#container-all-comments').append(comments);
+    $('#likes-container').append(reject);
+    $('#likes-container').append(approve);
+}

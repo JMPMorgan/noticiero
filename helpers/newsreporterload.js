@@ -27,14 +27,32 @@ $(async()=>{
                     <i class='bx bx-edit-alt '></i>
                     </button>
                 </td><tr>`);
-            }else{
+            }
+            else if(element.news_status===1){
+                html=$(`<tr><th scope="row" class=" bg-secondary text-success mx-auto th-row">
+                <i class='bx bx-paper-plane text-white status-success' ></i></th>
+                <td id='title' data=${element.uuid_news}>${element.news_title}</td>
+                <td>${element.news_date}</td>
+                <td>
+                <span>No se puede cambiar <br> esperando la revision</span>
+                </td></tr>`);
+            }
+            else if(element.news_status===2){
+                html=$(`<tr><th scope="row" class="bg-danger text-danger mx-auto th-row">
+                <i class='bx bx-x-circle text-white status-success'></i></th>
+                <td id='title' data=${element.uuid_news}>${element.news_title}</td>
+                <td>${element.news_date}</td>
+                <td>
+                <span><b>NOTICIA REGRESADA<b><br><small>para acceder a ella ve a tus notificaciones</small></span>
+                </td></tr>`);
+            }else if(element.news_status===3){
                 if(element.news_active===1){
-                    html=$(`<tr><th scope="row" class=" bg-secondary text-success mx-auto th-row">
-                    <i class='bx bx-paper-plane text-white status-success' ></i></th>
+                    html=$(`<tr><th scope="row" class="bg-success text-success mx-auto th-row">
+                    <i class='bx bx-check text-white status-success'></i></th>
                     <td id='title' data=${element.uuid_news}>${element.news_title}</td>
                     <td>${element.news_date}</td>
                     <td>
-                    <span>No se puede cambiar,esperando la revision</span>
+                    <span><b>NOTICIA PUBLICADA</b><span>
                     </td></tr>`);
                 }
                 else{
@@ -43,11 +61,7 @@ $(async()=>{
                     <td id='title' data=${element.uuid_news}>${element.news_title}</td>
                     <td>${element.news_date}</td>
                     <td>
-                    <button id='active' class="btn btn-outline-success"><i class='bx bx-check'></i></button>
-                    <button id='disable' class="btn btn btn-outline-danger"><i class='bx bx-x-circle'></i></button>
-                    <button id='edit' class='btn btn-outline-primary'>
-                    <i class='bx bx-edit-alt '></i>
-                    </button>
+                    <span><b>NOTICIA DESAHIBILITADA</b></span>
                     </td></tr>`);
                 }
             }

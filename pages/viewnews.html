@@ -9,6 +9,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="../assets/styleNavbar.css">
         <script type="module" src="../helpers/auxiliar/auxiliarMethods.js"></script>
         <script src="../helpers/navbar.js"></script>
@@ -77,16 +78,16 @@
             <div class="col-8">
                 <div class="container" style="padding:0;">
                     <div class=" ">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end" id="likes-container">
                             <button class="btn btn-outline-primary"><i class='bx bxs-like'></i></button><span class="ml-2 h3">15</span>
                         </div>
                         <h1 class="text-center" id="titulo-noticia">Falta de Agua en la Presa de la Boca </h1>
                         <div class="text-muted d-flex justify-content-between">
                             <span>MEXICO <i class="fa-solid fa-location-crosshairs"></i> </span>
                             <span id="nombre-reportero">NOMBRE REPORTERO</span>
-                            <span><i class="fa-solid fa-calendar-days"></i>18/02/2022</span>
+                            <span><i class="fa-solid fa-calendar-days"></i><span id="news-date">18/02/2022</span></span>
                         </div>
-                        <p class="text-justify no-gutters news-description">En caso de que haya ausencia de lluvia la presa podría secarse en su
+                        <p id="description" class="text-justify no-gutters news-description">En caso de que haya ausencia de lluvia la presa podría secarse en su
                             totalidad en marzo de este año
                         </p>
                     </div>

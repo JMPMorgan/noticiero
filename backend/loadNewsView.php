@@ -43,6 +43,8 @@ try{
                     $data_sections=selectQuery($sql);
                     $sql="CALL getNSK_sp(2,'{$fields['id']}')";
                     $data_keywords=selectQuery($sql);
+                    $sql="CALL getNSK_sp(4,'{$fields['id']}');";
+                    $data_user=selectQuery($sql);
                     if(!empty($rows)){
                         $informacion['news_info']=getInformationNews($rows[0]);
                         $informacion['news_info']['news_date']=date("d/m/Y",strtotime($informacion['news_info']['news_date']));
@@ -70,6 +72,12 @@ try{
                     }else{
                         $informacion['keywords_info']='';
                     }
+                    if(!empty($data_user)){
+                        $informacion['user_info']=getUserNews($data_user[0]);
+
+                    }else{
+                        $informacion['user_info']='';
+                    }
 
                     if(count($informacion)>0){
                         $result['info']=$informacion;
@@ -80,6 +88,7 @@ try{
                     $result['success']=false;
                     $result['error'][]='No existe ningun caso para esta peticion';
                     echo json_encode($result);
+                    exit;
                     break;
                 }
             }
@@ -172,6 +181,17 @@ function getKeywordsNews($keywords){
         $return[$contador]['creation_keywords']=$data['creation_keywords'];
         $contador++;
     }
+    return $return;
+}
+
+
+function getUserNews($user){
+    $return=array();
+    $return['user_status']=$user['user_status'];
+    $return['user_name']=$user['user_name'];
+    $return['user_email']=$user['user_email'];
+    $return['user_lastname']=$user['user_lastname'];
+    $return['user_nick']=$user['user_nick'];
     return $return;
 }
 ?>
