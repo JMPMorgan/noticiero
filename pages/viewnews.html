@@ -15,6 +15,8 @@
         <script src="../helpers/navbar.js"></script>
         <script src="../helpers/viewnews.js"></script>
         <script type="module" src="../helpers/loadNews.js"></script>
+        <script type="module" src="../helpers/comments.js"></script>
+        <script type="module" src="../helpers/likes.js"></script>
         <link rel="stylesheet" href="../assets/styleViewNews.css">
 
     </head>
@@ -54,7 +56,7 @@
             <div class="col-2">
                 <div class="container">
                     <p class="text-muted mt-4">  
-                        Publication date:18/02/2022
+                        Publication date:<span id="date-publication">18/02/2022</span>
                     </p>
                     <h2 class="text-justify" >News Sections </h2>
                     <div class="container-sections" id="sections-news">
@@ -79,7 +81,7 @@
                 <div class="container" style="padding:0;">
                     <div class=" ">
                         <div class="d-flex justify-content-end" id="likes-container">
-                            <button class="btn btn-outline-primary"><i class='bx bxs-like'></i></button><span class="ml-2 h3">15</span>
+                            <button id="like-btn" class="btn btn-outline-primary"><i class='bx bxs-like'></i></button><span class="ml-2 h3">15</span>
                         </div>
                         <h1 class="text-center" id="titulo-noticia">Falta de Agua en la Presa de la Boca </h1>
                         <div class="text-muted d-flex justify-content-between">
@@ -136,12 +138,12 @@
                     </div>   
                     <div id="container-all-comments">
                         <div class="form-group border-top">
-                            <label class='h2 'for="exampleFormControlTextarea1">Comments</label>
-                            <textarea class="form-control my-2" id="exampleFormControlTextarea1" rows="5"></textarea>
-                            <button class="btn btn-primary d-flex justify-content-end ml-auto">Comment</button>
+                            <label class='h2 'for="comment-text">Comments</label>
+                            <textarea id="comment-text" class="form-control my-2"  rows="5"></textarea>
+                            <button id="comment" class="btn btn-primary d-flex justify-content-end ml-auto">Comment</button>
                         </div>
-                        <div >
-                            <div class="comment ">
+                        <div id="container-comments">
+                        <!-- <div class="comment ">
                                 <div class="row border-top border-bottom">
                                     <div class="col-2 container-pp-comments">
                                         <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
@@ -159,8 +161,8 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="comment border-top">
+                            </div>-->
+                            <!--<div class="comment border-top">
                                 <div class="row border-top border-bottom">
                                     <div class="col-2 container-pp-comments">
                                         <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
@@ -178,8 +180,8 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="comment">
+                            </div>-->
+                          <!--  <div class="comment">
                                 <div class="row border-top border-bottom">
                                     <div class="col-2 container-pp-comments">
                                         <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
@@ -197,7 +199,7 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

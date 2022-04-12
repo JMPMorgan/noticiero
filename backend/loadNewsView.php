@@ -84,6 +84,56 @@ try{
                     }
                     break;
                 }
+                case 3:{#NOTICIA LISTA PARA VER
+                    $sql="CALL getNSK_sp(0,'{$fields['id']}'); ";
+                    $rows=selectQuery($sql);
+                    $sql="CALL getNSK_sp(3,'{$fields['id']}');";
+                    $data_multimedia=selectQuery($sql);
+                    $sql="CALL getNSK_sp(1,'{$fields['id']}');";
+                    $data_sections=selectQuery($sql);
+                    $sql="CALL getNSK_sp(2,'{$fields['id']}')";
+                    $data_keywords=selectQuery($sql);
+                    $sql="CALL getNSK_sp(4,'{$fields['id']}');";
+                    $data_user=selectQuery($sql);
+                    if(!empty($rows)){
+                        $informacion['news_info']=getInformationNews($rows[0]);
+                        $informacion['news_info']['news_date']=date("d/m/Y",strtotime($informacion['news_info']['news_date']));
+                        $informacion['news_info']['news_publication']=date("d/m/Y",strtotime($informacion['news_info']['news_publication']));
+                        
+                    }
+                    else{
+                        $informacion['news_info']='';
+                    }
+                    if(!empty($data_multimedia)){
+                        $informacion['multimedia_info']=getMultimediaNews($data_multimedia);
+                        
+                    }
+                    else{
+                        $informacion['multimedia_info']='';
+                    }
+                    if(!empty($data_sections)){
+                        $informacion['sections_info']=getSectionsNews($data_sections);
+                        
+                    }else{
+                        $informacion['sections_info']='';
+                    }
+                    if(!empty($data_keywords)){
+                        $informacion['keywords_info']=getKeywordsNews($data_keywords);
+                    }else{
+                        $informacion['keywords_info']='';
+                    }
+                    if(!empty($data_user)){
+                        $informacion['user_info']=getUserNews($data_user[0]);
+
+                    }else{
+                        $informacion['user_info']='';
+                    }
+
+                    if(count($informacion)>0){
+                        $result['info']=$informacion;
+                    }
+                    break;
+                }
                 default:{
                     $result['success']=false;
                     $result['error'][]='No existe ningun caso para esta peticion';

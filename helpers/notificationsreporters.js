@@ -92,7 +92,7 @@ const noDeleteUser= async()=>{
 
 const showModifications=(info)=>{
     console.log($('#noticia'));
-    $('#noticia').remove();
+    $('.noticias').remove();
     info.forEach(element=>{
         if(element.communication_message){
             let image;
@@ -103,27 +103,53 @@ const showModifications=(info)=>{
                             <source src='data:video/mp4;base,${element.archive}'></source>
                        </video>`;
             }
-            const html=$(`<div class="row" id="noticia">
+            const text=element.news_text.slice(element.news_text.indexOf('<p>'),element.news_text.indexOf('</p>'));
+            console.log(text);
+            const html=$(`<div class="row noticias" id="noticia">
                         <div class="col-4">
-                            <label class="input-grup-text" for="noticia" data='${element.uuid_news}'>
+                            <label class="input-grup-text" id='noti' for="noticia" data='${element.uuid_news}'>
                             ${image}
                             </label>
                         </div>
                         <div class="col-8">
                             <h2>Titulo de la noticia</h2>
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tristique erat erat, malesuada dictum ligula tempus
-                            porttitor. Aliquam volutpat, diam in tempor vestibulum, nulla augue venenatis justo, at fringilla arcu enim ac
-                            lacus. Morbi a arcu id velit laoreet vehicula id vitae nisl. Nunc ac ornare velit.</p>
+                            <p class="text-justify">${text}</p>
                         </div>
                         <div class="col-4">
                             <h5 class="text-muted"><b>Mensaje del Administrador</b></h5>
                         </div>
                         <div class="col-8">
-                            <p clas="text-muted">${element.communication_message}</p>
+                            <p id='message' data='${element.communication_date}' clas="text-muted">${element.communication_message}</p>
                         </div>
                     </div>`);
             $('#news-modification').after(html);
-            $(html).on('click',()=>window.location=`newsadd.html?id=${element.uuid_news}`);
+            $(html).on('click',async ()=>{
+                const date=$(html).find('#message').attr('data');
+                const uuid=$(html).find('#noti').attr('data');
+                console.log(date,uuid);
+                let response=await $.ajax({
+                    method:'POST',
+                    datatype:'JSON',
+                    data:{
+                        id:'YUlJV2dNcjFRTTZHNTRHZHhtUUNWZz09',
+                        date:date,
+                        n:uuid
+                    },
+                    url:'../backend/messages.php'
+
+                });
+                response=JSON.parse(response);
+                if(response.success===true){
+                    window.location=`newsadd.html?id=${element.uuid_news}`;
+                }else{
+                    Swal.fire(
+                        'Error',
+                        'No se pudo acceder a la foto intente de nuevo',
+                        'error'
+                    );
+                }
+                
+            });
         }else{
             console.log('Hey');
         }
@@ -132,7 +158,7 @@ const showModifications=(info)=>{
 
 const showSubmitted=(info)=>{
     console.log($('#noticia'));
-    $('#noticia').remove();
+    $('.noticias').remove();
  info.forEach(element=>{
      if(element.communication_message){
         let image;
@@ -143,7 +169,9 @@ const showSubmitted=(info)=>{
                         <source src='data:video/mp4;base,${element.archive}'></source>
                    </video>`;
         }
-        const html=`<div class="row" id="noticia">
+        const text=element.news_text.slice(element.news_text.indexOf('<p>'),element.news_text.indexOf('</p>'));
+            console.log(text);
+        const html=`<div class="row noticias" id="noticia">
                     <div class="col-4">
                         <label class="input-grup-text" for="noticia" data='${element.uuid_news}'>
                         ${image}
@@ -151,9 +179,7 @@ const showSubmitted=(info)=>{
                     </div>
                     <div class="col-8">
                         <h2>Titulo de la noticia</h2>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tristique erat erat, malesuada dictum ligula tempus
-                        porttitor. Aliquam volutpat, diam in tempor vestibulum, nulla augue venenatis justo, at fringilla arcu enim ac
-                        lacus. Morbi a arcu id velit laoreet vehicula id vitae nisl. Nunc ac ornare velit.</p>
+                        <p class="text-justify">${text}</p>
                     </div>
                     <div class="col-4">
                         <h5 class="text-muted"><b>Mensaje del Administrador</b></h5>
@@ -170,7 +196,7 @@ const showSubmitted=(info)=>{
 }
 const showAccepted=(info)=>{
     console.log($('#noticia'));
-    $('#noticia').remove();
+    $('.noticias').remove();
     info.forEach(element=>{
         if(element.communication_message){
             let image;
@@ -181,7 +207,9 @@ const showAccepted=(info)=>{
                             <source src='data:video/mp4;base,${element.archive}'></source>
                        </video>`;
             }
-            const html=$(`<div class="row" id="noticia" data='${element.uuid_news}'>
+            const text=element.news_text.slice(element.news_text.indexOf('<p>'),element.news_text.indexOf('</p>'));
+            console.log(text);
+            const html=$(`<div class="row noticias" id="noticia" data='${element.uuid_news}'>
                     <div class="col-4">
                         <label class="input-grup-text" for="noticia">
                         ${image}
@@ -189,9 +217,7 @@ const showAccepted=(info)=>{
                     </div>
                     <div class="col-8">
                         <h2>${element.news_title}</h2>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tristique erat erat, malesuada dictum ligula tempus
-                        porttitor. Aliquam volutpat, diam in tempor vestibulum, nulla augue venenatis justo, at fringilla arcu enim ac
-                        lacus. Morbi a arcu id velit laoreet vehicula id vitae nisl. Nunc ac ornare velit.</p>
+                        <p class="text-justify">${text}</p>
                     </div>
                     <div class="col-4">
                         <h5 class="text-muted"><b>Mensaje del Administrador</b></h5>

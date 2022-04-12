@@ -72,6 +72,7 @@ function getInfoNotifications($datas){
                  $return[$contador_main][$contador]['news_date']=$info['news_date'];
                  $return[$contador_main][$contador]['news_title']=$info['news_title'];
                  $return[$contador_main][$contador]['news_text']=$info['news_text'];
+                 $return[$contador_main][$contador]['communication_date']=$info['communication_date'];
                  $contador++;
             }
         }else{
@@ -80,6 +81,7 @@ function getInfoNotifications($datas){
             foreach($data as $info){
                 $return[$contador_main][$contador]['communication_message']=$info['communication_message'];
                 $return[$contador_main][$contador]['communication_status']=$info['communication_status'];
+                $return[$contador_main][$contador]['communication_date']=$info['communication_date'];
                 $return[$contador_main][$contador]['uuid_news']=$info['uuid_referencenews'];
                 $contador++;
             }

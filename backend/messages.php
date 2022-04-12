@@ -1,11 +1,16 @@
 <?php
 /*
+1->Y2pUeFBBLzgxWFloRm5Mam9FVVd2QT09
+2->QS9OUG9GRXNGNHhyMWhScnFIbHNKdz09
+3->Y2xPQ256QzQ4K3crcENmUXFGR3Jxdz09
+4->cnNmUmFVaVhlMDZiVnUrbzRVMXRlQT09
+5->YUlJV2dNcjFRTTZHNTRHZHhtUUNWZz09
 en el switch es 
 1 para eliminacion de usuario
 2 para enviar noticia al admin para revision
 3 Noticia regresada
 4 Noticia Publicada
-5 Noticia Publicada vista por el reportero
+5 Cambia el status del mensaje del reportero para editarla
 
                 PARA STATUS DE LA NOTICIA
                 0-> Editada
@@ -82,6 +87,18 @@ if($isSessionCorrect==true){
                     }else{
                         $result['success']=false;
                         $result['error'][]='No se pudo publicar la noticia';
+                        echo json_encode($result);
+                    }
+                }break;
+                case 5:{
+                    $sql="CALL changeStatusNewsAndMessage('{$fields['date']}','{$fields['n']}');";
+                    $isCreate=execQuery($sql);
+                    if(is_numeric($isCreate)){
+                        $result['success']=true;
+                        echo json_encode($result);
+                    }else{
+                        $result['success']=false;
+                        $result['error'][]='No se pudo cambiar el status del mensaje';
                         echo json_encode($result);
                     }
                 }break;
