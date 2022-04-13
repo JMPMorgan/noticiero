@@ -12,11 +12,22 @@ try{
             $fields['id']=intval($fields['id']);
             switch ($fields['id']) {
                 case 0:{
+                    $uuids = session_id();
+                    $uuids = explode('-', $uuids);
                     $sql="CALL comments_sp(0,NULL,NULL,NULL,NULL,NULL);";
                     $rows=selectQuery($sql);
+                    $sql="CALL comments_sp(4,NULL,NULL,NULL,NULL,NULL);";
+                    $rows2=selectQuery($sql);
                     if(!empty($rows)){
-                        $result['info']['child_delete']=connectMainComments($rows);
-                        $result['info']['data']=$rows;
+                        $info=array();
+                        if(!empty($rows2)){
+                            $info=connectMainComments($rows,$rows2);
+                        }else{
+                            $info=$rows;
+                        }
+                        //array_push($info,$rows,$rows2);
+                        $result['info']=$info;
+                        //$result['info']['data']=$rows;
                         $result['success']=true;
                         echo json_encode($result);
                         exit;
@@ -106,57 +117,31 @@ try{
 }
 
 
-function connectMainComments($data){
-    $hijos_eliminados=array();
-    /*foreach($data as $comments){
-        var_dump($comments);
-        array_map('checkDates',$data,$comments);
-    }*/
-    $array_num = count($data);
-
-    for($padre=0;$padre< $array_num;$padre++){
-        $data[$padre]['comments_child']=array();
-        for ($hijo=0; $hijo < $array_num; $hijo++) { 
-            if(strcmp($data[$padre]['uuid_comments'],$data[$hijo]['uuid_main'])==0){
-                //echo $comments['uuid_comments'];
-                //echo $data[$i]['uuid_main'];  
-                //array_push($data[$padre]['comments_child'],$data[$hijo]);
-                array_push($hijos_eliminados,$data[$hijo]['uuid_comments']);
+function connectMainComments($main,$childs){
+    $array_main=count($main);
+    $array_child=count($childs);
+    /*var_dump($main);
+    var_dump($childs);*/
+    for($y=0;$y< $array_main;$y++){
+        //var_dump($data);
+        for($i=0;$i< $array_child;$i++){
+            if($main[$y]['uuid_comments']===$childs[$i]['uuid_main']){
+                /*echo 'entro';
+                echo '<br>'; 
+                echo $data['uuid_comments'];
+                echo '<br>'; 
+                echo $childs[$i]['uuid_main'];*/
+                if(!isset($main[$y]['comments_child'])){
+                    $main[$y]['comments_child']=array();
+                }
+                array_push($main[$y]['comments_child'],$childs[$i]);
             }
-        }
+        }           
     }
-    //var_dump(array("Lucas","Marcelo"));
-   /* var_dump($hijos_eliminados);
-    var_dump($data);
-   $new_data=array_diff($data,$hijos_eliminados);*/
-   /*$eliminados_count=count($hijos_eliminados);
-   $contador=0;
-    for($y=0;$y <$array_num;$y++){
-        for ($i=0; $i < $eliminados_count; $i++) { 
-            if($y != $hijos_eliminados[$i]){
-                array_push($new_data,$info);
-            }
-        }
-    } */
-    
+    return $main;
 
-        /*foreach($data as $child_comment){
-            $comments['comments_child']=array();
-            if(strcmp($comments['uuid_comments'],$child_comment['uuid_main'])==0){
-                //var_dump($child_comment);
-                array_push($comments['comments_child'],$child_comment);
-                
-            }
-            //var_dump($comments);
-        }*/
-        //var_dump($comments);
-    //var_dump($data);
-    return $hijos_eliminados;
 }
 
 
-/*function checkDates($data,$element){
-    if($element['uuid_comments']==$)
-}*/
 
 ?>

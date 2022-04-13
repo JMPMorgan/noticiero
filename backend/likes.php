@@ -13,8 +13,12 @@ try {
                     $uuids = explode('-', $uuids);
                     $sql="CALL likes_sp(0,'{$uuids[1]}','{$fields['uuid']}');";
                     $rows=selectQuery($sql);
-                    if(!empty($rows)){
-                        $result['info']=$rows[0];
+                    $sql="CALL likes_sp(3,'{$uuids[1]}',NULL);";
+                    $rows2=selectQuery($sql);
+                    if(!empty($rows) && !empty($rows2)){
+                        $info=array();
+                        array_push($info,$rows[0],$rows2[0]);
+                        $result['info']=$info;
                         $result['success']=true;
                         echo json_encode($result);
                     }else{
@@ -53,6 +57,12 @@ try {
                         echo json_encode($result);
                     }
                     exit;
+                }break;
+                case 3:{
+                    $uuids=session_id();
+                    $uuids=explode('-',$uuids);
+                    
+                    
                 }break;
                 default:{
                     $result['success']=false;

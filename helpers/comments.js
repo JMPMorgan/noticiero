@@ -14,41 +14,18 @@ $(async ()=>{
     response=JSON.parse(response);
     console.log(response);
     if(response.success===true){
-        const childs_deletes=response.info.child_delete;
-        const info=response.info.data;
-        /*let respo=info.filter(element=>{
-            !childs_deletes.find(a=>{
-                console.log(a);
-                element.uuid_comments==a
-            });
-            /*childs_deletes.forEach(ele=>{
-                if(element.uuid_comments===ele){
-
-                }
-            });*/
-        //});
-        //let result = info.filter(e => !childs_deletes.find(a => e == a.lang));
-        //console.log(result);
-
-        //const info=[];
-
-        /*
-        old_info.forEach((element,index)=>{
-            childs_deletes.forEach((ele,i)=>{
-                if(index===i){
-                    delete old_info[index];
-                }
-            });
-        });
-        old_info.forEach(element=>{
-            info.push(element);
-        });
-        console.log(old_info);
-        console.log(info);*/
-        
-        console.log(respo);
-        loadComments(info,childs_deletes);
+        loadComments(response.info);
     }
+    response=await $.ajax({
+        method:'POST',
+        datatype:'JSON',
+        data:{
+            id:0,
+            uuid:getParameterByName('id')
+        },
+        url:'../backend/view_news.php'
+    });
+    console.log(response);
 
     $('#comment').on('click',async()=>{
         const comment = $('#comment-text').val();
@@ -90,62 +67,24 @@ $(async ()=>{
 });
 
 
-const loadComments=(data,child_delete)=>{
-    let counter=0;
-    data.forEach(element => {
-        /*data.map((l,index)=>{
-            if(element.uuid_comments===l.uuid_main){
-                console.log(l);
-                element.comments_child=[];
-                element.comments_child.push(l);
-                delete data[index];
-                console.log(index);
-                data.slice(index,index,null);
-            }
-        });*/
-        counter++;
-        /*const html = $(`<div class='comment border-top' >
-                        <div class='row border-top border-bottom'>
-                            <div class='col-1 container-pp-comments'>
-                                <img class='rounded img-thumbnail pp-comments'
-                                src="${image}"/>
-                            </div>
-                        <div class='col-11 d-flex justify-content-between'>
-                            <p class='h3' data='${data.uuid}'>${user}</p>
-                            <p class='text-muted mt-1' style='margin:0;'>${data.date}</p>
-                        </div>
-                        <div class='col-12'>
-                            <p style="margin: 0;" id='comment-paragraph' data='${uuid_comment}'>
-                                ${data.comment}
-                            </p>
-                            <p id='container-awnser-comment' style="margin: 0;" class='d-flex justify-content-end my-1'>
-                            <span id='awnser-comment' class='stretched-link'>Responder</span>
-                            </p>
-                        <div id='container-comments' ></div>
-                        </div>
-                        </div>
-                        </div>`);*/
-
-    });
+const loadComments=(data)=>{
     data.forEach(element=>{
-        let child_comments='';
-        console.log(element.comments_child);
+        let child_html='';
         if(element.comments_child){
-            element.comments_child.forEach(element=>{
-                console.log(element);
-                child_comments=+`<li class='comment border-top list-group-item' data='${element.uuid_comment}'>
+            element.comments_child.forEach(ele=>{
+                child_html+=`<li class='comment border-top list-group-item' data='${ele.uuid_comment}'>
                 <div class='row border-top border-bottom'>
                     <div class='col-1 container-pp-comments'>
                         <img class='rounded img-thumbnail pp-comments'
-                        src="../assets/img/profile_pics/${element.user_profilepic}"/>
+                        src="../assets/img/profile_pics/${ele.user_profilepic}"/>
                     </div>
                     <div class='col-11 d-flex justify-content-between'>
-                        <p class='h3' data=''>${element.user_nick}</p>
-                        <p class='text-muted mt-1' style='margin:0;'>${element.comments_creation}</p>
+                        <p class='h3' data=''>${ele.user_nick}</p>
+                        <p class='text-muted mt-1' style='margin:0;'>${ele.comments_creation}</p>
                     </div>
                     <div class='col-12'>
-                        <p style="margin: 0;"  data='${element.uuid_comment}'>
-                        ${element.comments_text}
+                        <p style="margin: 0;"  data='${ele.uuid_comment}'>
+                        ${ele.comments_text}
                         </p>
                         <p style="margin: 0;" class='d-flex justify-content-end my-1'>
                         </p>
@@ -172,7 +111,7 @@ const loadComments=(data,child_delete)=>{
                             <span id='awnser-comment' class='stretched-link'>Responder</span>
                             </p>
                         <ul id='container-sub-comments' class='list-group'>
-                            ${child_comments}
+                            ${child_html}
                         </ul>
                         </div>
                         </div>

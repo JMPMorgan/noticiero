@@ -70,3 +70,29 @@
 .stretched-link:hover{
     text-decoration: underline;
 }
+
+
+.isLike{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #fff !important;
+}
+
+.isLike:hover{
+    color: #007bff !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #007bff !important;
+}   
+
+.isLikent{color: #007bff !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #007bff !important;
+}
+
+.isLikent:hover{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #fff !important;
+}
