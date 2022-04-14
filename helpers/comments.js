@@ -1,13 +1,14 @@
 
 import { getParameterByName } from '../helpers/auxiliar/auxiliarMethods.js';
 $(async ()=>{
+    const n=getParameterByName('id');
     let response=await $.ajax({
         method:'GET',
         datatype:'JSON',
         data:{
             id:0,
             comment:'0',
-            n:'0'
+            n:n
         },
         url:'../backend/comments.php'
     });

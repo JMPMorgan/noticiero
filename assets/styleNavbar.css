@@ -88,3 +88,11 @@ details > summary {
 .btn-primary:active:not(.disabled) {
     filter: brightness(0.95);
 }
+
+.main-a{
+    color: black !important;
+}
+.main-a:hover{
+    color: black !important;
+    text-decoration: none  !important;
+}

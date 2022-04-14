@@ -12,7 +12,6 @@ $fields=(empty($_GET)?$_POST:$_GET);
 $isSessionCorrect=isSessionCorrect();
 $result=array('info'=>array());
 try{
-    if($isSessionCorrect==true){
         $fields['id']=removeEspecialChar($fields['id']);
         $sql="SELECT `getStatusNews`('{$fields['id']}') as `status`;";
         /*
@@ -156,10 +155,6 @@ try{
             $result['success']=false;
             $result['error'][]='No se pudo obtener el status de la noticia';
         }
-    }else{
-        $result['success']=false;
-        $result['error'][]='La seccion es incorrecta';
-    }
     echo json_encode($result);
     exit;
 }

@@ -7,7 +7,6 @@ try{
         $uuids = session_id();
         $uuids=explode('-',$uuids);
         $uuid_user=$uuids[1];
-        echo 'Hola'; 
     }
     else{
         $uuid_user='';

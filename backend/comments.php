@@ -4,7 +4,6 @@ require_once('../backend/Auxiliar/auxiliarMethods.php');
 $fields=(empty($_GET)?$_POST:$_GET);
 $result=array('info'=>array());
 try{
-    if(isSessionCorrect()==true){
         if(isset($fields['id']) && isset($fields['comment'])&& isset($fields['n'])){
             $fields['id']=removeCharForSpaces($fields['id']);
             $fields['comment']=removeEspecialChar($fields['comment']);
@@ -14,9 +13,9 @@ try{
                 case 0:{
                     $uuids = session_id();
                     $uuids = explode('-', $uuids);
-                    $sql="CALL comments_sp(0,NULL,NULL,NULL,NULL,NULL);";
+                    $sql="CALL comments_sp(0,NULL,NULL,'{$fields['n']}',NULL,NULL);";
                     $rows=selectQuery($sql);
-                    $sql="CALL comments_sp(4,NULL,NULL,NULL,NULL,NULL);";
+                    $sql="CALL comments_sp(4,NULL,NULL,'{$fields['n']}',NULL,NULL);";
                     $rows2=selectQuery($sql);
                     if(!empty($rows)){
                         $info=array();
@@ -39,45 +38,61 @@ try{
                     }
                 }break;
                 case 1:{
-                    $uuid=generateRandomToken();
-                    $uuids = session_id();
-                    $uuids = explode('-', $uuids);
-                    $sql="CALL comments_sp(1,'{$uuid}','{$uuids[1]}','{$fields['n']}',NULL,'{$fields['comment']}');";
-                    $isInsert=execQuery($sql);
-                    if($isInsert>0){
-                        $result['success']=true;
-                        $result['info']['uuid']=$uuids[1];
-                        $date=getdate();
-                        $date=date('d/m/Y');
-                        $result['info']['uuid_comment']=$uuid;
-                        $result['info']['date']=$date;
-                        echo json_encode($result);
-                        exit;
+                    if(isSessionCorrect()==true){
+                        $uuid=generateRandomToken();
+                        $uuids = session_id();
+                        $uuids = explode('-', $uuids);
+                        $sql="CALL comments_sp(1,'{$uuid}','{$uuids[1]}','{$fields['n']}',NULL,'{$fields['comment']}');";
+                        $isInsert=execQuery($sql);
+                        if($isInsert>0){
+                            $result['success']=true;
+                            $result['info']['uuid']=$uuids[1];
+                            $date=getdate();
+                            $date=date('d/m/Y');
+                            $result['info']['uuid_comment']=$uuid;
+                            $result['info']['date']=$date;
+                            echo json_encode($result);
+                            exit;
+                        }else{
+                            $result['success']=false;
+                            $result['error'][]='No se pudo insertar el comentario';
+                            echo json_encode($result);
+                            exit;
+                        }
                     }else{
                         $result['success']=false;
-                        $result['error'][]='No se pudo insertar el comentario';
+                        $result['error'][]='No tiene una cuenta para poder comentar';
                         echo json_encode($result);
                         exit;
                     }
+
                 }break;
                 case 2:{
-                    $uuid=generateRandomToken();
-                    $uuids = session_id();
-                    $uuids = explode('-', $uuids);
-                    $sql="CALL comments_sp(2,'{$uuid}','{$uuids[1]}','{$fields['n']}','{$fields['uuid_comment']}','{$fields['comment']}');";
-                    $isInsert=execQuery($sql);
-                    if($isInsert>0){
-                        $result['success']=true;
-                        $result['info']['uuid']=$uuids[1];
-                        $date=getdate();
-                        $date=date('d/m/Y');
-                        $result['info']['uuid_comment']=$uuid;
-                        $result['info']['date']=$date;
-                        echo json_encode($result);
-                        exit;
-                    }else{
+                    if(isSessionCorrect()==true){
+                        $uuid=generateRandomToken();
+                        $uuids = session_id();
+                        $uuids = explode('-', $uuids);
+                        $sql="CALL comments_sp(2,'{$uuid}','{$uuids[1]}','{$fields['n']}','{$fields['uuid_comment']}','{$fields['comment']}');";
+                        $isInsert=execQuery($sql);
+                        if($isInsert>0){
+                            $result['success']=true;
+                            $result['info']['uuid']=$uuids[1];
+                            $date=getdate();
+                            $date=date('d/m/Y');
+                            $result['info']['uuid_comment']=$uuid;
+                            $result['info']['date']=$date;
+                            echo json_encode($result);
+                            exit;
+                        }else{
+                            $result['success']=false;
+                            $result['error'][]='No se pudo insertar el comentario';
+                            echo json_encode($result);
+                            exit;
+                        }
+                    }
+                    else{
                         $result['success']=false;
-                        $result['error'][]='No se pudo insertar el comentario';
+                        $result['error'][]='No tiene una cuenta para poder comentar';
                         echo json_encode($result);
                         exit;
                     }
@@ -105,11 +120,6 @@ try{
                 }break;
             }
         }
-    }else{
-        $result['logged']=false;
-        $result['success']=false;
-        echo json_encode($result);
-    }
 }catch(Exception $e){
     $result['error'][]=$e->getMessage();
     $result['success']=false;

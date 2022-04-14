@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="../assets/styleNavbar.css">
     <link rel="stylesheet" href="../assets/styleIndex.css">
     <script src="../helpers/navbar.js"></script>
-    <script src="../helpers/index.js"></script>
+    <script type="module" src="../helpers/index.js"></script>
+    <script type="module" src="../helpers/auxiliar/auxiliarMethods.js"></script>
 </head>
 
 <body>
@@ -27,8 +28,8 @@
                     <img src="../assets/img/pn-logo.png" alt="" id="logo" srcset="">
                 </div>
             </ul>
-            <ul class="navbar-nav mx-auto sections">
-                <li class="nav-item active mx-2" onmouseover='this.style.borderBottom="2px solid red"' onmouseleave="this.style.borderBottom='none'">
+            <ul id="sections-main" class="navbar-nav mx-auto sections">
+                <!--<li class="nav-item active mx-2" onmouseover='this.style.borderBottom="2px solid red"' onmouseleave="this.style.borderBottom='none'">
                     <H6 class="mx-2">Seccion 1</H6>
                 </li>
                 <li class="nav-item mx-auto mx-2" onmouseover='this.style.borderBottom="2px solid blue"' onmouseleave="this.style.borderBottom='none'">
@@ -39,7 +40,7 @@
                 </li>
                 <li class="nav-item mx-auto mx-2" onmouseover='this.style.borderBottom="2px solid green"' onmouseleave="this.style.borderBottom='none'">
                     <h6 class="mx-2">Seccion 3</h6>
-                </li>
+                </li>-->    
             </ul>
             <ul class="navbar-nav ml-auto justify-content-end" id="profile">
                 <li class="nav-item">
@@ -53,8 +54,8 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <div class="row my-1">
+    <div id="main-news" class="container">
+        <!--<div class="row my-1">
             <div class="col-12 text-justify d-flex card mx-auto">
                 <p class="text-justify h1 mx-auto">Breaking News</p>
             </div>
@@ -151,7 +152,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     </div>
 </body>
