@@ -9,10 +9,11 @@ BEGIN
 if(`opc`=0)
 then 
 	#Obtiene las secciones para el navbar
-	SELECT `section_name`,`uuid_sections`,`sections_color` FROM `sections` WHERE `sections_active` =1 AND `sections_status`=100 LIMIT 5;
+	    	SELECT `section_name`,`uuid_sections`,`sections_color` FROM `sections` WHERE `sections_active` =1 AND `sections_status`<=100  
+            ORDER BY `sections`.`sections_status` DESC LIMIT 5;
 elseif(`opc`=1)
 then
-	#Obtiene las primeras 10 noticias  ordenadas por mayores status
+	#Obtiene las primeras 10 secciones  ordenadas por mayores status
 	SELECT `section_name`,`uuid_sections` FROM `sections` WHERE `sections_active`=1  ORDER BY `sections_status` DESC LIMIT 10;
 elseif(`opc`=2)
 then 

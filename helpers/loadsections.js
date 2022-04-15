@@ -171,19 +171,46 @@ $(async ()=>{
         $(edit_section).on('click',()=>{
             Swal.fire({
                 title: 'Ingrese el nuevo Nombre de la Seccion',
-                text: "You won't be able to revert this!",
-                input: 'text',
+                html: `<div class='row'>
+                            <div class='col-12'>
+                                <label>Name Section</label>
+                                <input id='section-edit' class='form-control' type="text"/>
+                            </div>
+                            <div class='col-12'>
+                                <label>Color Section</label>
+                                <input id='color-edit' class='form-control' type='color'/>
+                            </div>
+                            <div class='col-12'>
+                                <label>Importance</label>
+                                <select id='importance-edit' class='form-control'>
+                                    <option value='' selected>Chose...</option>
+                                    <option value='80'>Media-Alta</option>
+                                    <option value='50'>Media</option>
+                                    <option value='25'>Poca</option>
+                                    <option value='10'>Minima</option>
+                                </select>
+                            </div>
+                       </div>`,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Editar',
+                preConfirm:()=>{
+                    const section=Swal.getPopup().querySelector('#section-edit').value;
+                    const color=Swal.getPopup().querySelector('#color-edit').value;
+                    const importance=Swal.getPopup().querySelector('#importance-edit').value;
+                    return{section:section,color:color,importance:importance}
+                }
               }).then(async(result) => {
                 console.log(result);
                 const uuid = $(table_html).find('#name').attr('data');
-                if(result.value!=='' && result.value.length>0){
+                if(result.value.section.length>0 && result.value.importance>0){
                     let response=await $.ajax({
                         method:'POST',
-                        data:{valor:result.value,uuid},
+                        data:{section:result.value.section,
+                              color:result.value.color,
+                              importance:result.value.importance,
+                             uuid},
                         url:'../backend/editSections.php'
                     })
                     response=JSON.parse(response);
@@ -191,15 +218,16 @@ $(async ()=>{
                         location.reload();
                     }
                     else{
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                          );
-                          location.reload();
+                        printErrors(response.error);
                     }
+                }else{
+                    Swal.fire(
+                        'Verificar',
+                        'El campo section y el nivel de importancia no debe de estar vacio',
+                        'warning'
+                    );
                 }
-              })
+              });
         });
         $(delete_section).on('click',()=>{
             Swal.fire({
@@ -316,3 +344,25 @@ const loadSections=async(html)=>{
         $('#table_sections_active').append(html);
     })
 } 
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 4500,
+    timerProgressBar: false
+  });
+
+const printErrors = (error) => {
+    let html = 'Verificar información:';
+    let li = '<li>';
+    let li_last = '</li>';
+    for (let i = 0; error.length > i; i++) {
+      let text = li + error[i] + li_last;
+      html = html + text;
+    }
+    Toast.fire({
+      icon: 'warning',
+      html: html
+    });
+  }

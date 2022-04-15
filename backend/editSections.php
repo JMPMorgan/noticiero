@@ -6,28 +6,40 @@ $result=array('info'=>array());
 $isSessionCorrect=isSessionCorrect();
 if($isSessionCorrect==true){
     if(!empty($fields)){
-        $fields['valor']=removeEspecialChar($fields['valor']);
+        $fields['section']=removeEspecialChar($fields['section']);
+        $fields['color']=removeEspecialChar($fields['color']);
+        $fields['importance']=removeEspecialChar($fields['importance']);
         $fields['uuid']=removeCharForSpaces($fields['uuid']);
-        if(strlen($fields['valor'])>0 && strlen($fields['uuid'])>0){
-            $sql="UPDATE `sections` SET `section_name`='{$fields['valor']}' WHERE `uuid_sections`='{$fields['uuid']}';";
-            $isUpdated;
-            try{
-                $isUpdated=execQuery($sql);
-            }
-            catch(Exception $e){
-                $result['success']=false;
-                $result['error'][]=$e->getMessage();
-                echo json_encode($result);
-                exit;
-            }
-            if(is_numeric($isUpdated)){
-                $result['success']=true;
-                echo json_encode($result);
-                exit;
+        if(strlen($fields['uuid'])>0){
+            $sql="CALL sections(1,'{$fields['section']}',NULL,NULL,NULL);";
+            $rows=selectQuery($sql);
+            if($rows[0]['numero']==0){
+                $sql="CALL sections(2,'{$fields['section']}','{$fields['color']}','{$fields['importance']}','{$fields['uuid']}');";
+                $isUpdated;
+                try{
+                    $isUpdated=execQuery($sql);
+                }
+                catch(Exception $e){
+                    $result['success']=false;
+                    $result['error'][]=$e->getMessage();
+                    echo json_encode($result);
+                    exit;
+                }
+                if(is_numeric($isUpdated)){
+                    $result['success']=true;
+                    echo json_encode($result);
+                    exit;
+                }
+                else{
+                    $result['success']=false;
+                    $result['error'][]='No se pudo cambiar el status por favor recargue la pagina e intente de nuevo';
+                    echo json_encode($result);
+                    exit;
+                }
             }
             else{
                 $result['success']=false;
-                $result['error'][]='No se pudo cambiar el status por favor recargue la pagina e intente de nuevo';
+                $result['error'][]='Ya existe una seccion con este nombre';
                 echo json_encode($result);
                 exit;
             }
