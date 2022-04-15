@@ -150,6 +150,6 @@ $(()=>{
         let code = (e.keyCode ? e.keyCode : e.which);
         let text=$(buscador).val();
         if(code===13){
-            window.location='searchnews.html';
+            window.location=`searchnews.html?title=${text}`;
         }
     }

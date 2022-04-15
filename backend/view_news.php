@@ -10,8 +10,7 @@ try{
     }
     else{
         $uuid_user='';
-    }
-
+    }   
     $fields['id']=removeCharForSpaces($fields['id']);
     $fields['uuid']=removeCharForSpaces($fields['uuid']);
     $fields['id']=intval($fields['id']);

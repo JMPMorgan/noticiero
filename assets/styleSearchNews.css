@@ -1,3 +1,17 @@
 .news_image{
+    height: 180px;
     width: 300px;
+}
+
+.a-row{
+    text-decoration: none;
+    color: black;
+}
+
+#container-searchkeyword{
+    padding: 0;
+z-index: 100;
+display: grid;
+position: fixed;
+background-color: #dddddd;
 }
