@@ -26,6 +26,22 @@ try{
             echo json_encode($result);
             exit;
         }break;
+        case 1:{
+            $sql="CALL views_news(1,NULL,'{$uuid_user}');";
+            $rows=selectQuery($sql);
+            if(!empty($rows)){
+                $result['info']=$rows;
+                $result['success']=true;
+                echo json_encode($result);
+                exit;
+            }
+            else{
+                $result['error'][]='No se encontro ninguna noticia';
+                $result['success']=false;
+                echo json_encode($result);
+                exit;
+            }
+        }
         default:{
             $result['success']=false;
             $result['error'][]='No hay ningun caso especificado para las visitas';

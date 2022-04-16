@@ -57,7 +57,7 @@ $(async () => {
                 }
                 if(sections.length>0){
                     sections.forEach(element=>{
-                        const html=$(`<a class='btn btn-sm btn-outline-primary my-1' href='${element.uuid_sections}'>${element.section_name}</a>`);
+                        const html=$(`<a class='btn btn-sm btn-outline-primary my-1' href=index?id='${element.uuid_sections}'>${element.section_name}</a>`);
                         $('#sections-news').append(html);
                     });
                 }
@@ -119,7 +119,7 @@ $(async () => {
                 }
                 if(sections.length>0){
                     sections.forEach(element=>{
-                        const html=$(`<a class='btn btn-sm btn-outline-primary my-1' href='${element.uuid_sections}'>${element.section_name}</a>`);
+                        const html=$(`<a class='btn btn-sm btn-outline-primary my-1' href='index.html?id=${element.uuid_sections}'>${element.section_name}</a>`);
                         $('#sections-news').append(html);
                     });
                 }

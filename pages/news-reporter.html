@@ -41,7 +41,7 @@
                         <div class="input-group-prepend">
                             <label for="" class="input-group-text">News Title</label>
                         </div>
-                        <input type="text" class="form-control">
+                        <input id="news-title-search" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col-3">
@@ -49,20 +49,17 @@
                         <div class="input-group-prepend">
                           <label class="input-group-text" for="inputGroupSelect01">Sections</label>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01">
-                          <option selected>Choose...</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                        <select class="custom-select" id="sections-search">
+                          <option value="">Choose...</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-pretend">  
-                            <label class="input-group-text" for="star-date">Start date</label>
+                            <label class="input-group-text" for="start-date">Start date</label>
                         </div>
-                        <input type="date" class="form-control"id="star-date">
+                        <input type="date" class="form-control"id="start-date">
                     </div>
                 </div>
                 <div class="col-3">
@@ -74,9 +71,11 @@
                     </div>
                 </div>
             </div>
+            <div id="container-sections-selected" class="my-2">
+            </div>
             <div class="row d-flex justify-content-end">
-                <div class="col d-flex justify-content-end">
-                    <button class=" btn btn-primary">Search<i class='bx bx-search ml-2'></i></button>
+                <div class="col d-flex justify-content-end my-2">
+                    <button id="search-news-button" class="btn btn-primary">Search<i class='bx bx-search ml-2'></i></button>
                 </div>
             </div>
 

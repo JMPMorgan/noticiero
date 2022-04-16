@@ -88,14 +88,69 @@ $(async()=>{
                 const data=$(disable).attr('data');
                 console.log(disable,data );
             }
-            $('tbody').append(html)
+            $('tbody').append(html);
+        });
+    }else{
+        printErrors(response.error);
+    }
+
+    response=await $.ajax({
+        method:'GET',
+        datatype:'JSON',
+        url:'../backend/sections.php'
+    });
+    response=JSON.parse(response);
+    if(response.success===true){
+        const sections=response.info;
+        sections.forEach(element=>{
+             const html=$(`<option value='${element.uuid_sections}'>${element.section_name}</option>`);
+             $('#sections-search').append(html);
+             //$(html).on('click',()=>{selectedSections(html)});
+             $('#sections-search').change(()=>{selectedSections($('#sections-search').children('option:selected'))});
         });
     }else{
         printErrors(response.error);
     }
 
 
-})
+
+
+});
+
+
+const selectedSections=(html)=>{
+    const value=$(html).val();
+    const name=$(html).text();
+    const sections_selected=$('#container-sections-selected').children();
+    let isSelected=false;
+    if(value!==''){
+        sections_selected.each((index,element)=>{
+            if($(element).attr('data')===value){
+                isSelected=true;
+                return false;
+            }
+        });
+        if(isSelected===false){
+            const html=$(`<span class='btn btn-primary mx-1' data='${value}'>${name}
+            <i class="fa-solid fa-circle-xmark"></i></span>`);
+            $(html).on('click',()=>{
+                $(html).remove();
+            });
+            $('#container-sections-selected').append(html);
+        }
+    }
+    //Obtieve los hijos de ese div que solo estan las secciones seleccionadas
+    /*if(value!==''){
+        if(sections_selected.length===0){//Primer seccion
+
+            $('#container-sections-selected').append(html);
+        }else{//+1 de una seccion
+            console.log(sections_selected);
+        }
+    }*/
+}
+
+
 const printErrors = (error) => {
     let html = 'Verificar información:';
     let li = '<li>';

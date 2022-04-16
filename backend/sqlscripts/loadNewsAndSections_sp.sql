@@ -33,6 +33,9 @@ then
 	AND `news`.`news_publication` = (SELECT  MAX(`news`.`news_publication`))
 	AND `news_sections`.`uuid_section`=`uuid_section`
 	GROUP BY `news`.`uuid_news` ORDER BY `news`.`news_publication` DESC, `views_news`.`uuid_news` ASC;
+elseif(`opc`=3)#Obtenre el nombre la seccion que se quiere buscar
+then
+	SELECT `sections`.`section_name`,`sections`.`uuid_sections`,`sections`.`sections_color` FROM `sections` WHERE `uuid_section`;
 
 end if;
 END$$

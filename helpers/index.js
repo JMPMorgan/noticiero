@@ -2,6 +2,16 @@ import { getParameterByName } from '../helpers/auxiliar/auxiliarMethods.js';
 $(async()=>{
     const id=getParameterByName('id');
     if(id.length>0){
+        let response=await $.ajax({
+            method:'GET',
+            datatype:'JSON',
+            data:{
+                id:id
+            },
+            url:'../backend/loadindex.php'
+        });
+        response=JSON.parse(response);
+        console.log(response);
         /*
         Esto quiere decir que se busca una seccion
         */

@@ -15,7 +15,7 @@ $(async ()=>{
     response=JSON.parse(response);
     console.log(response);
     if(response.success===true){
-        loadComments(response.info);
+        loadComments(response.info,response.permission);
     }
     response=await $.ajax({
         method:'POST',
@@ -68,12 +68,16 @@ $(async ()=>{
 });
 
 
-const loadComments=(data)=>{
+const loadComments=(data,permission)=>{
     data.forEach(element=>{
         let child_html='';
+        let permission_html='';
+        if(permission===1){
+            permission_html=`<span id='delete-comment' class='stretched-link text-danger'>Borrar Comentario </span>`;
+        }
         if(element.comments_child){
             element.comments_child.forEach(ele=>{
-                child_html+=`<li class='comment border-top list-group-item' data='${ele.uuid_comment}'>
+                child_html+=`<li class='comment border-top list-group-item' data='${ele.uuid_comments}'>
                 <div class='row border-top border-bottom'>
                     <div class='col-1 container-pp-comments'>
                         <img class='rounded img-thumbnail pp-comments'
@@ -84,10 +88,11 @@ const loadComments=(data)=>{
                         <p class='text-muted mt-1' style='margin:0;'>${ele.comments_creation}</p>
                     </div>
                     <div class='col-12'>
-                        <p style="margin: 0;"  data='${ele.uuid_comment}'>
+                        <p style="margin: 0;" id='comment-childs-data'  data='${ele.uuid_comments}'>
                         ${ele.comments_text}
                         </p>
                         <p style="margin: 0;" class='d-flex justify-content-end my-1'>
+                        ${permission_html}
                         </p>
                     </div>
                 </div>
@@ -109,7 +114,8 @@ const loadComments=(data)=>{
                                 ${element.comments_text}
                             </p>
                             <p id='container-awnser-comment' style="margin: 0;" class='d-flex justify-content-end my-1'>
-                            <span id='awnser-comment' class='stretched-link'>Responder</span>
+                            ${permission_html} 
+                            <span id='awnser-comment' class='ml-1 stretched-link'>Responder</span>
                             </p>
                         <ul id='container-sub-comments' class='list-group'>
                             ${child_html}
@@ -118,6 +124,47 @@ const loadComments=(data)=>{
                         </div>
         </div>`);
         const awnser=$(html).find('#awnser-comment');
+        //const delete_comment=$(html).find('#delete-comment').on('click',()=>{});
+        $(html).find('#delete-comment').on('click',(e)=>{
+            const father=$(e.currentTarget).parents('.comment')[0];
+            const data=$(father).attr('data');
+            Swal.fire({
+                title: 'Esta seguro?',
+                text: `Esta seguro que desea eliminar este comentario,
+                     Si este comentario tiene respuestas tambien se eliminaran`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    let response=await $.ajax({
+                        method:'POST',
+                        datatype:'JSON',
+                        data:{
+                            id:3,
+                            n:data,
+                            comment:''
+                        },
+                        url:'../backend/comments.php'
+                    });
+                    console.log(response);
+                    response=JSON.parse(response);
+                    if(response.success===true){
+                        location.reload();
+                    }
+                    else{
+                        Swal.fire(
+                            'No se pudo eliminar el comentario',
+                            'No se pudo eliminar el comenario',
+                            'warning'
+                        ); 
+                    }
+                }
+              })
+        });
+        //console.log(delete_comment);
         $('#container-comments').append(html);
         $(awnser).on('click',()=>subComment(html));
 

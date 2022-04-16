@@ -11,12 +11,19 @@ try{
             $fields['id']=intval($fields['id']);
             switch ($fields['id']) {
                 case 0:{
-                    $uuids = session_id();
-                    $uuids = explode('-', $uuids);
+                    if(isSessionCorrect()==true){
+                        $uuids = session_id();
+                        $uuids = explode('-', $uuids);
+                        $uuid_user=$uuids[1];
+                    }else{
+                        $uuid_user='';
+                    }
                     $sql="CALL comments_sp(0,NULL,NULL,'{$fields['n']}',NULL,NULL);";
                     $rows=selectQuery($sql);
                     $sql="CALL comments_sp(4,NULL,NULL,'{$fields['n']}',NULL,NULL);";
                     $rows2=selectQuery($sql);
+                    $sql="CALL comments_sp(5,NULL,'{$uuid_user}','{$fields['n']}',NULL,NULL);";
+                    $rows3=selectQuery($sql);
                     if(!empty($rows)){
                         $info=array();
                         if(!empty($rows2)){
@@ -24,8 +31,15 @@ try{
                         }else{
                             $info=$rows;
                         }
+                        //$info['permission']=$rows3[0]['permission'];
                         //array_push($info,$rows,$rows2);
                         $result['info']=$info;
+                        if(strcmp($uuid_user,'7df77187de42f964ea60872a478f6819')==0){
+                            $result['permission']=1;
+                        }
+                        else{
+                            $result['permission']=$rows3[0]['permission'];
+                        }
                         //$result['info']['data']=$rows;
                         $result['success']=true;
                         echo json_encode($result);
@@ -98,7 +112,7 @@ try{
                     }
                 }
                 case 3:{
-                    $uuids = explode('-', $uuids);
+                    //$uuids = explode('-', $uuids);
                     $sql="CALL comments_sp(3,'{$fields['n']}',NULL,NULL,NULL,NULL);";
                     $isDelete=execQuery($sql);
                     if($isDelete>0){
@@ -107,7 +121,7 @@ try{
                         exit;
                     }else{
                         $result['success']=false;
-                        $result['error'][]='No se pudo insertar el comentario';
+                        $result['error'][]='No se pudo borrar el comentario';
                         echo json_encode($result);
                         exit;
                     }

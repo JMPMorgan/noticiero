@@ -20,7 +20,7 @@ BEGIN
 				AND `news`.`news_active`=1 AND `news`.`news_status`=3
 				AND `news`.`news_title` LIKE CONCAT('%',`titleP`,'%')
 				GROUP BY `news`.`uuid_news` ORDER BY `news`.`news_publication`  DESC ;
-	elseif(`opc`=1)#Para buscar de forma avanzada
+	elseif(`opc`=1)#Para buscar de forma avanzada en el buscador 
     then
 		/*
 			Se crea una tabla "Temporal" para guardar el array enviado
@@ -67,9 +67,48 @@ BEGIN
 					GROUP BY `news`.`uuid_news` ORDER BY  `news`.`news_publication`  DESC  LIMIT 20;
             end if;
 			DROP TABLE `keywords_search`;
+	elseif(`opc`=2)#Para buscar en news-reporter.html
+    then
+		/*
+        Este query fue creado para el reportero, tener su propio buscador en news-repotert.html
+        Si, no se envia minimo las fechas de busqueda no recibe nada
+        */
+    
+		CREATE TABLE `bd_noticiero`.`sections_search`(
+        `id`  INT NOT NULL AUTO_INCREMENT,
+		`uuid_section` VARCHAR(155) NULL,
+		PRIMARY KEY (`id`));
+        set @id=1;
+        WHILE(@id<=`contador_keywordsP`)
+        DO
+				INSERT INTO `sections_search`(`uuid_section`) VALUES(SUBSTRING_INDEX(`keywordsP`,"|",@id));
+				SET @id=@id+1;
+        END WHILE;
+			SELECT  COUNT(`id`) from `sections_search` INTO @contador;
+            IF(@contador>0)
+            THEN
+				SELECT `news`.`uuid_news`,`news`.`news_title`,`news`.`news_publication`,`news`.`news_status` ,`news_sections`.`uuid_section`,`news`.`news_active`
+					FROM `news`
+					INNER JOIN `news_sections` ON `news_sections`.`uuid_news`=`news`.`uuid_news`
+                    INNER JOIN `sections_search` ON `sections_search`.`uuid_section`=`news_sections`.`uuid_section`
+					WHERE `news`.`news_title` LIKE (CONCAT('%',`titleP`,'%'))
+					AND `sections_search`.`uuid_section`=`news_sections`.`uuid_section`
+					AND `news`.`news_creation`>=DATE(`start_dateP`) AND `news`.`news_creation`<=DATE(`end_dateP`)
+					AND `news`.`uuid_userC`=`descriptionP` ORDER BY `news`.`news_creation` ASC;
+            ELSEIF(@contador=0)
+            THEN
+				SELECT `news`.`uuid_news`,`news`.`news_title`,`news`.`news_publication`,`news`.`news_status` ,`news`.`news_active`
+					FROM `news`
+					WHERE `news`.`news_title` LIKE (CONCAT('%',`titleP`,'%'))
+					AND `news`.`news_creation`>=DATE(`start_dateP`) AND `news`.`news_creation`<=DATE(`end_dateP`)
+					AND `news`.`uuid_userC`=`descriptionP`  ORDER BY `news`.`news_creation` ASC;
+            END IF;
+		DROP TABLE `sections_search`;
     end if;
 END$$
 
 DELIMITER ;
 ;
+
+
 

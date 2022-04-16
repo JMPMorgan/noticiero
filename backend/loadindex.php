@@ -5,7 +5,40 @@ $fields=(empty($_GET)?$_POST:$_GET);
 $result=array('info'=>array());
 try{
     if(isset($fields['id'])){
-
+        $sql="CALL loadNewsAndSections(0,NULL);";
+        $rows=selectQuery($sql);
+        $fields['id']=removeEspecialChar($fields['id']);
+        $sql="CALL loadNewsAndSections(3,'{$fields['id']}');";
+        $rows2=selectQuery($sql);
+        $array_rows2=count($rows2);
+        if(!empty($rows2)){
+        $sql="CALL loadNewsAndSections(2,'{$rows2[0]['uuid_sections']}');";
+        $data=selectQuery($sql);
+        $data_count=count($data);
+        for($i=0;$i<$data_count;$i++){
+            $data[$i]['archive']=base64_encode($data[$i]['archive']);
+        }
+        $rows2[0]['news']=array();
+        $rows2[0]['news']=$data;
+        if(!empty($rows) && !empty($rows2)){
+            $result['success']=true;
+            $result['sections_main']=$rows;
+            $result['info']=$rows2;
+            echo json_encode($result);
+            exit;
+        }
+        else{
+            $result['success']=false;
+            $result['error'][]='No se encontro la informacion';
+            echo json_encode($result);
+            exit;
+        }
+        }
+        else{
+            $result['success']=false;
+            echo json_encode($result);
+            exit;
+        }
     }else{
         $sql="CALL loadNewsAndSections(0,NULL);";
         $rows=selectQuery($sql);

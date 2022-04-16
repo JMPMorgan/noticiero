@@ -7,3 +7,11 @@
 	END $$
     DELIMITER ; 
      
+	DELIMITER $$
+     CREATE TRIGGER `agregarComment_log`
+     BEFORE UPDATE on `comments`
+     FOR EACH ROW
+     BEGIN 
+      INSERT INTO `comments_log`(`uuid_comment`,`old_status`,`new_status`,`change_status`)VALUES(OLD.`uuid_comments`,OLD.`status`,NEW.`status`,NOW());
+	END $$
+    DELIMITER ; 

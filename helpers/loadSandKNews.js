@@ -55,7 +55,7 @@ const selectedSections=(section_name,section_value )=>{
     OBTIENE EL VALOR Y EL TEXTO DE LOS SELECT SELECCIONADOS PARA DESPUES PONERLOS EN 
     LA PAGINA DEBAJO PARA QUE SEA MAS FACIL DE VER
     */
-    
+    if(section_value!==''){
     const sections_selected=$('#container-sections').children();    
     let  isSelected=false;
 
@@ -69,6 +69,7 @@ const selectedSections=(section_name,section_value )=>{
         const html=$(`<span id='sections-unload' data='${section_value}' class='sections-selected text-white bg-primary mr-2 my-5 p-2 rounded'>${section_name} <i class="fa-solid fa-circle-xmark"></i><span>`);
         $(html).on('click',()=>{$(html).remove();})
                 $('#container-sections').append(html);
+    }
     }
 
 }

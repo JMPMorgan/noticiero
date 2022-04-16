@@ -52,7 +52,7 @@ $(async()=>{
         if(test!=='Keywords Selections') {
             if(popular_sections.length>0){
                 popular_sections.forEach(element=>{
-                    const html=$(`<a href="${element.uuid_sections}" class='btn my-1 btn-sm btn-outline-primary'>${element.section_name}</a>`);
+                    const html=$(`<a href="index.html?id=${element.uuid_sections}" class='btn my-1 btn-sm btn-outline-primary'>${element.section_name}</a>`);
                     $('#sections-popular').append(html);
                 });
             }

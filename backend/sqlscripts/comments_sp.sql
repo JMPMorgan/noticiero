@@ -28,10 +28,17 @@ set @uuid=`uuid_news`;
     VALUES (`uuid`,`uuid_user`,`uuid_news`,1,`comment`,NOW(),`uuid_main`);
  elseif(`opc`=3)#"Borrar" Comentario
  then
-	UPDATE `comments` SET  `status`=1 WHERE `uuid_comments`=`uuid`;
+UPDATE `comments` SET  `comments`.`status`=0  WHERE `comments`.`uuid_main`=`uuid`;
+	UPDATE `comments` SET  `status`=0 WHERE `uuid_comments`=`uuid`;
  elseif(`opc`=4) #Cargar los comentarios hijos
  then
 	SELECT * from `comments_child`;
+elseif(`opc`=5)#Verificar si el usuario que entro puede borrrar comentarios
+then
+	SELECT COUNT(*) as `permission` FROM `news`
+    WHERE `uuid_news`=`uuid_news`
+    AND `uuid_userC`=`uuid_user` 
+    AND `news_status`=3;
  end if;
 END$$
 

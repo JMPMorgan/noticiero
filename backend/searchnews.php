@@ -84,6 +84,50 @@ try{
                 exit;   
             }
         }
+    }elseif($fields['id']==2){
+        $fields['title']=removeEspecialChar($fields['title']);
+        if(isSessionCorrect()==true){
+            $uuids = explode('-', session_id());
+        }else{
+            $result['success']=false;
+            $result['logged']=true;
+            echo json_encode($result);
+            exit;
+        }
+        if(isset($fields['sections'])){
+            $array_sections=count($fields['sections']);
+            for($i=0;$i<$array_sections;$i++){
+                $fields['sections'][$i]=removeEspecialChar($fields['sections'][$i]);
+                $fields['sections'][$i]=$fields['sections'][$i].'|';
+            }
+            $sql="CALL searchNews(2,'{$fields['title']}','{$uuids[1]}','{$fields['start_date']}','{$fields['end_date']}'
+                ,'".implode(",",$fields['sections'])."','{$array_sections}');";
+            $rows=selectQuery($sql);
+            if(!empty($rows)){
+                $result['success']=true;
+                $result['info']=$rows;
+                echo json_encode($result);
+                exit;
+            }else{
+                $result['success']=false;
+                echo json_encode($result);
+                exit;
+            }
+        }else{
+            $sql="CALL searchNews(2,'{$fields['title']}','{$uuids[1]}','{$fields['start_date']}','{$fields['end_date']}'
+                ,NULL,0);";
+            $rows=selectQuery($sql);
+            if(!empty($rows)){
+                $result['success']=true;
+                $result['info']=$rows;
+                echo json_encode($result);
+                exit;
+            }else{
+                $result['success']=false;
+                echo json_encode($result);
+                exit;
+            }
+        }
     }
 
 }catch(Exception $e){
