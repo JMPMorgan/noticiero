@@ -169,12 +169,13 @@ ALTER TABLE `views_news` ADD FOREIGN KEY (`uuid_user`) REFERENCES `users`(`user_
 
 CREATE TABLE `bd_noticiero`.`comments_log` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  `uuid_comment` VARCHAR(155) NULL COMMENT 'Id del comentario que se esta cambiando',
-  `old_status` INT NULL COMMENT 'Viejo status del comentario',
+  `comment` VARCHAR(255) NULL COMMENT 'Texto del comentario',
+  `uuid_ownwer` VARCHAR(155) NULL COMMENT 'Dueño del comentario',
   `change_status` TIMESTAMP NULL COMMENT 'Fecha de cuando cambio ese status',
-  `new_status` INT NULL COMMENT 'Nuevo status del comentario',
+  `uuid_news` VARCHAR(155) NULL COMMENT 'Clave de la noticia',
   PRIMARY KEY (`id`))
 COMMENT = 'Tabla donde se almacena el cambio de status en los comentarios';
 
-ALTER TABLE `comments_log` ADD FOREIGN KEY (`uuid_comment`) REFERENCES `comments`(`uuid_comments`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `comments_log` ADD FOREIGN KEY (`uuid_owner`) REFERENCES `users`(`uuid_user`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `comments_log` ADD FOREIGN KEY (`uuid_news`) REFERENCES `news`(`uuid_news`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 

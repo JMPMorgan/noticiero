@@ -37,18 +37,36 @@ try{
         $fields['description']=removeEspecialChar($fields['description']);
         if(isset($fields['keywords'])){
             $array_keywords=count($fields['keywords']);
+            $info_keywords=array();
             for($i=0;$i<$array_keywords;$i++){
                 /*
                 Remueve caracteres peligrosos para la BD
                 luego se añade al final de la cadena
                 */
                 $fields['keywords'][$i]=removeEspecialChar($fields['keywords'][$i]);
-                $fields['keywords'][$i]=$fields['keywords'][$i].'|';
+                try{
+                    beginTransction();
+                    $sql="CALL searchNews(3,NULL,NULL,NULL,NULL,'{$fields['keywords'][$i]}',NULL);";
+                    $isInsert=execQuery($sql);
+                    if($isInsert<=0){
+                        rollback();
+                        $result['success']=false;
+                        $result['error'][]='No se pudo obtener una Keyword';
+                        echo json_encode($result);
+                        exit;
+                    }
+                }catch(Exception $e){
+                    rollback();
+                    $result['success']=false;
+                    $result['error'][]=$e->getMessage();
+                    echo json_encode($result);
+                    exit;
+                }
             }
             //Implode sirve para unir el array para enviarlo en un solo texto a mysql
             $sql="CALL searchNews(1,'{$fields['title']}','{$fields['description']}'
-            ,'{$fields['start_date']}','{$fields['end_date']}',
-            '".implode("','",$fields['keywords'])."',{$array_keywords});";
+            ,'{$fields['start_date']}','{$fields['end_date']}',NULL,NULL);";
+
             $rows=selectQuery($sql);
             if(!empty($rows)){
                 $array_rows=count($rows);
@@ -98,10 +116,25 @@ try{
             $array_sections=count($fields['sections']);
             for($i=0;$i<$array_sections;$i++){
                 $fields['sections'][$i]=removeEspecialChar($fields['sections'][$i]);
-                $fields['sections'][$i]=$fields['sections'][$i].'|';
+                try{
+                    beginTransction();
+                    $sql="CALL searchNews(3,NULL,NULL,NULL,NULL,'{$fields['sections'][$i]}',NULL);";
+                    $isInsert=execQuery($sql);
+                    if($isInsert<=0){
+                        rollback();
+                        $result['success']=false;
+                        $result['error'][]='No se pudo obtener una Keyword';
+                        exit;
+                    }
+                }catch(Exception $e){
+                    rollback();
+                    $result['success']=false;
+                    $result['error'][]=$e->getMessage();
+                    exit;
+                }
             }
             $sql="CALL searchNews(2,'{$fields['title']}','{$uuids[1]}','{$fields['start_date']}','{$fields['end_date']}'
-                ,'".implode(",",$fields['sections'])."','{$array_sections}');";
+                ,NULL,NULL);";
             $rows=selectQuery($sql);
             if(!empty($rows)){
                 $result['success']=true;

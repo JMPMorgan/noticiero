@@ -12,7 +12,7 @@ try{
         $rows2=selectQuery($sql);
         $array_rows2=count($rows2);
         if(!empty($rows2)){
-        $sql="CALL loadNewsAndSections(2,'{$rows2[0]['uuid_sections']}');";
+        $sql="CALL loadNewsAndSections(4,'{$rows2[0]['uuid_sections']}');";
         $data=selectQuery($sql);
         $data_count=count($data);
         for($i=0;$i<$data_count;$i++){
@@ -23,7 +23,7 @@ try{
         if(!empty($rows) && !empty($rows2)){
             $result['success']=true;
             $result['sections_main']=$rows;
-            $result['info']=$rows2;
+            $result['info']=$rows2[0];
             echo json_encode($result);
             exit;
         }

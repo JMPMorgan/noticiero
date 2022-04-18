@@ -12,6 +12,51 @@ $(async()=>{
         });
         response=JSON.parse(response);
         console.log(response);
+        if(response.success===true){
+            const news=response.info.news;
+            const sections_main=response.sections_main;
+            let news_html='';
+            if(news.length>0){
+                news.forEach(element=>{
+                    news_html+=`<div class='col-3'>
+                    <div class='thumbanil'>
+                        <a href='viewnews.html?id=${element.uuid_news}'>
+                        <h5 class='news-title'>${element.news_title}</h5>
+                        <img src='data:image/jpg;base64,${element.archive}'
+                        class="news-photos news-half"/>
+                        <div class='caption'>
+                            <p class='news-content'${element.news_description}></p>
+                        </div>
+                        </a>
+                    </div>
+                </div>`;
+                });
+            }else{
+                news_html=`<h1 class='d-flex justify-content-center text-justify text-muted'>No existe ninguna noticia relacionada a esta secccion<h1>`
+            }
+
+            const html=$(`<div class='row my-1'>
+            <div class='col-12 text-jutify d-flex card mx-auto'
+            onmouseover='this.style.borderBottom="2px solid ${response.info.sections_color}"'
+            onmouseleave='this.style.borderBottom="none"'>
+                <p class='text-justify h1 mx-auto'>
+                    ${response.info.section_name}
+                </p>
+                </div>
+                ${news_html}
+                </div>`);
+            $('#main-news').append(html);
+            sections_main.forEach(element=>{
+                const html=$(`<li class='nav-item active mx-2' 
+                                onmouseover='this.style.borderBottom="2px solid ${element.sections_color}"'
+                                onmouseleave="this.style.borderBottom='none'">
+                                    <h6 class='mx-2' ><a class='main-a' href='index.html?id=${element.uuid_sections}'>${element.section_name}</a></h2>
+                             </li>`);
+                $('#sections-main').append(html);
+            });
+        }else{
+
+        }
         /*
         Esto quiere decir que se busca una seccion
         */
@@ -61,7 +106,7 @@ $(async()=>{
             const html=$(`<li class='nav-item active mx-2' 
                             onmouseover='this.style.borderBottom="2px solid ${element.sections_color}"'
                             onmouseleave="this.style.borderBottom='none'">
-                                <h6 class='mx-2' ><a class='main-a' href='${element.uuid_sections}'>${element.section_name}</a></h2>
+                                <h6 class='mx-2' ><a class='main-a' href='index.html?id=${element.uuid_sections}'>${element.section_name}</a></h2>
                          </li>`);
             $('#sections-main').append(html);
            });

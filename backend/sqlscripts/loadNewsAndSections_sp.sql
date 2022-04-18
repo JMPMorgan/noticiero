@@ -35,8 +35,21 @@ then
 	GROUP BY `news`.`uuid_news` ORDER BY `news`.`news_publication` DESC, `views_news`.`uuid_news` ASC;
 elseif(`opc`=3)#Obtenre el nombre la seccion que se quiere buscar
 then
-	SELECT `sections`.`section_name`,`sections`.`uuid_sections`,`sections`.`sections_color` FROM `sections` WHERE `uuid_section`;
-
+	SELECT `sections`.`section_name`,`sections`.`uuid_sections`,`sections`.`sections_color` FROM `sections` 
+    WHERE `sections`.`uuid_sections`=`uuid_section`
+    AND `sections`.`sections_active`=1;
+elseif(`opc`=4)#Obtener todas las noticias relacionadas con solo una seccion
+then
+	SELECT `news`.`news_title`,`news`.`news_description`,`news`.`uuid_news`,`multimedia_news`.`archive`
+		FROM `news_sections` 
+		INNER JOIN `news` ON `news`.`uuid_news`=`news_sections`.`uuid_news`
+		INNER JOIN `multimedia_news` ON `multimedia_news`.`uuid_noticia`=`news`.`uuid_news`
+		WHERE `news_sections`.`uuid_section`=`uuid_section`
+		AND `news`.`uuid_news`=`news_sections`.`uuid_news`
+		AND `multimedia_news`.`type_archive`<>'.mp4'
+		AND `news`.`news_status`=3 
+		GROUP BY `news`.`uuid_news`
+		ORDER BY `news`.`news_publication` DESC;
 end if;
 END$$
 
