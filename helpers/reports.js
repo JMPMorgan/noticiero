@@ -3,6 +3,7 @@
 })};*/
 
 
+
 $(async ()=>{
     let response= await $.ajax({
         method:'GET',
@@ -32,18 +33,80 @@ $(async ()=>{
         const end_date=$('#end-date').val();
         const date1=new Date(start_date);
         const date2=new Date(end_date);
+        let response;
         if(date1<=date2){
-            let response=await $.ajax({
-                method:'GET',
-                datatype:'JSON',
-                data:{
+            if(value_sections.length>0){
+                //Esto quiere decir que selecciono secciones para reportes
+                 response=await $.ajax({
+                    method:'GET',
+                    datatype:'JSON',
+                    data:{
+                        id:1,
+                        secciones:value_sections,
+                        start_date:start_date,
+                        end_date:end_date
+                    },
+                    url:'../backend/reports.php'
+                });
+            }else{
+                response=await $.ajax({
+                    method:'GET',
+                    datatype:'JSON',
+                    data:{
+                        id:2,
+                        start_date:start_date,
+                        end_date:end_date
+                    },
+                    url:'../backend/reports.php'
 
-                },
-                url:''
-            });
+                });
+            }
+
             console.log(response);
             response=JSON.parse(response);
             console.log(response);
+            if(response.success===true){
+                const comun=response.info.reporte_comun;
+                const detalle=response.info.reporte_detalles;
+                const secciones=response.info.reporte_secciones;
+                $('#comun').children().remove();
+                $('#detalle').children().remove();
+                $('#secciones').children().remove();
+                if(comun.length>0){
+                    comun.forEach(element=>{
+                        const html=`<tr>
+                                        <th scope='row'>${element.likes}</th>
+                                        <td>${element.news_title}</td>
+                                        <td>${element.news_publication}</td>
+                                        <td>${element.comments}</td>
+                                    </tr>`;
+                        $('#comun').append(html);
+                    });
+                }
+                if(detalle.length>0){
+                    detalle.forEach(element=>{
+                        const html=`<tr>
+                        <th scope='row'>${element.likes}</th>
+                        <td>${element.news_title}</td>
+                        <td>${element.news_publication}</td>
+                        <td>${element.comments}</td>
+                    </tr>`;
+                    $('#detalle').append(html);
+                    });
+                }
+                if(secciones.length>0){
+                    secciones.forEach(element=>{
+                        const html=`<tr>
+                        <th scope='row'>${element.likes}</th>
+                        <td>${element.section_name}</td>
+                        <td>${element.date}</td>
+                        <td>${element.comments}</td>
+                    </tr>`;
+                    $('#secciones').append(html);
+                    });
+
+                }
+            }
         }else{
             Swal.fire({
                 icon: 'warning',

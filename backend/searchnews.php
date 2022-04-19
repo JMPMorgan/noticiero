@@ -45,18 +45,15 @@ try{
                 */
                 $fields['keywords'][$i]=removeEspecialChar($fields['keywords'][$i]);
                 try{
-                    beginTransction();
                     $sql="CALL searchNews(3,NULL,NULL,NULL,NULL,'{$fields['keywords'][$i]}',NULL);";
                     $isInsert=execQuery($sql);
                     if($isInsert<=0){
-                        rollback();
                         $result['success']=false;
                         $result['error'][]='No se pudo obtener una Keyword';
                         echo json_encode($result);
                         exit;
                     }
                 }catch(Exception $e){
-                    rollback();
                     $result['success']=false;
                     $result['error'][]=$e->getMessage();
                     echo json_encode($result);
@@ -117,17 +114,14 @@ try{
             for($i=0;$i<$array_sections;$i++){
                 $fields['sections'][$i]=removeEspecialChar($fields['sections'][$i]);
                 try{
-                    beginTransction();
                     $sql="CALL searchNews(3,NULL,NULL,NULL,NULL,'{$fields['sections'][$i]}',NULL);";
                     $isInsert=execQuery($sql);
                     if($isInsert<=0){
-                        rollback();
                         $result['success']=false;
                         $result['error'][]='No se pudo obtener una Keyword';
                         exit;
                     }
                 }catch(Exception $e){
-                    rollback();
                     $result['success']=false;
                     $result['error'][]=$e->getMessage();
                     exit;
