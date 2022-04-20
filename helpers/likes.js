@@ -12,14 +12,15 @@ $(async()=>{
     });
     response=JSON.parse(response);
     if(response.success===true){
-        const isLiked=response.info[1].id_likes>0?true:false;
-        const likes=response.info[0].likes;
-        if(likes>0){
-            $('#num-likes').text(likes);
+        const isLiked=response.info.like_usuario;
+        const likes=response.info.cantidad_likes;
+        console.log(isLiked);
+        if(likes.likes>0){
+            $('#num-likes').text(likes.likes);
         }else{
             $('#num-likes').text('0');
         }
-        if(isLiked===true ){
+        if(isLiked!==undefined){
             $('#like-btn').removeClass('isLikent');
             $('#like-btn').addClass('isLike');
             $('#like-btn').attr('data',true);

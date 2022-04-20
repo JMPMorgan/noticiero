@@ -20,20 +20,21 @@ try {
                     }
                     $sql="CALL likes_sp(0,'{$uuids[1]}','{$fields['uuid']}');";
                     $rows=selectQuery($sql);
-                    $sql="CALL likes_sp(3,'{$uuids[1]}',NULL);";
+                    $sql="CALL likes_sp(3,'{$uuids[1]}','{$fields['uuid']}');";
                     $rows2=selectQuery($sql);
-                    if(!empty($rows) && !empty($rows2)){
-                        $info=array();
+                    if(!empty($rows) ){
+                        //$info=array();
                         //var_dump($info);
-                        array_push($info,$rows[0],$rows2[0]);
-                        $result['info']=$info;
+                        //array_push($info,$rows[0],$rows2[0]);
+                        $result['info']['cantidad_likes']=$rows[0];
                         $result['success']=true;
-                        echo json_encode($result);
-                    }else{
-                        $result['success']=false;
-                        $result['error'][]='No se pudo obtener la cantidad de likes';
-                        echo json_encode($result);
                     }
+                    if(!empty($rows2)){
+                        $result['info']['like_usuario']=$rows2[0];
+                        $result['success']=true;
+                        
+                    }
+                    echo json_encode($result);
                     exit;
                 }break;
                 case 1:{

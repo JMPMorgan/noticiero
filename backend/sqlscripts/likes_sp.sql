@@ -18,7 +18,7 @@ BEGIN
 		DELETE FROM `likes` where `uuid_userL`=`uuid_user`;
 	elseif(`opc`=3)#OBTENER EL LIKE DEL USUARIO QUE ENTRA EN LA NOTICIA
 	then
-		SELECT `id_likes` FROM `likes` WHERE `uuid_userL`=`uuid_user`;
+		SELECT `id_likes` FROM `likes` WHERE `uuid_userL`=`uuid_user` AND `uuid_newsL`=`uuid_news`;
     end if;
 END$$
 

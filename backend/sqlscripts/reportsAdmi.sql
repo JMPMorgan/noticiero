@@ -12,8 +12,8 @@ BEGIN
 			`news`.`news_title`,
 			`sections`.`section_name`,
 			`news`.`news_publication`,
-			COUNT(`comments`.`uuid_news`) as `comments`,
-			COUNT(`likes`.`uuid_newsL`) as `likes`
+			COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments`,
+			COUNT(DISTINCT(`likes`.`id_likes`)) as `likes`
 			FROM `news`
 			INNER JOIN `news_sections` ON `news_sections`.`uuid_news`=`news`.`uuid_news`
 			INNER JOIN `sections` ON `sections`.`uuid_sections`=`news_sections`.`uuid_section`
@@ -29,8 +29,8 @@ BEGIN
 			`news`.`news_title`,
 			`sections`.`section_name`,
 			`news`.`news_publication`,
-			COUNT(`comments`.`uuid_news`) as `comments`,
-			COUNT(`likes`.`uuid_newsL`) as `likes`
+			COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments`,
+			COUNT(DISTINCT(`likes`.`id_likes`)) as `likes`
 			FROM `news`
 			INNER JOIN `news_sections` ON `news_sections`.`uuid_news`=`news`.`uuid_news`
 			INNER JOIN `sections` ON `sections`.`uuid_sections`=`news_sections`.`uuid_section`
@@ -48,7 +48,7 @@ BEGIN
 		INSERT INTO `parameter_search`(`parameter`) VALUES(`parameterP`);
 	ELSEIF(`opc`=3) #No se selecciona la seccion y no se da detalle de secciones
 	THEN
-		SELECT `news`.`news_title`,`sections`.`section_name`,`news`.`news_publication`,COUNT(`likes`.`uuid_userL`) as `likes`,COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments`FROM `sections`
+		SELECT `news`.`news_title`,`sections`.`section_name`,`news`.`news_publication`,COUNT(distinct(`likes`.`id_likes`)) as `likes`,COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments`FROM `sections`
 			INNER JOIN `news_sections` ON `news_sections`.`uuid_section`=`sections`.`uuid_sections`
 			LEFT JOIN `news` ON `news`.`uuid_news`=`news_sections`.`uuid_news`
 			LEFT JOIN `likes` on `likes`.`uuid_newsL`=`news`.`uuid_news`
@@ -59,7 +59,7 @@ BEGIN
 			ORDER BY COUNT(`likes`.`uuid_userL`) DESC;
 	ELSEIF(`opc`=4)#Se selecciona la seccion y no se da detalle de secciones
     THEN
-		SELECT `news`.`news_title`,`sections`.`section_name`,`news`.`news_publication`,COUNT(`likes`.`uuid_userL`) as `likes`,COUNT(`comments`.`uuid_news`) as `comments`FROM `sections`
+		SELECT `news`.`news_title`,`sections`.`section_name`,`news`.`news_publication`,COUNT(DISTINCT(`likes`.`id_likes`)) as `likes`,COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments`FROM `sections`
 			INNER JOIN `news_sections` ON `news_sections`.`uuid_section`=`sections`.`uuid_sections`
 			LEFT JOIN `news` ON `news`.`uuid_news`=`news_sections`.`uuid_news`
 			LEFT JOIN `likes` on `likes`.`uuid_newsL`=`news`.`uuid_news`
@@ -73,8 +73,8 @@ BEGIN
     THEN
 		SELECT `sections`.`section_name`,
 				DATE_FORMAT(`news`.`news_publication`,'%M/%Y') as `date`,
-				COUNT(`likes`.`id_likes`) AS `likes`,
-				COUNT(`comments`.`uuid_comments`) as `comments` 
+				COUNT(DISTINCT(`likes`.`id_likes`)) AS `likes`,
+				COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments` 
 				FROM `news_sections`
 		INNER JOIN `news` ON `news`.`uuid_news`=`news_sections`.`uuid_news`
 		LEFT JOIN `sections` on `sections`.`uuid_sections`=`news_sections`.`uuid_section`
@@ -87,8 +87,8 @@ BEGIN
     THEN
 		SELECT `sections`.`section_name`,
 				DATE_FORMAT(`news`.`news_publication`,'%M/%Y') as `date`,
-				COUNT(`likes`.`id_likes`) AS `likes`,
-				COUNT(`comments`.`uuid_comments`) as `comments` 
+				COUNT(DISTINCT(`likes`.`id_likes`)) AS `likes`,
+				COUNT(DISTINCT(`comments`.`uuid_comments`)) as `comments` 
 				FROM `news_sections`
 		INNER JOIN `news` ON `news`.`uuid_news`=`news_sections`.`uuid_news`
 		LEFT JOIN `sections` on `sections`.`uuid_sections`=`news_sections`.`uuid_section`
