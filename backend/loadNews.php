@@ -19,6 +19,12 @@ try{
 
         $uuids = explode('-', session_id());
         //se obtiene un array de la session id que almacena el id de la sesion y el id al usuario que pertenece
+
+
+        /*
+
+            
+        */
         $sql = "SELECT `news_title`,DATE_FORMAT(`news_date`,'%d/%c/%Y') as `news_date`,DATE_FORMAT(`news_creation`,'%d/%c/%Y') as `news_creation`,`news_active`,`uuid_news`,`news_status` 
         FROM `news` WHERE `uuid_userC`='{$uuids[1]}';";
         $rows = selectQuery($sql);

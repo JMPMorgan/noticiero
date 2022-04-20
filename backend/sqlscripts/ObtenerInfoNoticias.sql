@@ -83,8 +83,6 @@ CREATE  OR REPLACE VIEW `getmultimedia_news` AS
 	SELECT `multimedia_news`.`idmulti_news`,`multimedia_news`.`name_archive`,`multimedia_news`.`type_archive`,`multimedia_news`.`archive`,`multimedia_news`.`uuid_noticia`,`multimedia_news`.`creation_time`,
     `multimedia_news`.`lastM_multinews` FROM `multimedia_news` WHERE `uuid_noticia`=UUID_NEWS();
     
-
-        
 USE `bd_noticiero`;
 DROP procedure IF EXISTS `bd_noticiero`.`getNSK_sp`;
 ;
@@ -111,11 +109,17 @@ BEGIN
 	ELSEIF(`opc`=4)#Obtener la informacion del usuario que hizo la noticia
     THEN
 		select users.* from `usernews` users;
+	ELSEIF(`opc`=5)#Obtiene la noticias del reportero registrado 
+	THEN
+		#Se utiliza en loadNews.php
+		SELECT `news_title`,DATE_FORMAT(`news_date`,'%d/%c/%Y') as `news_date`,DATE_FORMAT(`news_creation`,'%d/%c/%Y') as `news_creation`,`news_active`,`uuid_news`,`news_status` 
+        FROM `news` WHERE `uuid_userC`=`uuid_newsP`;
     END IF;
 END$$
 
 DELIMITER ;
 ;
+
 
 CALL getNSK_sp(1,'e75c4f82143aa939a0ceda66436f62a4');
         

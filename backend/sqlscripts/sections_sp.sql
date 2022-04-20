@@ -20,6 +20,14 @@ BEGIN
 	elseif(`opc`=3)#Select de una seccion aunque se haya borrado
     THEN 
 		SELECT `section_name`,`uuid_sections` FROM `sections` ORDER BY `sections_status` DESC;
+	elseif(`opc`=4)#Update de el status maximo 
+    THEN 
+		#Utilizado en changeStatusSections.php
+		UPDATE `sections` SET `sections_status`=`importance` WHERE `uuid_sections`=`uuid` ;
+	elseif(`opc`=5)#Obtiene informacion de sections
+    THEN
+		#Utilizado en getSectionsKeywords.php
+        SELECT `uuid_sections`,`section_name`,`sections_color`,`sections_status` FROM `sections` WHERE `sections_active`=1;
     end if;
 END$$
 
