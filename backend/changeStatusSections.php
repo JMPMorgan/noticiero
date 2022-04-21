@@ -9,17 +9,31 @@ if($isSessionCorrect==true){
         $fields['status']=removeEspecialChar($fields['status']);
         $fields['uuid']=removeCharForSpaces($fields['uuid']);
         if(is_numeric($fields['status'])&& strlen($fields['uuid']>0)){
-            $sql="CALL sections(4,NULL,NULL,'{$fields['status']}','{$fields['uuid']}');";
-            //$sql="UPDATE `sections` SET `sections_status`={$fields['status']} WHERE `uuid_sections`='{$fields['uuid']}' ;";
-            $isUpdated=execQuery($sql);
-            if(is_numeric( $isUpdated)){
-                $result['success']=true;
-                echo json_encode($result);
-                exit;
+            if($fields['status']==100){
+                $sql="CALL sections(6,NULL,NULL,NULL,NULL);";
+                $howManyStatusMax=selectQuery($sql);
+                $howManyStatusMax=$howManyStatusMax[0]['numero'];
+            }else{
+                $howManyStatusMax=0;
             }
-            else{
+            if($howManyStatusMax<5){
+                $sql="CALL sections(4,NULL,NULL,'{$fields['status']}','{$fields['uuid']}');";
+                //$sql="UPDATE `sections` SET `sections_status`={$fields['status']} WHERE `uuid_sections`='{$fields['uuid']}' ;";
+                $isUpdated=execQuery($sql);
+                if(is_numeric( $isUpdated)){
+                    $result['success']=true;
+                    echo json_encode($result);
+                    exit;
+                }
+                else{
+                    $result['success']=false;
+                    $result['error'][]='No se pudo cambiar el status por favor recargue la pagina e intente de nuevo';
+                    echo json_encode($result);
+                    exit;
+                }
+            }else{
                 $result['success']=false;
-                $result['error'][]='No se pudo cambiar el status por favor recargue la pagina e intente de nuevo';
+                $result['error'][]='Solo se puede tener como principales 5 secciones';
                 echo json_encode($result);
                 exit;
             }

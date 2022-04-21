@@ -147,6 +147,8 @@ $(async ()=>{
             response=JSON.parse(response);
             if(response.success===true){
                 loadSections(html);
+            }else{
+                printErrors(response.error);
             }
 
         });
@@ -164,6 +166,8 @@ $(async ()=>{
             response=JSON.parse(response);
             if(response.success===true){
                 loadSections(html);
+            }else{
+                printErrors(response.error);
             }
         });
         const edit_section=$(table_html).find('#edit')[0];

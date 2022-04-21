@@ -34,12 +34,12 @@ BEGIN
     THEN
 		#UTILIZADO en editprofile.php
 		UPDATE `users` SET `user_name`=`name`, `user_email` =`email`,
-                    `user_pass`=`password` WHERE `user_uuid`=`uuid` AND `user_status`=0;
+                    `user_pass`=`password`, `user_lastname`=`lastname` WHERE `user_uuid`=`uuid` AND `user_status`=0;
 	ELSEIF(`opcion`=6)#Sirve para editar cuando se va hacer update con imagen
     THEN 
 		#UTILIZADO en editprofile.php
         UPDATE `users` SET `user_name`=`name`, `user_email` =`email`,
-                    `user_pass`=`password`, `user_profilepic`=`path_pp` WHERE `user_uuid`=`uuid` AND `user_status`=0;
+                    `user_pass`=`password`, `user_lastname`=`lastname` , `user_profilepic`=`path_pp` WHERE `user_uuid`=`uuid` AND `user_status`=0;
                     
 	ELSEIF(`opcion`=7)#Sirve para saber si es un admin
     THEN
@@ -54,11 +54,15 @@ BEGIN
 		#UTILIZADO en getprofilesbyadmin.php y en data.php
         SELECT `users`.`user_status`,`users`.`user_name`,`users`.`user_email`,`users`.`user_pass`,`users`.`user_uuid`,`users`.`user_profilepic`,
 		`users`.`user_lastname`,`users`.`user_gender`,`users`.`user_nick`,`users`.`user_type`,`users`.`last_modification`,`users`.`user_creation`
-		FROM `bd_noticiero`.`users` WHERE `users`.`user_uuid`=`uuid`;
+		FROM `bd_noticiero`.`users` WHERE `users`.`user_uuid`=`uuid` AND `users`.`user_status`=0;
 	ELSEIF(`opcion`=10)
     THEN
 		#UTILIZADO en dataReporters.php
 		SELECT `user_name`,`user_lastname`,`user_nick`,`user_uuid` FROM `users` WHERE `user_type`=1 AND `user_status`=0;
+	ELSEIF(`opcion`=11)
+    THEN
+		#Utilizado en editprofile.php
+		SELECT `user_pass`,`user_profilepic` FROM `users` WHERE `user_uuid`=`uuid`;
 
     END IF;
 	/*
@@ -97,3 +101,4 @@ END$$
 
 DELIMITER ;
 ;
+

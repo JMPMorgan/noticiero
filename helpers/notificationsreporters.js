@@ -31,7 +31,7 @@ $(async()=>{
                     deleteUser();
                 });
                 $(html).find('#btn-cancelar').on('click',()=>{
-                    console.log('Entre a btn cancelar');
+                    noDeleteUser();
                 });
                 $('#group-notifications-news').append(html);
             });
@@ -87,7 +87,19 @@ const deleteUser=async ()=>{
 }
 
 const noDeleteUser= async()=>{
-
+    let response= await $.ajax({
+        method:'POST',
+        datatype:'JSON',
+        data:{
+            id:'ODNxNUdPbEZOcGVQSTBBcG9sYzB4Zz09',
+            n:''
+        },
+        url:'../backend/messages.php'
+    });
+    response=JSON.parse(response);
+    if(response.success===true){
+        location.reload();
+    }
 }
 
 const showModifications=(info)=>{

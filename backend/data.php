@@ -12,7 +12,7 @@
             if(strcmp($session_id,$uuid_session)==0){
                 $uuids=explode('-',$uuid_session);
                 $uuid_user=$uuids[1];
-                $sql="CALL usersSP(9,'{$fields['id']}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+                $sql="CALL usersSP(9,'{$uuid_user}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
                 //$sql="SELECT * FROM `users` WHERE `user_uuid`='{$uuid_user}' AND `user_status`=0;";
                 $rows=selectQuery($sql);
                 $result=array('info'=>array());

@@ -19,4 +19,8 @@ echo '<br>';
 $cinco=5;
 echo $cinco;
 echo encode($cinco);
+echo '<br>';
+$seis=6;
+echo $seis;
+echo encode($seis);
 ?>

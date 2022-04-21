@@ -18,7 +18,8 @@ $(async()=>{
         response.info.forEach(element=>{
             let html;
             if(element.news_status===0){
-                html=$(`<tr><th scope="row" class="bg-primary text-primary mx-auto th-row">
+                if(element.news_active===1){
+                    html=$(`<tr><th scope="row" class="bg-primary text-primary mx-auto th-row">
                 <i class='bx bx-edit-alt text-white status-success'></i></th>
                 <td id='title' data=${element.uuid_news}>${element.news_title}</td>
                 <td>${element.news_date}</td>
@@ -26,7 +27,11 @@ $(async()=>{
                     <button id='edit' class='btn btn-outline-primary'>
                     <i class='bx bx-edit-alt '></i>
                     </button>
+                    <button id='delete' class='btn btn-outline-danger'>
+                    <i class='bx bx-trash'></i>
+                    </button>
                 </td><tr>`);
+                }
             }
             else if(element.news_status===1){
                 html=$(`<tr><th scope="row" class=" bg-secondary text-success mx-auto th-row">
@@ -68,6 +73,7 @@ $(async()=>{
             if($(html).find('#edit').length>0){
                 console.log('edit');
                 const edit = $(html).find('#edit')[0];
+                const delete_btn=$(html).find('#delete')[0];
                 console.log(edit);
                 $(edit).on('click',()=>{
                     const section=$(html).find('#title')[0];
@@ -75,6 +81,30 @@ $(async()=>{
                     console.log(section,data);
                     window.location=`newsadd.html?id=${data}`;
                 });
+                $(delete_btn).on('click',async()=>{
+                    const section=$(html).find('#title')[0];
+                    const data=$(section).attr('data');
+                    let response= await $.ajax({
+                        method:'POST',
+                        datatype:'JSON',
+                        data:{
+                            data
+                        },
+                        url:'../backend/deleteNews.php'
+                    });
+                    response=JSON.parse(response);
+                    if(response.success===true){
+                        await Swal.fire(
+                            'Exito!',
+                            'Noticia Borrada con exito',
+                            'success'
+                        );
+                        location.reload();
+                    }  else{
+                        printErrors(response.error);
+                    }
+                });
+
             }
             if($(html).find('#active').length>0){
                 console.log('active');

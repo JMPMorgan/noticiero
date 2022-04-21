@@ -19,7 +19,7 @@ BEGIN
 			`news`.`news_title`,
 			`news`.`news_text`
 			FROM `communication`
-			INNER JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
+			LEFT JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
 			INNER JOIN `news` on `news`.`uuid_news`=`communication`.`uuid_referencenews`
 			WHERE `communication`.`uuid_for`=`uuid`
             and `news`.`news_status`=2 
@@ -38,7 +38,7 @@ BEGIN
 			`news`.`news_title`,
 			`news`.`news_text`
 			FROM `communication`
-			INNER JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
+			LEFT JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
 			INNER JOIN `news` on `news`.`uuid_news`=`communication`.`uuid_referencenews`
 			WHERE `communication`.`uuid_from`=`uuid`
             and `news`.`news_status`=1 
@@ -57,7 +57,7 @@ BEGIN
         `news`.`news_title`,
         `news`.`news_text`
         FROM `communication`
-        INNER JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
+        LEFT JOIN `multimedia_news` on `multimedia_news`.`uuid_noticia`=`communication`.`uuid_referencenews`
         INNER JOIN `news` on `news`.`uuid_news`=`communication`.`uuid_referencenews`
         WHERE `communication`.`uuid_for`=`uuid` 
         and `news`.`news_status`=3  
@@ -68,14 +68,24 @@ BEGIN
     THEN
 		SELECT `communication_message`,
 				`communication_status`,
+                `communication_date`,
                 `uuid_referencenews`
                 FROM `communication` WHERE `uuid_for`=`uuid` 
 				AND `communication_status`=0 
                 AND `communication_message`='ELIMINACION'
                 and `communication`.`communication_status`=0;
+	ELSEIF(`opc`=4)#Elimina el reportero
+    THEN
+		UPDATE `users` SET `user_status`=1 WHERE `user_uuid`=`uuid`;
+        UPDATE `news` SET `news_active`=0 WHERE `uuid_userC`=`uuid`;
+	ELSEIF(`opc`=5)#No se va eliminar el usuario
+    THEN
+		UPDATE `communication` SET `communication_status`=1 WHERE `uuid_for`=`uuid` AND `communication_message`='ELIMINACION';
     END IF;
 END$$
 
 DELIMITER ;
 ;
+
+
 

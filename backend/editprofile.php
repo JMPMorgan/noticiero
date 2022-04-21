@@ -93,7 +93,7 @@ if(!empty($fields)){
                             )
 
                     */  
-                    $sql="CALL usersSP(5,'{$fields['number']}','{$fields['name']}',NULL,'{$fields['password']}',NULL,'{$fields['email']}',NULL,NULL,NULL);";
+                    $sql="CALL usersSP(5,'{$fields['number']}','{$fields['name']}','{$fields['lastname']}','{$fields['password']}',NULL,'{$fields['email']}',NULL,NULL,NULL);";
                     //$sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
                     //`user_pass`='{$fields['password']}' WHERE `user_uuid`='{$fields["number"]}';";
                     $isUpdated=execQuery($sql);
@@ -102,7 +102,7 @@ if(!empty($fields)){
                     $image_name=$fields["number"].'_pp'.$image_type;
                     $isSamePassword[0]['image_name']=$image_name;
                     $fields['password']=encode($fields['password']);
-                    $sql="CALL usersSP(6,'{$fields['number']}','{$fields['name']}',NULL,'{$fields['password']}',NULL,'{$fields['email']}','{$image_name}',NULL,NULL);";
+                    $sql="CALL usersSP(6,'{$fields['number']}','{$fields['name']}','{$fields['lastname']}','{$fields['password']}',NULL,'{$fields['email']}','{$image_name}',NULL,NULL);";
                     /*$sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
                     `user_pass`='{$fields['password']}', `user_profilepic`='{$image_name}' WHERE `user_uuid`='{$fields["number"]}';";*/
                     $isUpdated=execQuery($sql);

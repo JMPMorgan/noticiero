@@ -28,6 +28,9 @@ BEGIN
     THEN
 		#Utilizado en getSectionsKeywords.php
         SELECT `uuid_sections`,`section_name`,`sections_color`,`sections_status` FROM `sections` WHERE `sections_active`=1;
+	elseif(`opc`=6)#Obtiene cuantas secciones estan en status maximo
+	THEN
+		SELECT COUNT(`uuid_sections`) as `numero` FROM `sections` WHERE `sections_status`=100;
     end if;
 END$$
 

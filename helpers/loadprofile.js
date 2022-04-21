@@ -24,7 +24,7 @@ $(()=>{
                 $('#ed-name').val(r.info[0]);
                 $('#ed-lastname').val(r.info[1]);
                 $('#ed-email').val(r.info[2]);
-                if(r.info[6]!==0){
+                if(r.info[6]!==0 && r.info[6]!==1){
                     const html =$(`<button class='btn btn-danger'>
                     Delete User
                     </button>`);

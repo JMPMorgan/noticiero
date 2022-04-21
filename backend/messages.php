@@ -11,6 +11,7 @@ en el switch es
 3 Noticia regresada
 4 Noticia Publicada
 5 Cambia el status del mensaje del reportero para editarla
+6 Cambia el status del mensaje de eliminacion del reportero
 
                 PARA STATUS DE LA NOTICIA
                 0-> Editada
@@ -31,6 +32,7 @@ if($isSessionCorrect==true){
             $uuids=explode("-",$session_id);
             switch($fields['id']){
                 case 1:{
+                    $fields['n']=decode($fields['n']);
                     $sql="CALL `insertMessageCommunication`(0,'{$uuids[1]}','{$fields['n']}',NULL,NULL);";
                     /*$sql="INSERT INTO `communication` (`uuid_from`,`uuid_for`,`communication_message`,`communication_date`,
                     `communication_status`,communication_lastM) VALUES ('{$uuids[1]}','{$fields['n']}','ELIMINACION',now(),0,now());";*/
@@ -101,6 +103,20 @@ if($isSessionCorrect==true){
                         $result['error'][]='No se pudo cambiar el status del mensaje';
                         echo json_encode($result);
                     }
+                }break;
+                case 6:{
+                        $session_id=session_id();
+                        $uuids=explode('-',$session_id);
+                        $sql="CALL notificationsReporter(5,'{$uuids[1]}');";
+                        $isUpdated=execQuery($sql);
+                        if(is_numeric($isUpdated)){
+                            $result['success']=true;
+                            echo json_encode($result);
+                        }else{
+                            $result['success']=false;
+                            $result['error'][]='No se pudo cambiar el status';
+                            echo json_encode($result);
+                        }
                 }break;
 
                 default:{

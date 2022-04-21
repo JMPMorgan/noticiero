@@ -125,6 +125,16 @@ const saveKeyword=async(html)=>{
         })
         response=JSON.parse(response);
         console.log(response);
+        if(response.success===true){
+            await Swal.fire(
+                'Exito!',
+                'Keyword guardada con exito',
+                'success'
+            );
+            location.reload();
+        }else{
+            printErrors(response.error);
+        }
     }
     
 }

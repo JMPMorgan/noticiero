@@ -12,17 +12,17 @@ BEGIN
 			count(distinct(`news`.`uuid_news`)) as`number` FROM
 			((`news`
 			JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))
-			JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
+			LEFT JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
 		WHERE `news`.`news_status` = 1 AND `news`.`news_date` = CURRENT_TIMESTAMP();
 	elseif(`opc`=1)#NUMBERO DE NOTICIAS PARA ESTA SEMANA
     then 
-		SELECT count(distinct(`news`.`uuid_news`))  as `number`  FROM ((`news`JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
+		SELECT count(distinct(`news`.`uuid_news`))  as `number`  FROM ((`news`JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))LEFT JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
              WHERE
 				`news`.`news_status` = 1
 				AND `news`.`news_date` <= CURRENT_TIMESTAMP() + INTERVAL 7 DAY ;
 	elseif(`opc`=2)#NUMBERO DE NOTICIAS PARA LA SIGUIENTE SEMANA
     then
-		SELECT count(distinct(`news`.`uuid_news`)) as`number`  FROM ((`news`JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
+		SELECT count(distinct(`news`.`uuid_news`)) as`number`  FROM ((`news`JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))LEFT JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
              WHERE
 				`news`.`news_status` = 1
 				AND `news`.`news_date` > CURRENT_TIMESTAMP() + INTERVAL 7 DAY;
@@ -33,7 +33,7 @@ BEGIN
 			count(distinct(`news`.`uuid_news`))`number` FROM
 			((`news`
 			JOIN `users` ON (`users`.`user_uuid` = `news`.`uuid_userC`))
-			JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
+			LEFT JOIN `multimedia_news` ON (`multimedia_news`.`uuid_noticia` = `news`.`uuid_news`))
 		WHERE `news`.`news_status` = 1 AND `news`.`news_date` < CURRENT_TIMESTAMP();
     end if;
 END$$

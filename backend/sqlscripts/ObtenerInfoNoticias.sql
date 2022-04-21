@@ -114,12 +114,14 @@ BEGIN
 		#Se utiliza en loadNews.php
 		SELECT `news_title`,DATE_FORMAT(`news_date`,'%d/%c/%Y') as `news_date`,DATE_FORMAT(`news_creation`,'%d/%c/%Y') as `news_creation`,`news_active`,`uuid_news`,`news_status` 
         FROM `news` WHERE `uuid_userC`=`uuid_newsP`;
+	ELSEIF(`opc`=6) #'Borra' la noticia que esta en edicion
+    THEN
+		UPDATE `news` SET `news_active`=0 WHERE `uuid_news`=`uuid_newsP` AND `news_status`=0;
     END IF;
 END$$
 
 DELIMITER ;
 ;
-
 
 CALL getNSK_sp(1,'e75c4f82143aa939a0ceda66436f62a4');
         

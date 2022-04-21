@@ -7,7 +7,8 @@ $result=array('info'=>array());
 if($isSessionCorrect==true){
     $session_id=session_id();
     $uuids=explode('-',$session_id);
-    $sql="UPDATE `users` SET `user_status`=1 WHERE `user_uuid`='{$uuids[1]}';";
+    $sql="CALL notificationsReporter(4,'{$uuids[1]}');";
+    //$sql="UPDATE `users` SET `user_status`=1 WHERE `user_uuid`='{$uuids[1]}';";
     $isUpdated= execQuery($sql);
     if(is_numeric($isUpdated)){
         $result['success']=true;
