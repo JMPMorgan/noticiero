@@ -11,7 +11,25 @@ if(!empty($fields)){
     }
     $fields['email'] = removeEspecialChar($fields['email']);
     $fields['user'] = removeCharForSpaces($fields['user']);
-    $sql = "SELECT `user_name`,`user_email` from `users` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
+    /*
+    usersSP(
+        1->opcion
+        2->uuid
+        3->name
+        4->lastname
+        5->password
+        6->gender
+        7->email
+        8->path_pp
+        9->nick
+        10->type_user
+    )
+
+    */
+    $sql="CALL usersSP(0,NULL,NULL,NULL,NULL,NULL,'{$fields['email']}',NULL,'{$fields['user']}',NULL);";
+
+
+    //$sql = "SELECT `user_name`,`user_email` from `users` where `user_email` = '{$fields['email']}' OR `user_nick`='{$fields['user']}';";
     $rows = selectQuery($sql);  
     if (empty($rows)) {
         $uuid = generateRandomToken();
@@ -63,11 +81,29 @@ if(!empty($fields)){
     if($fields['type_signup']!=''){
         $fields['type_signup']=decode($fields['type_signup']);
         if($fields['type_signup']==1){
-            $sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','1');";
+                /*
+                usersSP(
+                    1->opcion
+                    2->uuid
+                    3->name
+                    4->lastname
+                    5->password
+                    6->gender
+                    7->email
+                    8->path_pp
+                    9->nick
+                    10->type_user
+                )
+
+    */      
+            $sql="CALL usersSP(1,'{$uuid}','{$fields['name']}','{$fields['lastname']}','{$password}','{$fields['gender']}','{$fields['email']}','{$image_name}','{$fields['user']}',1);";
+            /*$sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) 
+            VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','1');";*/
         }
     }
     else{
-        $sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','2');";
+        $sql="CALL usersSP(1,'{$uuid}','{$fields['name']}','{$fields['lastname']}','{$password}','{$fields['gender']}','{$fields['email']}','{$image_name}','{$fields['user']}',2);";
+        //$sql = "INSERT into `users`(`user_name`,`user_email`,`user_pass`,`user_uuid`,`user_lastname`,`user_gender`,`user_nick`,`user_profilepic`,`user_type`) VALUES('{$fields['name']}','{$fields['email']}','{$password}','{$uuid}','{$fields['lastname']}','{$fields['gender']}','{$fields['user']}','{$image_name}','2');";
 
     }
     if(strlen($sql)>0){

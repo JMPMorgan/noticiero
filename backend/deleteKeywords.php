@@ -8,6 +8,7 @@ if($isSessionCorrect==true){
     if(!empty($fields)){
         $fields['uuid']=removeCharForSpaces($fields['uuid']);
         if(strlen($fields['uuid'])>0){
+            $sql="CALL keywords(3,NULL,'{$fields['uuid']}');";
             $sql="UPDATE `keywords` SET `status_keywords`=0  WHERE `uuid_keywords`='{$fields['uuid']}';";
             $isUpdated;
             try{

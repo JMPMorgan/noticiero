@@ -7,11 +7,28 @@ $result=array('info'=>array());
 if($isSessionCorrect==true){
     $session_id=session_id();
     $uuids=explode('-',$session_id);
-    $sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$uuids[1]}' AND `user_type`=0";
+        /*
+    usersSP(
+        1->opcion
+        2->uuid
+        3->name
+        4->lastname
+        5->password
+        6->gender
+        7->email
+        8->path_pp
+        9->nick
+        10->type_user
+        )
+
+     */  
+    $sql="CALL usersSP(7,'{$uuids[1]}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+    //$sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$uuids[1]}' AND `user_type`=0";
     $isAdmin=selectQuery($sql);
     $isAdmin=$isAdmin[0]['COUNT(*)'];
     if($isAdmin==0){
-        $sql="UPDATE `users` SET `user_status`=1 WHERE `user_uuid`='{$uuids[1]}';";
+        $sql="CALL usersSP(8,'{$uuids[1]}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+        //$sql="UPDATE `users` SET `user_status`=1 WHERE `user_uuid`='{$uuids[1]}';";
         $isUpdated= execQuery($sql);
         if(is_numeric($isUpdated)){
             $result['success']=true;

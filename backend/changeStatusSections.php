@@ -9,7 +9,8 @@ if($isSessionCorrect==true){
         $fields['status']=removeEspecialChar($fields['status']);
         $fields['uuid']=removeCharForSpaces($fields['uuid']);
         if(is_numeric($fields['status'])&& strlen($fields['uuid']>0)){
-            $sql="UPDATE `sections` SET `sections_status`={$fields['status']} WHERE `uuid_sections`='{$fields['uuid']}' ;";
+            $sql="CALL sections(4,NULL,NULL,'{$fields['status']}','{$fields['uuid']}');";
+            //$sql="UPDATE `sections` SET `sections_status`={$fields['status']} WHERE `uuid_sections`='{$fields['uuid']}' ;";
             $isUpdated=execQuery($sql);
             if(is_numeric( $isUpdated)){
                 $result['success']=true;

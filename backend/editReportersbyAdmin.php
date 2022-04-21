@@ -21,7 +21,8 @@
             }
         }
         $fields['number']=removeEspecialChar(decode($fields['number']));
-        $sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$fields['number']}';";
+        $sql="CALL usersSP(4,'{$fields['number']}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+        //$sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$fields['number']}';";
         $exitsUser=selectQuery($sql);
         $exitsUser=$exitsUser[0]['COUNT(*)'];
         if($exitsUser==1){

@@ -4,7 +4,8 @@
     $isCorrect=isSessionCorrect();
     if($isCorrect==1){
         $result = array('error'=>array());
-        $sql="SELECT `user_name`,`user_lastname`,`user_nick`,`user_uuid` FROM `users` WHERE `user_type`=1;";
+        $sql="CALL usersSP(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+        //$sql="SELECT `user_name`,`user_lastname`,`user_nick`,`user_uuid` FROM `users` WHERE `user_type`=1;";
         $rows=selectQuery($sql);
         $i=0;
         if(!empty($rows)){

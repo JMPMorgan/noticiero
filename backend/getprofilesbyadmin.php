@@ -7,7 +7,8 @@ $path_image='../assets/img/profile_pics/';
 $result=array('info'=>array());
 if($isSessionCorrect==true){
 $fields['id']=removeEspecialChar(decode($fields['id']));
-$sql="SELECT * FROM `users` WHERE `user_uuid`='{$fields['id']}'; ";
+$sql="CALL usersSP(9,'{$fields['id']}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+//$sql="SELECT * FROM `users` WHERE `user_uuid`='{$fields['id']}'; ";
 $rows=selectQuery($sql);
 if(!empty($rows)){
     $result['info'][]=$rows[0]['user_name'];

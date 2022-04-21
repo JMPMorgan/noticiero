@@ -13,11 +13,29 @@ if(!empty($fields)){
         Este boleano isEmail sirve para indentificar si es un email si no lo es busca por nick para ver si existe ese nick
         si no existe no regresa nada de informacion
         */
+
+        /*
+                usersSP(
+                    1->opcion
+                    2->uuid
+                    3->name
+                    4->lastname
+                    5->password
+                    6->gender
+                    7->email
+                    8->path_pp
+                    9->nick
+                    10->type_user
+                )
+
+        */  
         if($isEmail==1){
-            $sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_email`='{$fields['user']}';";
+            $sql="CALL usersSP(2,NULL,NULL,NULL,'{$password}',NULL,'{$fields['user']}',NULL,NULL,NULL);";
+            //$sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_email`='{$fields['user']}';";
         }
         else{
-            $sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_nick`='{$fields['user']}';";
+            $sql="CALL usersSP(3,NULL,NULL,NULL,'{$password}',NULL,NULL,NULL,'{$fields['user']}',NULL);";
+            //$sql="SELECT `user_uuid` FROM `users` WHERE `user_pass`='{$password}' AND `user_nick`='{$fields['user']}';";
         }
         $rows = selectQuery($sql);
         if(!empty($rows)){

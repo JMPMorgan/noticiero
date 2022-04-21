@@ -25,8 +25,9 @@ try{
 
             
         */
-        $sql = "SELECT `news_title`,DATE_FORMAT(`news_date`,'%d/%c/%Y') as `news_date`,DATE_FORMAT(`news_creation`,'%d/%c/%Y') as `news_creation`,`news_active`,`uuid_news`,`news_status` 
-        FROM `news` WHERE `uuid_userC`='{$uuids[1]}';";
+        $sql="CALL getNSK_sp(5,'{$uuids[1]}');";
+        /*$sql = "SELECT `news_title`,DATE_FORMAT(`news_date`,'%d/%c/%Y') as `news_date`,DATE_FORMAT(`news_creation`,'%d/%c/%Y') as `news_creation`,`news_active`,`uuid_news`,`news_status` 
+        FROM `news` WHERE `uuid_userC`='{$uuids[1]}';";*/
         $rows = selectQuery($sql);
         if (!empty($rows)) {
             foreach($rows as $noticia){

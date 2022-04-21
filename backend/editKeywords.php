@@ -9,7 +9,8 @@ if($isSessionCorrect==true){
       $fields['valor']=removeEspecialChar($fields['valor']);
       $fields['uuid']=removeCharForSpaces($fields['uuid']);
       if(strlen($fields['valor'])>0 && strlen($fields['uuid'])>0){
-          $sql="UPDATE `keywords` SET `word_keywords`='{$fields['valor']}' WHERE `uuid_keywords`='{$fields['uuid']}';";
+          $sql="CALL keywords(2,'{$fields['valor']}','{$fields['uuid']}');";
+          //$sql="UPDATE `keywords` SET `word_keywords`='{$fields['valor']}' WHERE `uuid_keywords`='{$fields['uuid']}';";
           $isUpdated;
           try{
               $isUpdated=execQuery($sql);

@@ -17,7 +17,24 @@ if(!empty($fields)){
     }
     $fields['number']=removeEspecialChar( decode($fields['number']));
     //echo $fields['number'];
-    $sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$fields["number"]}';";
+    
+        /*
+                usersSP(
+                    1->opcion
+                    2->uuid
+                    3->name
+                    4->lastname
+                    5->password
+                    6->gender
+                    7->email
+                    8->path_pp
+                    9->nick
+                    10->type_user
+                )
+
+        */  
+    $sql="CALL usersSP(4,'{$fields['number']}',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+    //$sql="SELECT COUNT(*) FROM `users` WHERE `user_uuid`='{$fields["number"]}';";
     $exitsUser=selectQuery($sql);
     $exitsUser=$exitsUser[0]['COUNT(*)'];
     $image_size=3000001;
@@ -49,7 +66,8 @@ if(!empty($fields)){
             
             if ($result['success'] == true) {
                 $password = encode($fields['password']);
-                $sql_password="SELECT `user_pass`,`user_profilepic` FROM `users` WHERE `user_uuid`='{$fields['number']}';";
+                $sql_password="CALL usersSP(11,'{$fields['number']}',NULL,null,null,null,null,null,null,null);";
+                //$sql_password="SELECT `user_pass`,`user_profilepic` FROM `users` WHERE `user_uuid`='{$fields['number']}';";
                 $isSamePassword=selectQuery($sql_password);
                 //var_dump($isSamePassword);
                 $password=$isSamePassword[0]['user_pass'];
@@ -60,16 +78,33 @@ if(!empty($fields)){
 
                 if($fields['oldpassword']==$password && $hasAimage == false){
                     $fields['password']=encode($fields['password']);
-                    $sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
-                    `user_pass`='{$fields['password']}' WHERE `user_uuid`='{$fields["number"]}';";
+                                        /*
+                            usersSP(
+                                1->opcion
+                                2->uuid
+                                3->name
+                                4->lastname
+                                5->password
+                                6->gender
+                                7->email
+                                8->path_pp
+                                9->nick
+                                10->type_user
+                            )
+
+                    */  
+                    $sql="CALL usersSP(5,'{$fields['number']}','{$fields['name']}',NULL,'{$fields['password']}',NULL,'{$fields['email']}',NULL,NULL,NULL);";
+                    //$sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
+                    //`user_pass`='{$fields['password']}' WHERE `user_uuid`='{$fields["number"]}';";
                     $isUpdated=execQuery($sql);
                 }
                 else if($fields['oldpassword']==$password && $hasAimage==true){
                     $image_name=$fields["number"].'_pp'.$image_type;
                     $isSamePassword[0]['image_name']=$image_name;
                     $fields['password']=encode($fields['password']);
-                    $sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
-                    `user_pass`='{$fields['password']}', `user_profilepic`='{$image_name}' WHERE `user_uuid`='{$fields["number"]}';";
+                    $sql="CALL usersSP(6,'{$fields['number']}','{$fields['name']}',NULL,'{$fields['password']}',NULL,'{$fields['email']}','{$image_name}',NULL,NULL);";
+                    /*$sql="UPDATE `users` SET `user_name`='{$fields['name']}', `user_email` ='{$fields['email']}',
+                    `user_pass`='{$fields['password']}', `user_profilepic`='{$image_name}' WHERE `user_uuid`='{$fields["number"]}';";*/
                     $isUpdated=execQuery($sql);
                     $path_delete='../assets/img/profile_pics/';
                     if(unlink($path_delete.$path_old_image)==true){
