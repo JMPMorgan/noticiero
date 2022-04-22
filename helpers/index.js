@@ -94,6 +94,10 @@ $(async()=>{
            if(breaking_news.length>0){
                let brekings_html='';
                breaking_news.forEach(element=>{
+                if(element.news_title.length>20){
+                    element.news_title=element.news_title.slice(0,20);
+                    element.news_title+='...';
+                }
                 brekings_html+=`<div class='col-3'>
                                 <div class='thumbanil'>
                                     <a href='viewnews.html?id=${element.uuid_news}'>
@@ -122,6 +126,10 @@ $(async()=>{
             const news=element.news;
             let news_html='';
             news.forEach(ele=>{
+                if(ele.news_title.length>20){
+                    ele.news_title=ele.news_title.slice(0,20);
+                    ele.news_title+='...';
+                }
                 news_html+=`<div class='col-3'>
                                 <div class='thumbanil'>
                                     <a href='viewnews.html?id=${ele.uuid_news}'>

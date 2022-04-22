@@ -15,7 +15,7 @@ $.ajax({
                             "<h3>"+element.user_nick+"</h3>"+
                         "</div>"+     
                         "<div class='col-3'>"+
-                            "<h3>"+
+                            "<h3 data='"+element.user_uuid+"'>"+
                                 "<i class='bx bx-edit-alt btn btn-outline-primary' id='btn-edit' onclick=editReporter('"+element.user_uuid+"')></i>"+
                                 "<i class='bx bx-trash btn btn-outline-danger mx-2' id='btn-delete' onclick=deleteReporter('"+element.user_uuid+"')></i>"+
                                 "<i class='bx bx-detail btn btn-outline-primary' id='btn-detail' onclick=detailReporter('"+element.user_uuid+"')></i>"+
@@ -24,6 +24,7 @@ $.ajax({
                       "</div>";
                 
             });
+            html=$(html);
             $('#container-reporters').append(html);
         }
         else{
@@ -63,8 +64,9 @@ const deleteReporter=(n)=>{
             icon:'success',
             confirmButtonColor:'#28a745'
           });
+          $(`h3[data='${n}']`).css('display','none');
         }
-      })
+      });
 }
 const detailReporter=(n)=>{
     window.location=`edprofileadmin.html?id=${n}&status=2`;

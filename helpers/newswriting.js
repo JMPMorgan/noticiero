@@ -161,8 +161,14 @@ window.onload=()=>{
             }).then(r=>r.text());
             response=JSON.parse(response);
             if(response.success==true){
+                await Swal.fire({
+                    title:'Noticia Guardada con exito',
+                    text:'Su noticia fue guardada con exito',
+                    icon:'success',
+                    confirmButtonColor:'#28a745'
+                });
+                window.location=`newsadd.html?id=${response.info.id}`
                 //window.location='news-reporter.html';
-
             }
             else{
                 printErrors(response.error);
@@ -199,12 +205,13 @@ window.onload=()=>{
         }
         messages=JSON.parse(messages);
         if(messages.success===true){
-            Swal.fire({
+            await Swal.fire({
                 title:'Mensaje Enviado Con Exito',
                 text:'Su noticia fue enviada para revision',
                 icon:'success',
                 confirmButtonColor:'#28a745'
             });
+            window.location='news-reporter.html';
         }else{
             Swal.fire({
                 title:'Mensaje No Enviado ',
