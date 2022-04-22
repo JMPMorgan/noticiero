@@ -74,6 +74,49 @@ $(async()=>{
        if(response.success===true){
            const sections=response.info;
            const sections_main=response.sections_main;
+           const breaking_news=response.breaking_news;
+           const news_visited=response.news_visited;
+           if(news_visited.length>0){
+               const html=`<div class='my-2' style="text-align: center;"><h4 class='mx-auto'>Most visited news<h4></div>`;
+               $('#news_visited').append(html);
+               news_visited.forEach(element=>{
+                const news_visited_html=`<div  class='news-suggested d-flex'>
+                <a href='viewnews.html?id=${element.uuid_news}' style="margin-left: 20%;">
+                <h6>${element.news_title}</h6>
+                <img class="news-more-visited mx-auto" src="data:image/jpg;base64,${element.archive}">
+                </a>
+                 </div>`
+                 $('#news_visited').append(news_visited_html);
+               });
+
+               
+           }
+           if(breaking_news.length>0){
+               let brekings_html='';
+               breaking_news.forEach(element=>{
+                brekings_html+=`<div class='col-3'>
+                                <div class='thumbanil'>
+                                    <a href='viewnews.html?id=${element.uuid_news}'>
+                                    <h5 class='news-title'>${element.news_title}</h5>
+                                    <img src='data:image/jpg;base64,${element.archive}'
+                                    class="news-photos news-half"/>
+                                    <div class='caption'>
+                                        <p class='news-content'${element.news_description}></p>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>`;
+               });
+               const html=`<div class='row my-1'>
+                            <div class='col-12 text-justify d-flex card mx-auto'>
+                                <p class='text-justify h1 mx-auto'>
+                                    Breaking News
+                                </p>
+                            </div>
+                            ${brekings_html}
+                          </div>`;
+                $('#main-news').append(html);
+           }
            console.log(sections_main);
            sections.forEach(element=>{
             const news=element.news;

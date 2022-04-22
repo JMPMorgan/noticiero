@@ -29,3 +29,8 @@ font-family: 'Arimo', sans-serif;
 .news-content{
     font-family: 'Source Serif Pro', sans-serif;
 }
+
+.news-more-visited{
+    width: 120px;
+    height: 120px;
+}

@@ -31,6 +31,13 @@ BEGIN
 	elseif(`opc`=6)#Obtiene cuantas secciones estan en status maximo
 	THEN
 		SELECT COUNT(`uuid_sections`) as `numero` FROM `sections` WHERE `sections_status`=100;
+	elseif(`opc`=7)#"Eliminar"  Sections y eliminar las relaciones de las secciones con la noticias
+    THEN
+		UPDATE `sections` SET `sections_active`=0 WHERE `uuid_sections`=`uuid`;
+        DELETE FROM `news_sections` WHERE `uuid_section`=`uuid`;
+	elseif(`opc`=8)#Select de todas las secciones no "Eliminadas"
+    THEN
+		SELECT `section_name`,`uuid_sections` FROM `sections` WHERE `sections_active`=1 ORDER BY `sections_status` DESC;
     end if;
 END$$
 

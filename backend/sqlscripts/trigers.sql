@@ -15,3 +15,12 @@
       INSERT INTO `comments_log`(`uuid_owner`,`comment`,`uuid_news`,`change_status`)VALUES(OLD.`uuid_user`,OLD.`comments_text`,OLD.`uuid_news`,NOW());
 	END $$
     DELIMITER ; 
+    
+    	DELIMITER $$
+     CREATE TRIGGER `agregarSections_log`
+     BEFORE DELETE on `news_sections`
+     FOR EACH ROW
+     BEGIN 
+      INSERT INTO `news_sections_log`(`uuid_sections`,`uuid_news`,`creation_date`)VALUES(OLD.`uuid_section`,OLD.`uuid_news`,NOW());
+	END $$
+    DELIMITER ; 

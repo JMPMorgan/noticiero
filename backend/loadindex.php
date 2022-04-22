@@ -59,7 +59,23 @@ try{
             $rows2[$i]['news']=array();
             $rows2[$i]['news']=$data;
         }
+        
         if(!empty($rows) && !empty($rows2)){
+            $sql="CALL loadNewsAndSections(5,NULL);";
+            $rows3=selectQuery($sql);
+            //var_dump($rows3);
+            $array_rows3=count($rows3);
+            for($x=0;$x< $array_rows3;$x++){
+                $rows3[$x]['archive']=base64_encode($rows3[$x]['archive']);
+            }
+            $sql="CALL loadNewsAndSections(6,NULL);";
+            $news_visited=selectQuery($sql);
+            $count_news=count($news_visited);
+            for($x=0;$x<$count_news;$x++){
+                $news_visited[$x]['archive']=base64_encode($news_visited[$x]['archive']);
+            }
+            $result['news_visited']=$news_visited;
+            $result['breaking_news']=$rows3;
             $result['success']=true;
             $result['sections_main']=$rows;
             $result['info']=$rows2;

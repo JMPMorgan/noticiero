@@ -50,6 +50,25 @@ then
 		AND `news`.`news_status`=3 
 		GROUP BY `news`.`uuid_news`
 		ORDER BY `news`.`news_publication` DESC;
+elseif(`opc`=5)#Obtener las noticias publicadas esta semana
+THEN
+	SELECT `news`.`news_title`,`news`.`news_description`,`news`.`uuid_news`,`multimedia_news`.`archive`
+		FROM `news` 
+		INNER JOIN `multimedia_news` ON `multimedia_news`.`uuid_noticia`=`news`.`uuid_news`
+		WHERE `multimedia_news`.`type_archive`<>'.mp4'
+        AND `news_publication`>=DATE(NOW()- INTERVAL 7 DAY)
+		AND `news`.`news_status`=3 
+		GROUP BY `news`.`uuid_news`
+		ORDER BY `news`.`news_publication` DESC;
+elseif(`opc`=6) #Obtener las noticias mas visitadas
+THEN
+	SELECT `news`.`news_title`,`news`.`uuid_news`,`multimedia_news`.`archive`
+    FROM `news`
+    INNER JOIN `multimedia_news`on `multimedia_news`.`uuid_noticia`=`news`.`uuid_news`
+    INNER JOIN `views_news` ON `views_news`.`uuid_news`=`news`.`uuid_news`
+    WHERE `multimedia_news`.`type_archive`<>'.mp4'
+    GROUP by `news`.`uuid_news`
+    ORDER BY COUNT(`views_news`.`uuid_news`) DESC LIMIT 5;
 end if;
 END$$
 

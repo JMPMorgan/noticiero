@@ -179,3 +179,16 @@ COMMENT = 'Tabla donde se almacena el cambio de status en los comentarios';
 ALTER TABLE `comments_log` ADD FOREIGN KEY (`uuid_owner`) REFERENCES `users`(`uuid_user`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 ALTER TABLE `comments_log` ADD FOREIGN KEY (`uuid_news`) REFERENCES `news`(`uuid_news`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+
+CREATE TABLE `bd_noticiero`.`news_sections_log` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'clave primaria',
+  `uuid_sections` VARCHAR(155) NULL COMMENT 'Clave primaria de la seccion(FK)',
+  `uuid_news` VARCHAR(155) NULL COMMENT 'Clave de la noticia (FK)',
+  `creation_date` TIMESTAMP NULL COMMENT 'Fecha de creacion',
+  PRIMARY KEY (`id`))
+COMMENT = 'Tabla que guarda las relaciones eliminadas de la tabla news_sections';
+
+ALTER TABLE `news_sections_log` ADD FOREIGN KEY(`uuid_news`) REFERENCES `news`(`uuid_news`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `news_sections_log` ADD FOREIGN KEY(`uuid_sections`) REFERENCES `sections`(`uuid_sections`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

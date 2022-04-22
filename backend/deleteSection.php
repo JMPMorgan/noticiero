@@ -8,7 +8,8 @@ if($isSessionCorrect==true){
     if(!empty($fields)){
         $fields['uuid']=removeCharForSpaces($fields['uuid']);
         if(strlen($fields['uuid']>0)){
-            $sql="UPDATE `sections` SET `sections_active`=0 WHERE `uuid_sections`='{$fields['uuid']}';";
+            $sql="CALL sections(7,NULL,NULL,NULL,'{$fields['uuid']}');";
+            //$sql="UPDATE `sections` SET `sections_active`=0 WHERE `uuid_sections`='{$fields['uuid']}';";
             $isUpdated=execQuery($sql);
             if(is_numeric($isUpdated)){
                 $result['success']=true;
