@@ -67,6 +67,7 @@ THEN
     INNER JOIN `multimedia_news`on `multimedia_news`.`uuid_noticia`=`news`.`uuid_news`
     INNER JOIN `views_news` ON `views_news`.`uuid_news`=`news`.`uuid_news`
     WHERE `multimedia_news`.`type_archive`<>'.mp4'
+        AND `news`.`news_status`=3
     GROUP by `news`.`uuid_news`
     ORDER BY COUNT(`views_news`.`uuid_news`) DESC LIMIT 5;
 end if;

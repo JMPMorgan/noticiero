@@ -10,11 +10,20 @@
         <script src="https://kit.fontawesome.com/e500c13009.js" crossorigin="anonymous"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!--API DE MAPAS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+        <!--API DE MAPAS-->
+
         <link rel="stylesheet" href="../assets/styleNavbar.css">
         <script type="module" src="../helpers/auxiliar/auxiliarMethods.js"></script>
         <script src="../helpers/navbar.js"></script>
         <script src="../helpers/viewnews.js"></script>
-        <script type="module" src="../helpers/loadNews.js"></script>
         <script type="module" src="../helpers/comments.js"></script>
         <script type="module" src="../helpers/likes.js"></script>
         <link rel="stylesheet" href="../assets/styleViewNews.css">
@@ -60,18 +69,10 @@
                     </p>
                     <h2 class="text-justify" >News Sections </h2>
                     <div class="container-sections" id="sections-news">
-                        <!--<a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
-                        <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
-                        <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
-                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>-->
 
                     </div>
                     <h2 class="text-justify">Popular Sections </h2>
                     <div class="container-sections" id="sections-popular">
-                        <!--<a class="btn my-1   btn-sm btn-outline-primary">Sports</a>
-                        <a class="btn my-1 btn-sm btn-outline-primary">Music</a>
-                        <a  class="btn my-1 btn-sm btn-outline-primary">National</a>
-                        <a  class="btn my-1 btn-sm btn-outline-primary">International</a>-->
 
                     </div>
  
@@ -85,7 +86,7 @@
                         </div>
                         <h1 class="text-center" id="titulo-noticia">Falta de Agua en la Presa de la Boca </h1>
                         <div class="text-muted d-flex justify-content-between">
-                            <span>MEXICO <i class="fa-solid fa-location-crosshairs"></i> </span>
+                            <span id="container-location" ><span id="location-data">MEXICO</span> <i class="fa-solid fa-location-crosshairs"></i> <div id="map-mini"></div></span>
                             <span id="nombre-reportero">NOMBRE REPORTERO</span>
                             <span><i class="fa-solid fa-calendar-days"></i><span id="news-date">18/02/2022</span></span>
                         </div>
@@ -95,20 +96,8 @@
                     </div>
                     <div class="my-4">
                         <div class="content-images mx-auto" style="max-width:1200px">
-                            <!--<img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">
-                            <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%">
-                            <img class="mySlides mx-auto" src="../assets/img/noticia.jpg" style="width:25%;display:none">-->
                           
                             <div id="container-imgs" class="row-padding d-flex justify-content-between section-images">
-                              <!--<div class="col-image  d-flex justify-content-center s4">
-                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(1)">
-                              </div>
-                              <div class="col-image  d-flex justify-content-center  s4">
-                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(2)">
-                              </div>
-                              <div class="col-image  d-flex justify-content-center s4">
-                                <img class="demo opacity-image hover-opacity-off" src="../assets/img/pn-logo.png" style="width:25%;cursor:pointer" onclick="currentDiv(3)">
-                              </div>-->
                             </div>
                           </div>
                         <div id="text-noticia">
@@ -143,103 +132,22 @@
                             <button id="comment" class="btn btn-primary d-flex justify-content-end ml-auto">Comment</button>
                         </div>
                         <div id="container-comments">
-                        <!-- <div class="comment ">
-                                <div class="row border-top border-bottom">
-                                    <div class="col-2 container-pp-comments">
-                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
-                                    </div>
-                                    <div class="col-10">
-                                        <p class="h1">User</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
-                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
-                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
-                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
-                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
-                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!--<div class="comment border-top">
-                                <div class="row border-top border-bottom">
-                                    <div class="col-2 container-pp-comments">
-                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
-                                    </div>
-                                    <div class="col-10">
-                                        <p class="h1">User</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
-                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
-                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
-                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
-                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
-                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>-->
-                          <!--  <div class="comment">
-                                <div class="row border-top border-bottom">
-                                    <div class="col-2 container-pp-comments">
-                                        <img class="rounded img-thumbnail pp-comments" src="../assets/img/pp.png" alt="" srcset="">
-                                    </div>
-                                    <div class="col-10">
-                                        <p class="h1">User</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt dui felis, eget porttitor lectus pulvinar
-                                            vel. Phasellus ac hendrerit dui. Nulla ultrices rhoncus nulla,
-                                            vitae elementum lectus dictum at. Morbi non dictum justo. Curabitur sit amet scelerisque purus, nec suscipit tellus.
-                                            Vestibulum blandit ex vel tellus mattis, vitae aliquam est dapibus.
-                                            Mauris quis lorem imperdiet, pretium massa et, vestibulum magna. Phasellus varius tempus dui. Donec ornare vehicula
-                                            nibh eu iaculis. Ut scelerisque urna sed metus ullamcorper placerat.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
+                    <div id="container-map">
+                        <div id="map" style="display: none;"></div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-2">
                 <div class="container" id="container-all-news-suggested">
                     <h2>News suggested</h2>
-                    <!--<div class="news-suggested">
-                        <h6 class="news-title">FULL NOTICIA</h6>
-                        <a href="#">
-                            <img src="../assets/img/pn-logo.png" class="news-sections" alt="" srcset="">
-                            <div class="caption">
-                                <p class="news-content">Titulo noticia</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="news-suggested">
-                        <h6 class="news-title">FULL NOTICIA</h6>
-                        <a href="#">
-                            <img src="../assets/img/pn-logo.png" class="news-sections" alt="" srcset="">
-                            <div class="caption">
-                                <p class="news-content">Titulo noticia</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="news-suggested">
-                        <h6 class="news-title">FULL NOTICIA</h6>
-                        <a href="#">
-                            <img src="../assets/img/pn-logo.png" class="news-sections" alt="" srcset="">
-                            <div class="caption">
-                                <p class="news-content">Titulo noticia</p>
-                            </div>
-                        </a>
-                    </div>-->
                 </div>
                 
             </div>
             </div>
         </div>
-      
- 
+        <script type="module" src="../helpers/loadNews.js"></script>
     </body>
 </html>

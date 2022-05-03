@@ -83,7 +83,9 @@ if($isSessionCorrect==true){
                 case 4:{
                     $sql="CALL insertMessageCommunication(3,'7df77187de42f964ea60872a478f6819','{$fields['uuid']}','{$fields['n']}','{$fields['messages']}');";
                     $isCreate=execQuery($sql);
-                    if(is_numeric($isCreate)){
+                    $sql="CALL location_news_sp('{$fields['n']}','{$fields['country']}','{$fields['city']}','{$fields['lat_map']}','{$fields['lng_map']}');";
+                    $isInsert=execQuery($sql);
+                    if(is_numeric($isCreate) && is_numeric($isInsert)){
                         $result['success']=true;
                         echo json_encode($result);
                     }else{

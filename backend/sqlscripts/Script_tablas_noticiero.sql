@@ -192,3 +192,15 @@ ALTER TABLE `news_sections_log` ADD FOREIGN KEY(`uuid_news`) REFERENCES `news`(`
 ALTER TABLE `news_sections_log` ADD FOREIGN KEY(`uuid_sections`) REFERENCES `sections`(`uuid_sections`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
+CREATE TABLE `bd_noticiero`.`location_news`(
+`idlocation_news` INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
+`lat` FLOAT NULL COMMENT 'Latitud de la localizacion',
+`lng` FLOAT NULL COMMENT 'Longitud de la noticia',
+`country` VARCHAR(155) NULL COMMENT 'Pais de donde paso la noticia',
+`city` VARCHAR(155) NULL COMMENT 'Ciudad de donde paso la noticia',
+`uuid` VARCHAR(155) NULL COMMENT 'Clave de la noticia donde paso la noticia'
+)COMMENT ='Tabla de localizacion de la noticias';
+
+ALTER TABLE `location_news` ADD FOREIGN KEY (`uuid_news`) REFERENCES `news`(`uuid_news`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

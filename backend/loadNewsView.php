@@ -94,6 +94,8 @@ try{
                     $data_keywords=selectQuery($sql);
                     $sql="CALL getNSK_sp(4,'{$fields['id']}');";
                     $data_user=selectQuery($sql);
+                    $sql="CALL getNSK_sp(7,'{$fields['id']}');";
+                    $data_location=selectQuery($sql);
                     if(!empty($rows)){
                         $informacion['news_info']=getInformationNews($rows[0]);
                         $informacion['news_info']['news_date']=date("d/m/Y",strtotime($informacion['news_info']['news_date']));
@@ -126,6 +128,12 @@ try{
 
                     }else{
                         $informacion['user_info']='';
+                    }
+                    if(!empty($data_location)){
+                        $informacion['location_info']=getLocation($data_location[0]);
+                        
+                    }else{
+                        $informacion['location_info']='';
                     }
 
                     if(count($informacion)>0){
@@ -237,6 +245,15 @@ function getUserNews($user){
     $return['user_email']=$user['user_email'];
     $return['user_lastname']=$user['user_lastname'];
     $return['user_nick']=$user['user_nick'];
+    return $return;
+}
+
+function getLocation($location){
+    $return=array();
+    $return['lat']=$location['lat'];
+    $return['lng']=$location['lng'];
+    $return['city']=$location['city'];
+    $return['country']=$location['country'];
     return $return;
 }
 ?>

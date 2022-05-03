@@ -96,3 +96,20 @@
     border-color: #007bff !important;
     color: #fff !important;
 }
+
+#map{
+    height: 245px;
+}
+
+#map-mini{
+    height: 240px;
+    width: 350px;
+    display: none;
+}
+
+#container-location:hover>#map-mini{
+    display: flex;
+    position: absolute !important;
+    border-radius: 20px;
+    border: 6px solid #007bff69;
+}

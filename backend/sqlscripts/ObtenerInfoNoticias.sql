@@ -117,6 +117,9 @@ BEGIN
 	ELSEIF(`opc`=6) #'Borra' la noticia que esta en edicion
     THEN
 		UPDATE `news` SET `news_active`=0 WHERE `uuid_news`=`uuid_newsP` AND `news_status`=0;
+	ELSEIF(`opc`=7)#Obtiene la localizacion de la noticia
+    THEN
+		SELECT `lat`,`lng`,`country`,`city` FROM `location_news` WHERE `uuid_news`=`uuid_newsP`;
     END IF;
 END$$
 
